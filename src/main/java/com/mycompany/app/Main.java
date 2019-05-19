@@ -1,95 +1,87 @@
 package com.mycompany.app;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrRequest;
-import org.apache.solr.client.solrj.SolrResponse;
+import java.io.*;
+
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.params.SolrParams;
-
-import java.io.IOException;
-import java.util.LinkedList;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 
 
 public class Main {
 
     public static void main(String[] args) throws IOException, SolrServerException {
-        /*File folder = new File("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Netzwerke");
-        File[] listOfFiles = folder.listFiles();
+        String urlString = "http://localhost:8983/solr/localDocs21";
+        HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
 
-        HashMap<String, String> namesAndDates = getNamesAndDates(listOfFiles);
+        System.out.println("before query");
+        Query query = new Query();
+        System.out.println("after query");
+        //happens later from UI
+        query.addParameter(ParameterType.QUERY, "singleton");
+        query.addParameter(ParameterType.FIELDlIST, "id,start");
+
+        SolrDocumentList results = query.sendQuery(solr);
 
         try (PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename.txt"))  {
-            for(HashMap.Entry<String,String> mapValue : namesAndDates.entrySet()){
-                out.println(mapValue.getKey() + ": " + mapValue.getValue());
-            }
-
-        }*/
-
-
-        SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/localDocs20").build();
-
-
-        File folder = new File("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Netzwerke");
-        File[] listOfFiles = folder.listFiles();
-        ArrayList<SolrInputDocument> docList = new ArrayList<>();
-        for(File file : listOfFiles){
-            SolrInputDocument doc = new SolrInputDocument();
-            //TODO: get data from files and write to doc
-            SolrRequest req = new SolrRequest() {
-                @Override
-                public SolrParams getParams() {
-                    return null;
-                }
-
-                @Override
-                protected SolrResponse createResponse(SolrClient solrClient) {
-                    return null;
+            if(!results.isEmpty()){
+                for(SolrDocument doc : results){
+                    out.println(doc.toString());
                 }
             }
-            client.request();
-
-            docList.add(doc);
-            //if(i%100==0) client.commit();  // periodically flush
         }
 
+        /*String urlString = "http://localhost:8983/solr/localDocs";
+        HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
+        //CloudSolrClient cloudSolrClient = new CloudSolrClient.Builder(Arrays.asList(urlString)).build();
+
+        //is working
         /*for(int i=0;i<1000;++i) {
             SolrInputDocument doc = new SolrInputDocument();
             doc.addField("cat", "book");
             doc.addField("id", "book-" + i);
             doc.addField("name", "The Legend of the Hobbit part " + i);
-            client.add(doc);
-            if(i%100==0) client.commit();  // periodically flush
+            solr.add(doc);
+            if(i%100==0) solr.commit();  // periodically flush
+        }
+
+        //is not working
+        File file = new File("C:\\Users\\mareike\\Desktop\\Bachelorarbeit.pdf");
+
+        ContentStreamUpdateRequest req = new ContentStreamUpdateRequest(urlString + "/update/extract");
+
+        req.addFile(file, "application/pdf");
+
+        //req.setParam("literal.id", "doc1");
+        //req.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
+
+
+        try{
+            solr.request(req);
+        }
+        catch(IOException e){
+            PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename.txt");
+            e.printStackTrace(out);
+            out.close();
+            System.out.println("IO message: " + e.getMessage());
+        } catch(SolrServerException e){
+            PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename.txt");
+            e.printStackTrace(out);
+            out.close();
+            System.out.println("SolrServer message: " + e.getMessage());
+        } catch(HttpSolrClient.RemoteSolrException e){
+            PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename.txt");
+            e.printStackTrace(out);
+            out.close();
+            System.out.println("RemoteSolrException message: " + e.getMessage());
+        }catch(Exception e){
+            PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename.txt");
+            e.printStackTrace(out);
+            out.close();
+            System.out.println("UnknownException message: " + e.getMessage());
+            System.out.println("exception" + e.getClass().getName());
+        }finally{
+            solr.commit();
         }*/
 
-        client.add(docList);
-        client.commit();
-    }
-
-    public static HashMap<String, String> getNamesAndDates(File[] listOfFiles){
-        HashMap<String, String> fileList = new HashMap<>();
-
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                String fileName = listOfFiles[i].getName();
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                String modifiedDate = sdf.format(listOfFiles[i].lastModified());
-
-                fileList.put(fileName, modifiedDate);
-            } else if (listOfFiles[i].isDirectory()) {
-                String fileName = "Directory: " + listOfFiles[i].getName();
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                String modifiedDate = sdf.format(listOfFiles[i].lastModified());
-
-                fileList.put(fileName, modifiedDate);
-            }
-        }
-        return fileList;
     }
 }

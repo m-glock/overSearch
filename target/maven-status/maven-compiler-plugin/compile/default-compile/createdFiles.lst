@@ -1,1 +1,5 @@
+com\mycompany\app\Test.class
+com\mycompany\app\ParameterType.class
 com\mycompany\app\Main.class
+com\mycompany\app\MSGraph.class
+com\mycompany\app\Query.class
