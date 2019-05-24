@@ -1,6 +1,10 @@
 package com.mareike.solrsearch;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
+
 import org.apache.solr.client.solrj.SolrServerException;
 
 
@@ -11,7 +15,9 @@ public class Main {
 
         SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "test10");
         IndexHandler handler = new IndexHandler(solr);
-        handler.addFiles();
+        handler.addFiles("C:\\Users\\mareike\\Desktop\\Bachelorarbeit.pdf");
+
+
 
 
         /*HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();

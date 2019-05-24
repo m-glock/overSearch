@@ -1,5 +1,6 @@
 package com.mareike.solrsearch;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
@@ -39,13 +40,13 @@ public class IndexHandler {
         collectionURL = solr.getSolrUrl()+ "/" + solr.getCollectionName();
     }
 
-    public void addFiles() throws IOException, SolrServerException{
+    public void addFiles(String path) throws IOException, SolrServerException{
         client.setBaseURL(collectionURL);
-        File file = new File("C:\\Users\\mareike\\Desktop\\Bachelorarbeit.pdf");
+        File file = new File(path);
 
         ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
 
-        request.addFile(file, "application/pdf");
+        request.addFile(file, getContentType(file));
 
         //req.setParam("literal.id", "doc1");
         //req.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
@@ -68,5 +69,21 @@ public class IndexHandler {
             client.commit();
             out.close();
         }
+    }
+
+    private String getContentType(File file){
+        //pdf, word, excel, ppt, txt, ...
+        String extension = FilenameUtils.getExtension(file.getAbsolutePath());
+        String type;
+        switch(extension){
+            case "pdf":
+                type = "application/pdf";
+                break;
+            default:
+                //is there a basic content type?
+                type = "something";
+                break;
+        }
+        return type;
     }
 }
