@@ -10,6 +10,10 @@ public class SolrInstance {
         collectionName = collection;
     }
 
+    private void firstInit(){
+        //TODO: start solr as a service and add the config file
+    }
+
     public String getSolrUrl(){
         return urlString;
     }
