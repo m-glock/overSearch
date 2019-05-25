@@ -13,9 +13,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException, SolrServerException {
 
-        SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "test10");
+        SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs9");
         IndexHandler handler = new IndexHandler(solr);
-        handler.addFiles("C:\\Users\\mareike\\Desktop\\Bachelorarbeit.pdf");
+        handler.addFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");
 
 
 

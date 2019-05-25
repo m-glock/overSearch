@@ -5,11 +5,13 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
+import org.apache.solr.client.solrj.request.CoreAdminRequest;
 import org.apache.solr.common.util.NamedList;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class IndexHandler {
 
@@ -32,29 +34,66 @@ public class IndexHandler {
     }
 
     private void createIndex() throws IOException, SolrServerException {
+        PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename.txt");
         client = new HttpSolrClient.Builder(solr.getSolrUrl()).build();
 
-        final CollectionAdminRequest.Create req = CollectionAdminRequest.Create
-                .createCollection(solr.getCollectionName(), configName, 1, 1);
-        NamedList resp = client.request(req);
-        collectionURL = solr.getSolrUrl()+ "/" + solr.getCollectionName();
-    }
-
-    public void addFiles(String path) throws IOException, SolrServerException{
-        client.setBaseURL(collectionURL);
-        File file = new File(path);
-
-        ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
-
-        request.addFile(file, getContentType(file));
-
-        //req.setParam("literal.id", "doc1");
-        //req.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
-        PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename.txt");
+        final CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(solr.getCollectionName(), configName,1, 1);
 
         try{
             out.println("In try");
-            client.request(request);
+            NamedList resp = client.request(req);
+            out.println("response: " + resp.toString());
+            out.close();
+            collectionURL = client.getBaseURL() + "/" + solr.getCollectionName();
+            client.setBaseURL(collectionURL);
+            out.println("base url: " + client.getBaseURL());
+        } catch(IOException e){
+
+            out.println("IOException message: ");
+            e.printStackTrace(out);
+        }catch(HttpSolrClient.RemoteSolrException e){
+            out.println("RemoteSolrException message: ");
+            e.printStackTrace(out);
+        }catch(Exception e){
+            out.println("UnknownException message: ");
+            e.printStackTrace(out);
+        }finally{
+            client.commit();
+
+        }
+
+    }
+
+    public void addFiles(String path) throws IOException, SolrServerException{
+        PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename1.txt");
+        ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
+        File folder = new File(path);
+        File[] listOfFiles = folder.listFiles();
+
+        for(File file : listOfFiles){
+            out.println("content type: " + getContentType(file));
+            request.addFile(file, getContentType(file));
+        }
+
+
+
+        /*File file = new File(path);
+        ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
+        out.println("content type: " + getContentType(file));
+        request.addFile(file, getContentType(file));*/
+
+        //req.setParam("literal.id", "doc1");
+        //req.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
+
+
+        try{
+            out.println("In try");
+            out.println("path:" + request.getPath());
+            out.println("to string:" + request.toString());
+            out.println(client.getBaseURL());
+            NamedList resp = client.request(request);
+            out.println(resp.toString());
+
         }
         catch(IOException e){
             e.printStackTrace(out);
@@ -79,9 +118,18 @@ public class IndexHandler {
             case "pdf":
                 type = "application/pdf";
                 break;
+            case "doc": case "docx":
+                type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                break;
+            case "xls": case "xlsx":
+                type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                break;
+            case "ppt": case "pptx":
+                type = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+                break;
             default:
                 //is there a basic content type?
-                type = "something";
+                type = "plain/text";
                 break;
         }
         return type;
