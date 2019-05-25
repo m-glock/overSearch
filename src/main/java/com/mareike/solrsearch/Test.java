@@ -51,40 +51,6 @@ public class Test {
         out.close();
 
 
-
-
-
-
-
-        /*File folder = new File("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Netzwerke");
-        File[] listOfFiles = folder.listFiles();
-
-        HashMap<String, String> namesAndDates = getNamesAndDates(listOfFiles);
-
-        try (PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename.txt"))  {
-            for(HashMap.Entry<String,String> mapValue : namesAndDates.entrySet()){
-                out.println(mapValue.getKey() + ": " + mapValue.getValue());
-            }
-
-        }*/
-
-
-
-
-        //find our which files are new
-
-        SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "test10");
-        IndexHandler handler = new IndexHandler(solr);
-
-        File folder = new File("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Netzwerke");
-        File[] listOfFiles = folder.listFiles();
-        ArrayList<File> docList = new ArrayList<>();
-        for(File file : listOfFiles){
-            handler.addFiles(file.getPath());
-            //if(i%100==0) client.commit();  // periodically flush
-        }
-
-
     }
 
     public static HashMap<String, String> getNamesAndDates(File[] listOfFiles){

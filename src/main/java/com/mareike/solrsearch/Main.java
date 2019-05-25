@@ -1,9 +1,6 @@
 package com.mareike.solrsearch;
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Scanner;
 
 import org.apache.solr.client.solrj.SolrServerException;
 
@@ -15,7 +12,7 @@ public class Main {
 
         SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs9");
         IndexHandler handler = new IndexHandler(solr);
-        handler.addFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");
+        handler.indexFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");
 
 
 

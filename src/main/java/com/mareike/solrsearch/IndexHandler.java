@@ -5,13 +5,11 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
-import org.apache.solr.client.solrj.request.CoreAdminRequest;
 import org.apache.solr.common.util.NamedList;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 public class IndexHandler {
 
@@ -64,23 +62,22 @@ public class IndexHandler {
 
     }
 
-    public void addFiles(String path) throws IOException, SolrServerException{
+    public void indexFiles(String path) throws IOException, SolrServerException{
+        //TODO: how tof ind out if there are new files?
+
+
         PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename1.txt");
-        ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
         File folder = new File(path);
+        ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
+        request = addFilesToRequest(folder, request);
+        /*File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
 
         for(File file : listOfFiles){
-            out.println("content type: " + getContentType(file));
+            //TODO: if file is folder, go inside and do same thing (recursive)
+            //out.println("content type: " + getContentType(file));
             request.addFile(file, getContentType(file));
-        }
-
-
-
-        /*File file = new File(path);
-        ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
-        out.println("content type: " + getContentType(file));
-        request.addFile(file, getContentType(file));*/
+        }*/
 
         //req.setParam("literal.id", "doc1");
         //req.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
@@ -110,8 +107,21 @@ public class IndexHandler {
         }
     }
 
+    private ContentStreamUpdateRequest addFilesToRequest(File folder, ContentStreamUpdateRequest request) throws IOException{
+        File[] listOfFiles = folder.listFiles();
+        for(File file : listOfFiles){
+            //TODO: if file is folder, go inside and do same thing (recursive)
+            if(file.isDirectory()){
+                request = addFilesToRequest(file, request);
+            }
+            //out.println("content type: " + getContentType(file));
+            request.addFile(file, getContentType(file));
+        }
+        return request;
+    }
+
     private String getContentType(File file){
-        //pdf, word, excel, ppt, txt, ...
+        //TODO: add other file extensions and check for default
         String extension = FilenameUtils.getExtension(file.getAbsolutePath());
         String type;
         switch(extension){
