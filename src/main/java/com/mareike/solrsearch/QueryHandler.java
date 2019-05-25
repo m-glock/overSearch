@@ -10,12 +10,12 @@ import org.apache.solr.common.params.SolrParams;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class Query {
+public class QueryHandler {
 
     private HashMap<String, String> parameters;
     private SolrDocumentList docs;
 
-    public Query(){
+    public QueryHandler(){
         parameters = new HashMap<>();
         docs = new SolrDocumentList();
     }
