@@ -10,9 +10,16 @@ public class Main {
 
     public static void main(String[] args) throws IOException, SolrServerException {
 
-        SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs");
+        /*SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs");
         IndexHandler handler = new IndexHandler(solr);
-        handler.indexFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");
+        handler.indexFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");*/
+
+        UIHandler frame=new UIHandler();
+        frame.setTitle("Word Cloud");
+        frame.setSize(1250, 800);
+        frame.setResizable(false);
+        frame.setLocation(100, 100);
+        frame.setVisible(true);
 
 
 

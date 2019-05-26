@@ -1,6 +1,8 @@
 package com.mareike.solrsearch;
 
-public class UIHandler {
+import javax.swing.*;
+import java.awt.*;
 
-
+public class UIHandler extends JFrame{
+    
 }
