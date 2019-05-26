@@ -63,24 +63,16 @@ public class IndexHandler {
     }
 
     public void indexFiles(String path) throws IOException, SolrServerException{
-        //TODO: how tof ind out if there are new files?
+        //TODO: how to find out if there are new files?
 
 
         PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename1.txt");
         File folder = new File(path);
         ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
+
+
         request = addFilesToRequest(folder, request);
-        /*File folder = new File(path);
-        File[] listOfFiles = folder.listFiles();
-
-        for(File file : listOfFiles){
-            //TODO: if file is folder, go inside and do same thing (recursive)
-            //out.println("content type: " + getContentType(file));
-            request.addFile(file, getContentType(file));
-        }*/
-
         //req.setParam("literal.id", "doc1");
-        //req.setAction(AbstractUpdateRequest.ACTION.COMMIT, true, true);
 
 
         try{
@@ -109,13 +101,17 @@ public class IndexHandler {
 
     private ContentStreamUpdateRequest addFilesToRequest(File folder, ContentStreamUpdateRequest request) throws IOException{
         File[] listOfFiles = folder.listFiles();
-        for(File file : listOfFiles){
-            //TODO: if file is folder, go inside and do same thing (recursive)
-            if(file.isDirectory()){
-                request = addFilesToRequest(file, request);
+        if(listOfFiles!= null) {
+            for (File file : listOfFiles) {
+                //out.println("Name: " + file.getName() + ": " + file.getAbsolutePath());
+                if (file.isDirectory()) {
+                    //out.println("going into directory");
+                    request = addFilesToRequest(file, request);
+                }else{
+                    //out.println("File: " + file.getName() + " and content type: " + getContentType(file));
+                    request.addFile(file, getContentType(file));
+                }
             }
-            //out.println("content type: " + getContentType(file));
-            request.addFile(file, getContentType(file));
         }
         return request;
     }
@@ -143,5 +139,9 @@ public class IndexHandler {
                 break;
         }
         return type;
+    }
+
+    private void findNewFiles(){
+
     }
 }

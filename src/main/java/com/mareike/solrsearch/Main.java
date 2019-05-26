@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, SolrServerException {
 
-        SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs9");
+        SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs");
         IndexHandler handler = new IndexHandler(solr);
         handler.indexFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");
 
@@ -35,12 +35,6 @@ public class Main {
                 }
             }
         }*/
-
-
-
-
-
-
 
     }
 }
