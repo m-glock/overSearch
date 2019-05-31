@@ -97,5 +97,10 @@
       <artifactId>solr-solrj</artifactId>
       <version>7.7.0</version>
     </dependency>
+      <dependency>
+          <groupId>com.microsoft.graph</groupId>
+          <artifactId>microsoft-graph</artifactId>
+          <version>1.4.0</version>
+      </dependency>
   </dependencies>
 </project>
