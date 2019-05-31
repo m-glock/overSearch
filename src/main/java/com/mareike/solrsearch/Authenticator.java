@@ -27,7 +27,7 @@ public class Authenticator {
         if (authenticationProvider == null) {
             try {
                 accessToken = getAccessToken().replace("\"", ""); //strips out excess quotes
-                System.out.println("Access Token: " + accessToken);
+                //System.out.println("Access Token: " + accessToken);
                 authenticationProvider = new IAuthenticationProvider() {
                     @Override
                     public void authenticateRequest(final IHttpRequest request) {

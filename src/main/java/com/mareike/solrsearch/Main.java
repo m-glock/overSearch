@@ -5,14 +5,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.microsoft.graph.authentication.IAuthenticationProvider;
-import com.microsoft.graph.core.DefaultClientConfig;
-import com.microsoft.graph.core.IClientConfig;
+import com.microsoft.graph.concurrency.ICallback;
+import com.microsoft.graph.core.ClientException;
 import com.microsoft.graph.models.extensions.IGraphServiceClient;
-import com.microsoft.graph.requests.extensions.CustomRequestBuilder;
-import com.microsoft.graph.requests.extensions.GraphServiceClient;
-import com.microsoft.graph.requests.extensions.IDriveRequestBuilder;
+import com.microsoft.graph.models.extensions.User;
+import com.microsoft.graph.requests.extensions.*;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
 import org.apache.solr.client.solrj.SolrServerException;
-
+import sun.net.www.http.HttpClient;
 
 
 public class Main {
@@ -27,29 +28,51 @@ public class Main {
         Authenticator authenticator = new Authenticator();
         IAuthenticationProvider authenticationProvider = authenticator.getAuthenticationProvider();
 
-        StringBuilder result = new StringBuilder();
-        URL url = new URL("https://graph.microsoft.com/v1.0/me/messages");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Authorization", "Bearer " + authenticator.accessToken());
-        conn.setRequestProperty("Accept","application/json");
-        try {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
+
+        final IGraphServiceClient graphClient =
+                GraphServiceClient
+                        .builder()
+                        .authenticationProvider(authenticationProvider)
+                        .buildClient();
+
+
+
+        /*URL url = new URL("https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize?"+
+                "client_id=" + Constants.clientId +
+                "&response_type=code" +
+                "&redirect_uri=" + Constants.redirectURI +
+                "&response_mode=query" +
+                "&scope=offline_access%20user.read%20mail.read" +
+                "&state=12345");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+
+        int status = con.getResponseCode();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
             }
-            rd.close();
-            System.out.println(result.toString());
-        }catch(IOException io){
-            System.out.println(io.getMessage());
-            System.out.println(conn.getResponseMessage());
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-            System.out.println(conn.getResponseMessage());
-        }
+            in.close();
 
+            System.out.println(response.toString());*/
 
+        final IUserRequest request = graphClient.me().buildRequest();
+        request.get(new ICallback<User>() {
+            @Override
+            public void success(User user) {
+                System.out.println("User: " + user.displayName);
+            }
+
+            @Override
+            public void failure(ClientException ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
+        });
 
 
 
