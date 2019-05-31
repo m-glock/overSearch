@@ -1,19 +1,10 @@
 package com.mareike.solrsearch;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import com.microsoft.graph.authentication.IAuthenticationProvider;
-import com.microsoft.graph.concurrency.ICallback;
-import com.microsoft.graph.core.ClientException;
 import com.microsoft.graph.models.extensions.IGraphServiceClient;
-import com.microsoft.graph.models.extensions.User;
 import com.microsoft.graph.requests.extensions.*;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
 import org.apache.solr.client.solrj.SolrServerException;
-import sun.net.www.http.HttpClient;
 
 
 public class Main {
@@ -60,21 +51,6 @@ public class Main {
             in.close();
 
             System.out.println(response.toString());*/
-
-        final IUserRequest request = graphClient.me().buildRequest();
-        request.get(new ICallback<User>() {
-            @Override
-            public void success(User user) {
-                System.out.println("User: " + user.displayName);
-            }
-
-            @Override
-            public void failure(ClientException ex) {
-                System.out.println("Error: " + ex.getMessage());
-            }
-        });
-
-
 
         /*HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
 

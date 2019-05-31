@@ -52,6 +52,7 @@ public class Authenticator {
     private String getAccessToken()
     {
         try {
+            //starting directly with token endpoint, need code from authorization endpoint before that?
             URL url = new URL(tokenEndpoint);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             String line;
@@ -85,6 +86,7 @@ public class Authenticator {
             conn.disconnect();
 
             JsonObject res = new GsonBuilder().create().fromJson(jsonString.toString(), JsonObject.class);
+            System.out.println("JSON;" + res.toString());
             return res.get("access_token").toString().replaceAll("\"", "");
 
         } catch (Exception e) {
