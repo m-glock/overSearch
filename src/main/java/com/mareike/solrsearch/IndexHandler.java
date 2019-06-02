@@ -15,87 +15,62 @@ public class IndexHandler {
 
     private SolrInstance solr;
     private String configName = "localDocs";
-    private HttpSolrClient client;
     private String collectionURL;
 
     public IndexHandler(SolrInstance inst){
         solr = inst;
         try{
             createIndex();
-        }catch(IOException io){
+        } catch(IOException io){
 
-        }catch(SolrServerException serv){
+        } catch(SolrServerException serv){
 
-        }catch (Exception e){
+        } catch (Exception e){
 
         }
     }
 
     private void createIndex() throws IOException, SolrServerException {
-        PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename.txt");
-        client = new HttpSolrClient.Builder(solr.getSolrUrl()).build();
-
-        final CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(solr.getCollectionName(), configName,1, 1);
+        //TODO: check that colection name does not already exist
+        final CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(solr.getCollectionName(), configName, 1, 1);
 
         try{
-            out.println("In try");
-            NamedList resp = client.request(req);
-            out.println("response: " + resp.toString());
-            out.close();
-            collectionURL = client.getBaseURL() + "/" + solr.getCollectionName();
-            client.setBaseURL(collectionURL);
-            out.println("base url: " + client.getBaseURL());
+            NamedList resp = solr.client.request(req);
+            System.out.println("response: " + resp.toString());
+            collectionURL = solr.client.getBaseURL() + "/" + solr.getCollectionName();
+            solr.client.setBaseURL(collectionURL);
+            System.out.println("base url: " + solr.client.getBaseURL());
         } catch(IOException e){
-
-            out.println("IOException message: ");
-            e.printStackTrace(out);
+            System.out.println("IOException message: ");
         }catch(HttpSolrClient.RemoteSolrException e){
-            out.println("RemoteSolrException message: ");
-            e.printStackTrace(out);
+            System.out.println("RemoteSolrException message: ");
         }catch(Exception e){
-            out.println("UnknownException message: ");
-            e.printStackTrace(out);
+            System.out.println("UnknownException message: ");
         }finally{
-            client.commit();
-
+            solr.client.commit();
         }
 
     }
 
     public void indexFiles(String path) throws IOException, SolrServerException{
         //TODO: how to find out if there are new files?
-
-
-        PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename1.txt");
         File folder = new File(path);
         ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
 
-
         request = addFilesToRequest(folder, request);
         //req.setParam("literal.id", "doc1");
-
-
         try{
-            out.println("In try");
-            out.println("path:" + request.getPath());
-            out.println("to string:" + request.toString());
-            out.println(client.getBaseURL());
-            NamedList resp = client.request(request);
-            out.println(resp.toString());
-
+            NamedList resp = solr.client.request(request);
+            System.out.println(resp.toString());
         }
         catch(IOException e){
-            e.printStackTrace(out);
-            out.println("IOException message: ");
+            System.out.println("IOException message: ");
         }catch(HttpSolrClient.RemoteSolrException e){
-            out.println("RemoteSolrException message: ");
-            e.printStackTrace(out);
+            System.out.println("RemoteSolrException message: ");
         }catch(Exception e){
-            out.println("UnknownException message: ");
-            e.printStackTrace(out);
+            System.out.println("UnknownException message: ");
         }finally{
-            client.commit();
-            out.close();
+            solr.client.commit();
         }
     }
 
