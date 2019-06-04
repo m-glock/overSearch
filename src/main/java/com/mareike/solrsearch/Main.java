@@ -1,8 +1,15 @@
 package com.mareike.solrsearch;
 
 import java.io.*;
+import java.util.Arrays;
+
+import com.mareike.solrsearch.msauth.AuthorizationCodeProvider;
+import com.mareike.solrsearch.msauth.ClientCredentialProvider;
+import com.mareike.solrsearch.msauth.Constants;
+import com.mareike.solrsearch.msauth.NationalCloud;
 import com.microsoft.graph.authentication.IAuthenticationProvider;
 import com.microsoft.graph.models.extensions.IGraphServiceClient;
+import com.microsoft.graph.models.extensions.User;
 import com.microsoft.graph.requests.extensions.*;
 import org.apache.solr.client.solrj.SolrServerException;
 
@@ -16,17 +23,21 @@ public class Main {
         handler.indexFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");*/
 
         //authenticate with MS Graph
-        Authenticator authenticator = new Authenticator();
-        IAuthenticationProvider authenticationProvider = authenticator.getAuthenticationProvider();
+        //TODO: how to get authorization code?
+        //String authorizationCode = "";
+        //AuthorizationCodeProvider authProvider = new AuthorizationCodeProvider(Constants.CLIENTID, Arrays.asList(Constants.SCOPES), authorizationCode, Constants.REDIRECTURI, NationalCloud.Germany, Constants.TENANT, Constants.CLIENTSECRET);
+
+        ClientCredentialProvider authProvider = new ClientCredentialProvider(Constants.CLIENTID, Arrays.asList(Constants.SCOPES), Constants.CLIENTSECRET, Constants.TENANT, NationalCloud.Germany);
+
 
 
         final IGraphServiceClient graphClient =
                 GraphServiceClient
                         .builder()
-                        .authenticationProvider(authenticationProvider)
+                        .authenticationProvider(authProvider)
                         .buildClient();
 
-
+        User user = graphClient.me().buildRequest().get();
 
         /*URL url = new URL("https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize?"+
                 "client_id=" + Constants.clientId +

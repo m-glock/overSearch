@@ -15,7 +15,8 @@
   </properties>
 
   <build>
-    <plugins>
+      <defaultGoal>package</defaultGoal>
+      <plugins>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
@@ -106,6 +107,16 @@
           <groupId>org.apache.oltu.oauth2</groupId>
           <artifactId>org.apache.oltu.oauth2.client</artifactId>
           <version>1.0.2</version>
+      </dependency>
+      <dependency>
+          <groupId>com.squareup.okhttp3</groupId>
+          <artifactId>okhttp</artifactId>
+          <version>3.12.1</version>
+      </dependency>
+      <dependency>
+          <groupId>com.microsoft.graph</groupId>
+          <artifactId>microsoft-graph-core</artifactId>
+          <version>1.0.0</version>
       </dependency>
   </dependencies>
 </project>
