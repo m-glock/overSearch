@@ -13,11 +13,17 @@ public class Constants {
     public static final String TOKEN_ENDPOINT = "/oauth2/v2.0/token";
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    //public final static String CLIENTID = "f6bd1e4d-0ebe-453f-b601-4db109efa9de";
-    public final static String CLIENTID = "7ee25081-38e5-4147-8c42-472f31cd7564";
-    //public final static String CLIENTSECRET = "x6y7ZkFFlz/6YZGKCB/sLhRAptf-yH=6";
-    public final static String CLIENTSECRET = "5ah5HVS6+/LHPi2*lvCgk*4-KhuvF0.G";
-    public final static String TENANT = "common";
+    //solrSearchEnterprise imiba - working
+    /*public final static String CLIENTID = "f790fe06-5b01-439a-af4b-3d1c8c6ea2f1";
+    public final static String CLIENTSECRET = "I_UEMKyPlm:.7/CMUM81kxteTSCcurC3";
+    public final static String TENANT = "f535a890-cd9a-4331-88f6-3c188ce19127";*/
+
+    //solrSearch imiba AAD - working
+    public final static String CLIENTID = "4e4d4263-af02-4741-bd67-ac0e3befccf1";
+    public final static String CLIENTSECRET = "O.GIGj9uk/FLinMNgGh8+aJnrDAP7T+8";
+    public final static String TENANT = "f535a890-cd9a-4331-88f6-3c188ce19127";
+
+
     public final static String REDIRECTURI = "overSearch://auth";
-    public final static String[] SCOPES = {"User.Read"};
+    public final static String[] SCOPES = {"https://graph.microsoft.com/.default"};
 }

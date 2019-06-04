@@ -43,14 +43,12 @@ public class ClientCredentialProvider extends BaseAuthentication implements IAut
     @Override
     public void authenticateRequest(IHttpRequest request) {
         String accessToken = getAcccessToken();
-        System.out.println("2. ###################" + accessToken);
         request.addHeader(Constants.AUTHORIZATION_HEADER, Constants.BEARER + accessToken);
     }
 
     @Override
     public Request authenticateRequest(Request request) {
         String accessToken = getAcccessToken();
-        System.out.println("2. ##################" + accessToken);
         return request.newBuilder().addHeader(Constants.AUTHORIZATION_HEADER, Constants.BEARER + accessToken).build();
     }
 
@@ -62,9 +60,7 @@ public class ClientCredentialProvider extends BaseAuthentication implements IAut
                 accessToken = getResponse().getAccessToken();
             } else {
                 OAuthClientRequest authRequest = getTokenRequestMessage();
-                System.out.println("after oauthrequest: " + authRequest.getBody());
                 accessToken = getAccessTokenNewRequest(authRequest);
-                System.out.println("1. ####################################################################################################" + accessToken);
             }
         } catch (Exception e) {
             e.printStackTrace();

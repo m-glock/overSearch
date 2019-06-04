@@ -60,7 +60,6 @@ public class BaseAuthentication {
             scopeString.append(" ");
         }
         String str = scopeString.toString().substring(0, scopeString.length() - 1);
-        System.out.println("Scopes 2: " + str + "test");
         return str;
     }
 
