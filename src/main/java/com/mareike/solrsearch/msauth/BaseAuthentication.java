@@ -59,7 +59,9 @@ public class BaseAuthentication {
             scopeString.append(s);
             scopeString.append(" ");
         }
-        return scopeString.toString();
+        String str = scopeString.toString().substring(0, scopeString.length() - 1);
+        System.out.println("Scopes 2: " + str + "test");
+        return str;
     }
 
     protected String getAccessTokenSilent()
@@ -79,7 +81,6 @@ public class BaseAuthentication {
                 if(this.clientSecret != null) {
                     token.setClientSecret(this.clientSecret);
                 }
-
                 OAuthClientRequest request = token.buildBodyMessage();
                 OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
                 this.startTime = System.currentTimeMillis();
@@ -88,6 +89,7 @@ public class BaseAuthentication {
             }
             else return response.getAccessToken();
         } catch (Exception e) {
+            System.out.println("error caught");
             e.printStackTrace();
         }
         return null;
