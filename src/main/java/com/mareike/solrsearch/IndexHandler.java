@@ -8,17 +8,23 @@ import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
 import org.apache.solr.common.util.NamedList;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class IndexHandler {
 
     private SolrInstance solr;
     private String configName = "localDocs";
     private String collectionURL;
+    private ArrayList<String> excludedDir;
 
     public IndexHandler(SolrInstance inst){
         solr = inst;
+        excludedDir = new ArrayList<>();
+
+        //TODO: exception handling
         try{
             createIndex();
         } catch(IOException io){
@@ -34,6 +40,7 @@ public class IndexHandler {
         //TODO: check that colection name does not already exist
         final CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(solr.getCollectionName(), configName, 1, 1);
 
+        //TODO: exception handling
         try{
             NamedList resp = solr.client.request(req);
             System.out.println("response: " + resp.toString());
@@ -49,7 +56,18 @@ public class IndexHandler {
         }finally{
             solr.client.commit();
         }
+    }
 
+    public boolean addExcludedDir(String dirName){
+        boolean success = excludedDir.add(dirName);
+        return success;
+    }
+
+    public boolean removeExcludedDir(String dirName){
+        boolean success = false;
+        if(excludedDir.contains(dirName))
+            success = excludedDir.remove(dirName);
+        return success;
     }
 
     public void indexFiles(String path) throws IOException, SolrServerException{
@@ -59,6 +77,8 @@ public class IndexHandler {
 
         request = addFilesToRequest(folder, request);
         //req.setParam("literal.id", "doc1");
+
+        //TODO: exception handling
         try{
             NamedList resp = solr.client.request(request);
             System.out.println(resp.toString());
@@ -74,17 +94,26 @@ public class IndexHandler {
         }
     }
 
-    private ContentStreamUpdateRequest addFilesToRequest(File folder, ContentStreamUpdateRequest request) throws IOException{
-        File[] listOfFiles = folder.listFiles();
+    private ContentStreamUpdateRequest addFilesToRequest(final File folder, ContentStreamUpdateRequest request) throws IOException{
+        File[] listOfFiles = folder.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                System.out.println("folder name: " + folder.getName());
+                if(folder.getName().equals("folder3")){
+                    return false;
+                }
+                return true;
+            }
+        });
         if(listOfFiles!= null) {
             for (File file : listOfFiles) {
-                //out.println("Name: " + file.getName() + ": " + file.getAbsolutePath());
-                if (file.isDirectory()) {
-                    //out.println("going into directory");
-                    request = addFilesToRequest(file, request);
-                }else{
-                    //out.println("File: " + file.getName() + " and content type: " + getContentType(file));
+                System.out.println("Name: " + file.getName() + ": " + file.getAbsolutePath());
+                if (file.isFile()) {
+                    System.out.println("File: " + file.getName() + " and content type: " + getContentType(file));
                     request.addFile(file, getContentType(file));
+                }else{
+                    System.out.println("going into directory");
+                    request = addFilesToRequest(file, request);
                 }
             }
         }
@@ -116,6 +145,8 @@ public class IndexHandler {
         return type;
     }
 
+
+    //TODO: check for changes in directories, needs to be done async
     private void findNewFiles(){
 
     }
