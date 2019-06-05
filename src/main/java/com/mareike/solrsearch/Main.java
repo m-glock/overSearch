@@ -26,33 +26,7 @@ public class Main {
         IndexHandler handler = new IndexHandler(solr);
         handler.indexFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");*/
 
-        //authenticate with MS Graph
-        ClientCredentialProvider authProvider = new ClientCredentialProvider(
-                CLIENTID,
-                Arrays.asList(SCOPES),
-                CLIENTSECRET,
-                TENANT,
-                NationalCloud.Global
-        );
-
-        final IGraphServiceClient graphClient = GraphServiceClient.builder().authenticationProvider(authProvider).buildClient();
-
-
-        //get users
-        graphClient.users().buildRequest().get(new ICallback<IUserCollectionPage>() {
-            @Override
-            public void success(IUserCollectionPage iUserCollectionPage) {
-                System.out.println("Success!");
-                List<User> users = iUserCollectionPage.getCurrentPage();
-                for(User user : users){
-                    System.out.println("Found user: " + user.displayName);
-                }
-            }
-            @Override
-            public void failure(ClientException ex) {
-                System.out.println("failed :(");
-            }
-        });
+        
 
 
         /*HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
