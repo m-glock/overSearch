@@ -25,6 +25,7 @@ public class SolrInstance {
 
     private void firstInit(){
         //TODO: start solr as a service and add the config file
+        //TODO: check if Solr is running on provided URL. If this is not the case, show message that Solr is down and how to install it?
     }
     
     private void startClient(){

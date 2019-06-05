@@ -63,7 +63,7 @@ public class UIExample extends javax.swing.JFrame {
                 System.out.println("in Action listener of ms connection");
                 List<User> users = solr.msConnector.getUsers();
                 for(User user : users){
-                    System.out.println("User found: " + user);
+                    System.out.println("User found: " + user.displayName);
                 }
             }
         });
