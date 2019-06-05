@@ -1,5 +1,6 @@
 package com.mareike.solrsearch;
 
+import com.mareike.solrsearch.UIExample;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,17 +20,14 @@ import static com.mareike.solrsearch.msauth.Constants.*;
 
 
 public class Main {
-
+    
     public static void main(String[] args) throws IOException, SolrServerException {
 
         /*SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs");
         IndexHandler handler = new IndexHandler(solr);
         handler.indexFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");*/
 
-        
-
-
-        /*HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
+               /*HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
 
         System.out.println("before query");
         Query query = new Query();
@@ -47,6 +45,44 @@ public class Main {
                 }
             }
         }*/
+        
+        setLookAndFeel();
 
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                UIExample ex = new UIExample();
+                ex.setVisible(true);
+                System.out.println("In runnable");
+                
+                
+            }
+        });
+
+    }
+    
+    public static void setLookAndFeel(){
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(UIExample.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(UIExample.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(UIExample.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(UIExample.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
     }
 }
