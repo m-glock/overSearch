@@ -25,10 +25,10 @@ public class UIExample extends javax.swing.JFrame {
      */
     public UIExample() {
         initComponents();
-        createActionListeners();
+        createActionListeners(this);
     }
     
-    private void createActionListeners(){
+    private void createActionListeners(final UIExample ex){
         connectToSolr.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,6 +67,15 @@ public class UIExample extends javax.swing.JFrame {
                 }
             }
         });
+        
+        /*newFrame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ex.getContentPane().removeAll();
+                ex.validate();
+                //repaint();
+            }
+        });*/
     }
 
     /**
@@ -78,81 +87,95 @@ public class UIExample extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        searchBar = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        searchResults = new javax.swing.JTextArea();
-        solrConnection = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         connectToSolr = new javax.swing.JButton();
-        documentsIndexed = new javax.swing.JLabel();
         indexDocuments = new javax.swing.JButton();
-        microsoftAccount = new javax.swing.JLabel();
         connectWithMicrosoft = new javax.swing.JButton();
+        newFrame = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        searchBar.setText("search");
-
-        searchResults.setColumns(20);
-        searchResults.setRows(5);
-        jScrollPane1.setViewportView(searchResults);
-
-        solrConnection.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        solrConnection.setText("no connection to Solr");
-
         connectToSolr.setText("connect to Solr");
-
-        documentsIndexed.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        documentsIndexed.setText("0 documents indexed");
 
         indexDocuments.setText("index documents");
 
-        microsoftAccount.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        microsoftAccount.setText("no microsoft account detected");
-
         connectWithMicrosoft.setText("connect with Microsoft");
+
+        newFrame.setText("jButton1");
+
+        jButton1.setText("jButton1");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(connectToSolr)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(indexDocuments)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(connectWithMicrosoft)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(newFrame)
+                .addContainerGap(101, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(connectToSolr)
+                    .addComponent(indexDocuments)
+                    .addComponent(connectWithMicrosoft)
+                    .addComponent(newFrame)
+                    .addComponent(jButton1))
+                .addContainerGap(628, Short.MAX_VALUE))
+        );
+
+        jButton2.setText("jButton2");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 821, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 673, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jButton2)
+                    .addContainerGap(628, Short.MAX_VALUE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(connectToSolr)
-                            .addComponent(solrConnection))
-                        .addGap(191, 191, 191)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(documentsIndexed)
-                            .addComponent(indexDocuments))
-                        .addGap(235, 235, 235)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(connectWithMicrosoft)
-                            .addComponent(microsoftAccount))
-                        .addGap(0, 353, Short.MAX_VALUE))
-                    .addComponent(searchBar))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(solrConnection)
-                    .addComponent(documentsIndexed)
-                    .addComponent(microsoftAccount))
-                .addGap(94, 94, 94)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(connectToSolr)
-                    .addComponent(indexDocuments)
-                    .addComponent(connectWithMicrosoft))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
-                .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,12 +185,11 @@ public class UIExample extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton connectToSolr;
     private javax.swing.JButton connectWithMicrosoft;
-    private javax.swing.JLabel documentsIndexed;
     private javax.swing.JButton indexDocuments;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel microsoftAccount;
-    private javax.swing.JTextField searchBar;
-    private javax.swing.JTextArea searchResults;
-    private javax.swing.JLabel solrConnection;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton newFrame;
     // End of variables declaration//GEN-END:variables
 }

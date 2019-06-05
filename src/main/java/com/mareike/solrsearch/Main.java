@@ -39,8 +39,6 @@ public class Main {
                 UIExample ex = new UIExample();
                 ex.setVisible(true);
                 System.out.println("In runnable");
-                
-                
             }
         });
 
