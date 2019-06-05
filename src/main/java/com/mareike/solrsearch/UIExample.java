@@ -1,7 +1,10 @@
 package com.mareike.solrsearch;
 
+import com.microsoft.graph.models.extensions.User;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -51,6 +54,17 @@ public class UIExample extends javax.swing.JFrame {
                     
                 }
                 
+            }
+        });
+
+        connectWithMicrosoft.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("in Action listener of ms connection");
+                List<User> users = solr.msConnector.getUsers();
+                for(User user : users){
+                    System.out.println("User found: " + user);
+                }
             }
         });
     }

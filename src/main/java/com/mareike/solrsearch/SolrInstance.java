@@ -2,10 +2,12 @@ package com.mareike.solrsearch;
 
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 
+
 public class SolrInstance {
 
-    private final IndexHandler handler;
     public HttpSolrClient client;
+    public MicrosoftConnector msConnector;
+    private final IndexHandler handler;
     private final String urlString;
     private String collectionName;
     
@@ -18,6 +20,7 @@ public class SolrInstance {
         //createIndexHandler();
         startClient();
         handler = new IndexHandler(this);
+        msConnector = new MicrosoftConnector();
     }
 
     private void firstInit(){
@@ -29,7 +32,7 @@ public class SolrInstance {
     }
     
     public void createIndex(){
-        //TODO: eeds to be async, in a new thread or need a loading spinner while indexing files
+        //TODO: needs to be async, in a new thread or need a loading spinner while indexing files
         try{
             System.out.println("Index handler is null: " + (handler == null));
             handler.indexFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");
@@ -40,7 +43,7 @@ public class SolrInstance {
         
     }
     
-    public Boolean checkConnection(){
+    public Boolean checkSolrConnection(){
         
         return true;
     }

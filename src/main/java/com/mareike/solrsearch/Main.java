@@ -1,22 +1,7 @@
 package com.mareike.solrsearch;
 
-import com.mareike.solrsearch.UIExample;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-
-import com.mareike.solrsearch.msauth.*;
-import com.microsoft.graph.authentication.IAuthenticationProvider;
-import com.microsoft.graph.concurrency.ICallback;
-import com.microsoft.graph.core.ClientException;
-import com.microsoft.graph.models.extensions.IGraphServiceClient;
-import com.microsoft.graph.models.extensions.User;
-import com.microsoft.graph.requests.extensions.*;
 import org.apache.solr.client.solrj.SolrServerException;
-
-import static com.mareike.solrsearch.msauth.Constants.*;
 
 
 public class Main {
