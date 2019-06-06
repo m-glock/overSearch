@@ -31,17 +31,32 @@ public class Main {
             }
         }*/
                
-        setLookAndFeel();
+               
+        /*setLookAndFeel();
 
-        /* Create and display the form */
+        //Create and display the form
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 UIHandler ex = new UIHandler();
                 ex.setVisible(true);
                 System.out.println("In runnable");
             }
-        });
+        });*/
 
+    }
+    
+    public static void chooseFiles(File folder, int indent){
+        //File drive = new File("C:");
+        for(File file : folder.listFiles()){
+            String st = "";
+            if(file.isDirectory()){
+                for (int i = 0; i < indent; i++) {
+                    st += "--";
+                }
+                System.out.println(st + " " + file.getName());
+                chooseFiles(file, indent++);
+            }
+        }
     }
     
     public static void setLookAndFeel(){

@@ -10,7 +10,6 @@ import org.apache.solr.common.util.NamedList;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class IndexHandler {
