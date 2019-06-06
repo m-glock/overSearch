@@ -1,18 +1,16 @@
 package com.mareike.solrsearch;
 
 import java.io.*;
+import java.io.File;
+import java.util.List;
+
 import org.apache.solr.client.solrj.SolrServerException;
 
 
 public class Main {
     
     public static void main(String[] args) throws IOException, SolrServerException {
-
-        /*SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs");
-        IndexHandler handler = new IndexHandler(solr);
-        handler.indexFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");*/
-
-               /*HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
+        /*HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
 
         System.out.println("before query");
         Query query = new Query();
@@ -31,7 +29,17 @@ public class Main {
             }
         }*/
                
-               
+
+        MicrosoftConnector con = new MicrosoftConnector();
+        List<String> filePaths = con.getAllFiles();
+
+
+        /*for(String st : filePaths){
+
+        }*/
+
+
+
         /*setLookAndFeel();
 
         //Create and display the form
