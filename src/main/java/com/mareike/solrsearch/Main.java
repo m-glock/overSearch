@@ -30,13 +30,13 @@ public class Main {
                 }
             }
         }*/
-        
+               
         setLookAndFeel();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                UIExample ex = new UIExample();
+                UIHandler ex = new UIHandler();
                 ex.setVisible(true);
                 System.out.println("In runnable");
             }
