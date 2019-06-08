@@ -1,15 +1,13 @@
 package com.mareike.solrsearch;
 
-import java.io.*;
 import java.io.File;
-import java.util.List;
-
-import org.apache.solr.client.solrj.SolrServerException;
 
 
 public class Main {
     
-    public static void main(String[] args) throws IOException, SolrServerException {
+    public static void main(String[] args){
+
+        //TODO: add this to QueryHandler
         /*HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
 
         System.out.println("before query");
@@ -28,10 +26,12 @@ public class Main {
                 }
             }
         }*/
-               
+        
 
-        MicrosoftConnector con = new MicrosoftConnector();
-        List<String> filePaths = con.getAllFiles();
+
+        //TODO: find better way to access files
+        //MicrosoftConnector con = new MicrosoftConnector();
+        //List<String> filePaths = con.getAllFiles();
 
 
         /*for(String st : filePaths){
@@ -40,16 +40,18 @@ public class Main {
 
 
 
-        /*setLookAndFeel();
+
+        //TODO: UI handling
+        setLookAndFeel();
 
         //Create and display the form
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                UIHandler ex = new UIHandler();
+                UIExample ex = new UIExample();
                 ex.setVisible(true);
                 System.out.println("In runnable");
             }
-        });*/
+        });
 
     }
     

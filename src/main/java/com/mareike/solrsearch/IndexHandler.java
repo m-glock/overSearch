@@ -5,6 +5,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
+import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.util.NamedList;
 
 import java.io.File;
@@ -20,6 +21,8 @@ public class IndexHandler {
     private ArrayList<String> excludedDir;
 
     public IndexHandler(SolrInstance inst){
+        System.out.println("create index handler");
+
         solr = inst;
         excludedDir = new ArrayList<>();
 
@@ -27,11 +30,11 @@ public class IndexHandler {
         try{
             createIndex();
         } catch(IOException io){
-
+            System.out.println("IOException message: " + io.getMessage());
         } catch(SolrServerException serv){
-
+            System.out.println("SolrServerException message: " + serv.getMessage());
         } catch (Exception e){
-
+            System.out.println("UnknownException message: " + e.getMessage());
         }
     }
 
@@ -47,11 +50,11 @@ public class IndexHandler {
             solr.client.setBaseURL(collectionURL);
             System.out.println("base url: " + solr.client.getBaseURL());
         } catch(IOException e){
-            System.out.println("IOException message: ");
+            System.out.println("IOException message: "+ e.getMessage());
         }catch(HttpSolrClient.RemoteSolrException e){
-            System.out.println("RemoteSolrException message: ");
+            System.out.println("RemoteSolrException message: "+ e.getMessage());
         }catch(Exception e){
-            System.out.println("UnknownException message: ");
+            System.out.println("UnknownException message: " + e.getMessage());
         }finally{
             solr.client.commit();
         }
@@ -69,7 +72,7 @@ public class IndexHandler {
         return success;
     }
 
-    public void indexFiles(String path) throws IOException, SolrServerException{
+    public void indexLocalFiles(String path) throws IOException, SolrServerException{
         //TODO: how to find out if there are new files?
         File folder = new File(path);
         ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
@@ -91,6 +94,34 @@ public class IndexHandler {
         }finally{
             solr.client.commit();
         }
+    }
+
+    public void indexSharepointFiles(){
+        System.out.println("starting to index SharePoint files");
+        try{
+            for(int i=0;i<10;++i) {
+                SolrInputDocument doc = createSolrDocs(i);
+                solr.client.add(doc);
+                if(i%100==0) solr.client.commit();  // periodically flush
+            }
+            solr.client.commit();
+        }catch(SolrServerException ex){
+            System.out.println("IOException message: " + ex.getMessage());
+        }catch(IOException ex){
+            System.out.println("RemoteSolrException message: " + ex.getMessage());
+        }catch(Exception ex){
+            System.out.println("UnknownException message: " + ex.getMessage());
+        }
+    }
+
+    private SolrInputDocument createSolrDocs(int i){
+        SolrInputDocument doc = new SolrInputDocument();
+        doc.addField("id", "book-" + i);
+        doc.addField("name", "The Legend of the Hobbit part " + i);
+        doc.addField("stream_size","1");
+        doc.addField("content_type", "text/plain");
+        doc.addField("content_type", "text/plain");
+        return doc;
     }
 
     private ContentStreamUpdateRequest addFilesToRequest(final File folder, ContentStreamUpdateRequest request) throws IOException{

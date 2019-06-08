@@ -36,8 +36,10 @@ public class SolrInstance {
         //TODO: needs to be async, in a new thread or need a loading spinner while indexing files
         try{
             System.out.println("Index handler is null: " + (handler == null));
-            handler.indexFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");
-            System.out.println("Index filled");
+            handler.indexLocalFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");
+            System.out.println("Private files finished.");
+            handler.indexSharepointFiles();
+            System.out.println("SharePoint files finished. Index filled");
         } catch(Exception e){
             System.out.println(e.getMessage());
         }
