@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class IndexHandler {
 
     private SolrInstance solr;
-    private String configName = "_default";
+    private String configName = "localDocs";
     private String collectionURL;
     private ArrayList<String> excludedDir;
 

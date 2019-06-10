@@ -32,7 +32,7 @@ public class UIExample extends javax.swing.JFrame {
         connectToSolr.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                solr = new SolrInstance("http://40.114.210.42:8983/solr", "localDocs2");
+                solr = new SolrInstance("http://40.114.210.42:8983/solr", "localDocs");
                 System.out.println("solr instance created");
                 System.out.println("with collection name: " + solr.getCollectionName());
                 System.out.println("and Solr URL: " + solr.getSolrUrl());
