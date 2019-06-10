@@ -55,7 +55,7 @@ public class Main {
 
     }
     
-    public static void chooseFiles(File folder, int indent){
+    /*public static void chooseFiles(File folder, int indent){
         //File drive = new File("C:");
         for(File file : folder.listFiles()){
             String st = "";
@@ -67,7 +67,7 @@ public class Main {
                 chooseFiles(file, indent++);
             }
         }
-    }
+    }*/
     
     public static void setLookAndFeel(){
         /* Set the Nimbus look and feel */
