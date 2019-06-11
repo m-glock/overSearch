@@ -5,6 +5,7 @@ import com.mareike.solrsearch.msauth.Constants;
 import com.mareike.solrsearch.msauth.NationalCloud;
 import com.microsoft.graph.models.extensions.*;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
+import com.microsoft.graph.requests.extensions.IListCollectionPage;
 import com.microsoft.graph.requests.extensions.IUserCollectionPage;
 
 import java.util.ArrayList;
@@ -56,6 +57,17 @@ public class MicrosoftConnector {
                 }
             }
         }
+
+        /*List<Site> sites = graphClient.sites().buildRequest().get().getCurrentPage();
+        for(Site site : sites) {
+            String id = site.id;
+            List<com.microsoft.graph.models.extensions.List> lists = graphClient.sites(id).lists().buildRequest().get().getCurrentPage();
+            for(com.microsoft.graph.models.extensions.List list : lists){
+                List<ListItem> item = list.items.getCurrentPage();
+
+            }
+        }*/
+
         return urlList;
     }
 }
