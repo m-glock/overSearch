@@ -3,6 +3,9 @@ package com.mareike.solrsearch;
 import javax.swing.*;
 import javax.swing.tree.TreeModel;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class Main {
@@ -28,20 +31,32 @@ public class Main {
                 }
             }
         }*/
-        
+
+        // parse arguments
+        if (args.length == 0 || args.length > 2)
+            WatchDirectory.usage();
+        boolean recursive = false;
+        int dirArg = 0;
+        if (args[0].equals("-r")) {
+            if (args.length < 2)
+                WatchDirectory.usage();
+            recursive = true;
+            dirArg++;
+        }
+
+        // register directory and process its events
+        Path dir = Paths.get(args[dirArg]);
+        try {
+            new WatchDirectory(dir, recursive).processEvents();
+        }catch(IOException io){
+            
+        }
 
 
-        //TODO: find better way to access files
-        //MicrosoftConnector con = new MicrosoftConnector();
-        //List<String> filePaths = con.getAllFiles();
 
 
-        /*for(String st : filePaths){
 
-        }*/
-
-
-        JFrame frame = new JFrame();
+        /*JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         FileSystemModel fileSystemDataModel = new FileSystemModel();
@@ -50,7 +65,7 @@ public class Main {
         frame.add(scrollPane);
 
         frame.setSize(800, 600);
-        frame.setVisible(true);
+        frame.setVisible(true);*/
 
 
 
@@ -67,20 +82,6 @@ public class Main {
         });*/
 
     }
-    
-    /*public static void chooseFiles(File folder, int indent){
-        //File drive = new File("C:");
-        for(File file : folder.listFiles()){
-            String st = "";
-            if(file.isDirectory()){
-                for (int i = 0; i < indent; i++) {
-                    st += "--";
-                }
-                System.out.println(st + " " + file.getName());
-                chooseFiles(file, indent++);
-            }
-        }
-    }*/
     
     public static void setLookAndFeel(){
         /* Set the Nimbus look and feel */
