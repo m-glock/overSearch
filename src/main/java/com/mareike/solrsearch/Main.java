@@ -1,5 +1,7 @@
 package com.mareike.solrsearch;
 
+import javax.swing.*;
+import javax.swing.tree.TreeModel;
 import java.io.File;
 
 
@@ -39,10 +41,21 @@ public class Main {
         }*/
 
 
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        FileSystemModel fileSystemDataModel = new FileSystemModel();
+        JTree tree = new JTree(fileSystemDataModel);
+        JScrollPane scrollPane = new JScrollPane(tree);
+        frame.add(scrollPane);
+
+        frame.setSize(800, 600);
+        frame.setVisible(true);
+
 
 
         //TODO: UI handling
-        setLookAndFeel();
+        /*setLookAndFeel();
 
         //Create and display the form
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -51,7 +64,7 @@ public class Main {
                 ex.setVisible(true);
                 System.out.println("In runnable");
             }
-        });
+        });*/
 
     }
     
