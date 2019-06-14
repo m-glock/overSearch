@@ -47,7 +47,7 @@ public class WatchDirectory {
     private final WatchService watcher;
     private final Map<WatchKey,Path> keys;
     private final boolean recursive;
-    private boolean trace = false;
+    private boolean trace;
 
     @SuppressWarnings("unchecked")
     static <T> WatchEvent<T> cast(WatchEvent<?> event) {
@@ -59,7 +59,7 @@ public class WatchDirectory {
      */
     public WatchDirectory(Path dir, boolean recursive) throws IOException {
         this.watcher = FileSystems.getDefault().newWatchService();
-        this.keys = new HashMap<WatchKey,Path>();
+        this.keys = new HashMap<>();
         this.recursive = recursive;
 
         if (recursive) {
@@ -145,7 +145,9 @@ public class WatchDirectory {
                 Path child = dir.resolve(name);
 
                 // print out event
+                //TODO: This child (or rather the path) is needed -> call indexing from here?
                 System.out.format("%s: %s\n", event.kind().name(), child);
+
 
                 // if directory is created, and watching recursively, then
                 // register it and its sub-directories

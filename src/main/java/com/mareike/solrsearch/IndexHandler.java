@@ -11,6 +11,8 @@ import org.apache.solr.common.util.NamedList;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class IndexHandler {
@@ -93,6 +95,7 @@ public class IndexHandler {
             System.out.println("UnknownException message: ");
         }finally{
             solr.client.commit();
+            createDirectoryWatcher(path, true);
         }
     }
 
@@ -125,6 +128,9 @@ public class IndexHandler {
     }
 
     private ContentStreamUpdateRequest addFilesToRequest(final File folder, ContentStreamUpdateRequest request) throws IOException{
+        //TODO: include/exclude directories
+        //if file in list of allowed -> continue with recursion
+        //else break/return
         File[] listOfFiles = folder.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -176,8 +182,11 @@ public class IndexHandler {
     }
 
 
-    //TODO: check for changes in directories, needs to be done async
-    private void findNewFiles(){
-
+    //TODO: is it async? change it to private later on
+    public static void createDirectoryWatcher(String path, Boolean recursive) throws IOException{
+        // register directory and process its events
+        //TODO: exception handling
+        Path dir = Paths.get(path);
+        new WatchDirectory(dir, recursive).processEvents();
     }
 }

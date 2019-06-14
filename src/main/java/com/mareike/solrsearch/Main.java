@@ -32,30 +32,33 @@ public class Main {
             }
         }*/
 
-        // parse arguments
-        if (args.length == 0 || args.length > 2)
-            WatchDirectory.usage();
-        boolean recursive = false;
-        int dirArg = 0;
-        if (args[0].equals("-r")) {
-            if (args.length < 2)
-                WatchDirectory.usage();
-            recursive = true;
-            dirArg++;
-        }
+        //TODO: UI handling
+        /*setLookAndFeel();
 
-        // register directory and process its events
-        Path dir = Paths.get(args[dirArg]);
+        //Create and display the form
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                UIExample ex = new UIExample();
+                ex.setVisible(true);
+                System.out.println("In runnable");
+                //cannot close normal window
+
+            }
+        });*/
+
+
+        //TODO: put it in thread so that it run next to the UI
+        //TODO: find out where loop or whatever is...
         try {
-            new WatchDirectory(dir, recursive).processEvents();
+            IndexHandler.createDirectoryWatcher("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2", true);
         }catch(IOException io){
-            
+
         }
 
 
 
 
-
+        //TODO: make directory selector work
         /*JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -69,17 +72,7 @@ public class Main {
 
 
 
-        //TODO: UI handling
-        /*setLookAndFeel();
 
-        //Create and display the form
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                UIExample ex = new UIExample();
-                ex.setVisible(true);
-                System.out.println("In runnable");
-            }
-        });*/
 
     }
     
