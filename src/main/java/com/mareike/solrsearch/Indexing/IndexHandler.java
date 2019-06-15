@@ -1,7 +1,6 @@
 package com.mareike.solrsearch.Indexing;
 
 import com.mareike.solrsearch.SolrInstance;
-import com.mareike.solrsearch.Indexing.WatchDirectory;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;

@@ -1,7 +1,6 @@
 package com.mareike.solrsearch.UI;
 
 import com.mareike.solrsearch.SolrInstance;
-import com.microsoft.graph.models.extensions.User;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,21 +61,9 @@ public class UIExample extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("in Action listener of ms connection");
-                List<String> users = solr.msConnector.getAllFiles();
-                /*for(User user : users){
-                    System.out.println("User found: " + user.displayName);
-                }*/
+                List<String> fileURLs = solr.msConnector.getAllFiles();
             }
         });
-        
-        /*newFrame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ex.getContentPane().removeAll();
-                ex.validate();
-                //repaint();
-            }
-        });*/
     }
 
     /**

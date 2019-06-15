@@ -1,7 +1,7 @@
 package com.mareike.solrsearch;
 
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import com.mareike.solrsearch.IndexHandler;
+import com.mareike.solrsearch.Indexing.IndexHandler;
 
 
 public class SolrInstance {

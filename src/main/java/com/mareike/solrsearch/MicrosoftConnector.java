@@ -1,13 +1,13 @@
 package com.mareike.solrsearch;
 
-import com.mareike.solrsearch.msauth.ClientCredentialProvider;
-import com.mareike.solrsearch.msauth.Constants;
-import com.mareike.solrsearch.msauth.NationalCloud;
+import com.mareike.solrsearch.MSAuth.ClientCredentialProvider;
+import com.mareike.solrsearch.MSAuth.Constants;
+import com.mareike.solrsearch.MSAuth.NationalCloud;
 import com.microsoft.graph.models.extensions.*;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
-import com.microsoft.graph.requests.extensions.IListCollectionPage;
-import com.microsoft.graph.requests.extensions.IUserCollectionPage;
+import org.apache.commons.io.IOUtils;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,40 +34,30 @@ public class MicrosoftConnector {
         );
     }
 
-    public List<User> getUsers(){
-        //get users
-        List<User> users;
-        IUserCollectionPage page = graphClient.users().buildRequest().get();
-        users = page.getCurrentPage();
-        return users;
-    }
-
     public List<String> getAllFiles(){
         ArrayList<String> urlList = new ArrayList<>();
         List<Group> groups = graphClient.groups().buildRequest().get().getCurrentPage();
 
-        for(Group group : groups){
+        for(Group group : groups) {
             String id = group.id;
-            List<Drive> drives = graphClient.groups(id).drives().buildRequest().get().getCurrentPage();
-            for(Drive drive : drives){
-                String driveID = drive.id;
-                List<DriveItem> driveItems = graphClient.groups(id).drives(driveID).root().children().buildRequest().get().getCurrentPage();
-                for(DriveItem item : driveItems){
-                    urlList.add(item.webUrl);
+            List<ListItem> items = graphClient.groups(id).sites("root").lists("Documents").items().buildRequest().get().getCurrentPage();
+            System.out.println("Size: " + items.size());
+            for(ListItem item : items){
+                urlList.add(item.webUrl);
+                //TODO: get content from files
+                InputStream content = graphClient.groups(id).sites("root").lists("Documents").items(item.id).driveItem().content().buildRequest().get();
+                StringWriter writer = new StringWriter();
+                String encoding = "UTF8";
+                try {
+                    IOUtils.copy(content, writer, encoding);
+                    System.out.println(writer.toString());
+                } catch(IOException io) {
+                    System.out.println("IOException");
                 }
             }
         }
 
-        /*List<Site> sites = graphClient.sites().buildRequest().get().getCurrentPage();
-        for(Site site : sites) {
-            String id = site.id;
-            List<com.microsoft.graph.models.extensions.List> lists = graphClient.sites(id).lists().buildRequest().get().getCurrentPage();
-            for(com.microsoft.graph.models.extensions.List list : lists){
-                List<ListItem> item = list.items.getCurrentPage();
-
-            }
-        }*/
-
+        System.out.println("end of retrieving sp files");
         return urlList;
     }
 }

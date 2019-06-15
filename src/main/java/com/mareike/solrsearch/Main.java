@@ -1,11 +1,6 @@
 package com.mareike.solrsearch;
 
-import javax.swing.*;
-import javax.swing.tree.TreeModel;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import com.mareike.solrsearch.UI.UIExample;
 
 
 public class Main {
@@ -33,7 +28,7 @@ public class Main {
         }*/
 
         //TODO: UI handling
-        /*setLookAndFeel();
+        setLookAndFeel();
 
         //Create and display the form
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -44,16 +39,16 @@ public class Main {
                 //cannot close normal window
 
             }
-        });*/
+        });
 
 
         //TODO: put it in thread so that it run next to the UI
         //TODO: find out where loop or whatever is...
-        try {
+        /*try {
             IndexHandler.createDirectoryWatcher("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2", true);
         }catch(IOException io){
 
-        }
+        }*/
 
 
 
