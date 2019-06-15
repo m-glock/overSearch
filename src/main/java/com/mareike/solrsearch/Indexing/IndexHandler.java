@@ -8,6 +8,8 @@ import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
 import org.apache.solr.common.util.NamedList;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.WatchEvent;
 import java.util.List;
 
 public class IndexHandler {
@@ -78,5 +80,19 @@ public class IndexHandler {
             if(i%100==0) solr.client.commit();  // periodically flush
          }
          solr.client.commit();*/
+    }
+
+    //TODO: index or update files depending on event from watcher; depends on where watcher is called and how directory chooser is working
+    public static void updateFiles(WatchEvent event, Path path){
+        System.out.println("In index handler: " + event.kind());
+        switch(event.kind().name()){
+            case "ENTRY_CREATE":
+                //indexLocalFiles(path.toString());
+            case "ENTRY_MODIFY":
+
+            case "ENTRY_DELETE":
+
+            default:
+        }
     }
 }

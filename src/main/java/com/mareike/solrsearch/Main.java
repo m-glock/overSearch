@@ -1,6 +1,10 @@
 package com.mareike.solrsearch;
 
+import com.mareike.solrsearch.Indexing.WatchDirectory;
 import com.mareike.solrsearch.UI.UIExample;
+
+import java.io.IOException;
+import java.nio.file.Paths;
 
 public class Main {
     
@@ -26,8 +30,12 @@ public class Main {
             }
         }*/
 
+
+
+
+
         //TODO: UI handling
-        setLookAndFeel();
+        /*setLookAndFeel();
 
 
         //Create and display the form
@@ -37,7 +45,16 @@ public class Main {
                 ex.setVisible(true);
                 System.out.println("In runnable");
             }
-        });
+        });*/
+
+
+            try{
+                Thread t = new Thread(new WatchDirectory(Paths.get("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2"), true));
+                t.start();
+            }catch(IOException io){
+                System.out.println("IOException: " + io.getMessage());
+            }
+
 
         //TODO: make directory selector work
         /*JFrame frame = new JFrame();

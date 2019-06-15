@@ -150,11 +150,11 @@ public class WatchDirectory implements Runnable{
                 // Context for directory entry event is the file name of entry
                 WatchEvent<Path> ev = cast(event);
                 Path name = ev.context();
-                System.out.println("path name: " + name);
                 Path child = dir.resolve(name);
 
                 // print out event
                 //TODO: This child (or rather the path) is needed -> call indexing from here?
+                IndexHandler.updateFiles(event, child);
                 System.out.format("%s: %s\n", event.kind().name(), child);
 
 
