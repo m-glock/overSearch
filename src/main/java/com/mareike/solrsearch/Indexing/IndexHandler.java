@@ -60,6 +60,7 @@ public class IndexHandler {
         request = indexer.addFilesToRequest(folder, request);
         NamedList resp = solr.client.request(request);
         //TODO: do something if http error is returned
+        //TODO: handle case when file is not of expected type and cannot be indexed
         System.out.println(resp.toString());
         solr.client.commit();
     }
@@ -72,6 +73,7 @@ public class IndexHandler {
             System.out.println("URL of file is: " + url);
         }
         //TODO: index files
+        //TODO: handle case when file is not of expected type and cannot be indexed
         //TODO: do something if http error is returned
 
         /*for(int i=0;i<10;++i) {

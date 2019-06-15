@@ -1,26 +1,20 @@
 package com.mareike.solrsearch.Indexing;
 
 import java.io.File;
-import java.util.Enumeration;
 import java.util.Vector;
-
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
-import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 
-class FileSystemModel implements TreeModel {
+public class FileSystemModel implements TreeModel {
     private String root; // The root identifier
 
     private Vector listeners; // Declare the listeners vector
 
     public FileSystemModel() {
 
-        root = System.getProperty("user.home");
+        root = "C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16";
         File tempFile = new File(root);
         root = tempFile.getParent();
 
@@ -84,7 +78,7 @@ class FileSystemModel implements TreeModel {
         // Does Nothing!
     }
 
-    public void fireTreeNodesInserted(TreeModelEvent e) {
+    /*public void fireTreeNodesInserted(TreeModelEvent e) {
         Enumeration listenerCount = listeners.elements();
         while (listenerCount.hasMoreElements()) {
             TreeModelListener listener = (TreeModelListener) listenerCount.nextElement();
@@ -117,5 +111,5 @@ class FileSystemModel implements TreeModel {
             listener.treeStructureChanged(e);
         }
 
-    }
+    }*/
 }

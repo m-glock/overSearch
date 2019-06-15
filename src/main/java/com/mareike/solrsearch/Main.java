@@ -1,8 +1,13 @@
 package com.mareike.solrsearch;
 
+import com.mareike.solrsearch.Indexing.FileSystemModel;
 import com.mareike.solrsearch.Indexing.WatchDirectory;
 import com.mareike.solrsearch.UI.UIExample;
 
+import javax.swing.*;
+import javax.swing.tree.TreeSelectionModel;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -35,7 +40,7 @@ public class Main {
 
 
         //TODO: UI handling
-        /*setLookAndFeel();
+        setLookAndFeel();
 
 
         //Create and display the form
@@ -45,28 +50,19 @@ public class Main {
                 ex.setVisible(true);
                 System.out.println("In runnable");
             }
-        });*/
+        });
 
 
-            try{
-                Thread t = new Thread(new WatchDirectory(Paths.get("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2"), true));
-                t.start();
-            }catch(IOException io){
-                System.out.println("IOException: " + io.getMessage());
-            }
+        //TODO: finish up directory watcher
+        /*try{
+            Thread t = new Thread(new WatchDirectory(Paths.get("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2"), true));
+            t.start();
+         }catch(IOException io){
+            System.out.println("IOException: " + io.getMessage());
+         }*/
 
 
         //TODO: make directory selector work
-        /*JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        FileSystemModel fileSystemDataModel = new FileSystemModel();
-        JTree tree = new JTree(fileSystemDataModel);
-        JScrollPane scrollPane = new JScrollPane(tree);
-        frame.add(scrollPane);
-
-        frame.setSize(800, 600);
-        frame.setVisible(true);*/
 
     }
     

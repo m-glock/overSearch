@@ -1,9 +1,15 @@
 package com.mareike.solrsearch.UI;
 
+import com.mareike.solrsearch.Indexing.FileSystemModel;
 import com.mareike.solrsearch.SolrInstance;
-
+import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreeSelectionModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.List;
 
 /*
@@ -48,6 +54,21 @@ public class UIExample extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 List<String> fileURLs = solr.msConnector.getAllFiles();
+            }
+        });
+
+        jButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DirectoryChooser frame = new DirectoryChooser();
+                //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                JScrollPane scrollPane = new JScrollPane(frame.tree);
+                frame.add(scrollPane);
+
+                frame.setSize(800, 600);
+                frame.setVisible(true);
+
             }
         });
     }
