@@ -1,4 +1,4 @@
-package com.mareike.solrsearch.msauth;
+package com.mareike.solrsearch.MSAuth;
 import java.util.List;
 
 import org.apache.oltu.oauth2.client.OAuthClient;

@@ -1,5 +1,7 @@
-package com.mareike.solrsearch;
+package com.mareike.solrsearch.Indexing;
 
+import com.mareike.solrsearch.SolrInstance;
+import com.mareike.solrsearch.Indexing.WatchDirectory;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 public class IndexHandler {
 
@@ -95,13 +98,25 @@ public class IndexHandler {
             System.out.println("UnknownException message: ");
         }finally{
             solr.client.commit();
-            createDirectoryWatcher(path, true);
+            //createDirectoryWatcher(path, true);
         }
     }
 
-    public void indexSharepointFiles(){
+    public void indexSharepointFiles() throws IOException, SolrServerException {
         System.out.println("starting to index SharePoint files");
-        try{
+        List<String> fileURLs = solr.msConnector.getAllFiles();
+        //ArrayList<File> files = new ArrayList<>();
+        ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
+        for(String url : fileURLs){
+            File file = new File(url);
+            request.addFile(file, getContentType(file));
+        }
+        System.out.println("before sending request");
+        NamedList resp = solr.client.request(request);
+        System.out.println("response: " + resp.toString());
+        solr.client.commit();
+
+        /*try{
             for(int i=0;i<10;++i) {
                 SolrInputDocument doc = createSolrDocs(i);
                 solr.client.add(doc);
@@ -114,7 +129,8 @@ public class IndexHandler {
             System.out.println("RemoteSolrException message: " + ex.getMessage());
         }catch(Exception ex){
             System.out.println("UnknownException message: " + ex.getMessage());
-        }
+        }*/
+
     }
 
     private SolrInputDocument createSolrDocs(int i){

@@ -1,4 +1,4 @@
-package com.mareike.solrsearch;
+package com.mareike.solrsearch.UI;
 
 import java.awt.CardLayout;
 import java.awt.Color;

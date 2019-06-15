@@ -1,4 +1,4 @@
-package com.mareike.solrsearch;
+package com.mareike.solrsearch.Indexing;
 
 import java.io.File;
 import java.util.Enumeration;

@@ -1,21 +1,13 @@
 package com.mareike.solrsearch;
 
-import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
-
 import java.io.*;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class Test {
 
-    public Test(){
-
-    }
+    public Test(){ }
 
     public void placeholder() throws IOException, SolrServerException {
         //try this again when the authentication is working
@@ -51,26 +43,5 @@ public class Test {
         out.close();
 
 
-    }
-
-    public static HashMap<String, String> getNamesAndDates(File[] listOfFiles){
-        HashMap<String, String> fileList = new HashMap<>();
-
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                String fileName = listOfFiles[i].getName();
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                String modifiedDate = sdf.format(listOfFiles[i].lastModified());
-
-                fileList.put(fileName, modifiedDate);
-            } else if (listOfFiles[i].isDirectory()) {
-                String fileName = "Directory: " + listOfFiles[i].getName();
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                String modifiedDate = sdf.format(listOfFiles[i].lastModified());
-
-                fileList.put(fileName, modifiedDate);
-            }
-        }
-        return fileList;
     }
 }

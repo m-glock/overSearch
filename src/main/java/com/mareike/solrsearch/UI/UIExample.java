@@ -1,5 +1,6 @@
-package com.mareike.solrsearch;
+package com.mareike.solrsearch.UI;
 
+import com.mareike.solrsearch.SolrInstance;
 import com.microsoft.graph.models.extensions.User;
 
 import java.awt.event.ActionEvent;
@@ -32,7 +33,7 @@ public class UIExample extends javax.swing.JFrame {
         connectToSolr.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                solr = new SolrInstance("http://40.114.210.42:8983/solr", "localDocs");
+                solr = new SolrInstance("http://localhost:8983/solr", "testtesttest");
                 System.out.println("solr instance created");
                 System.out.println("with collection name: " + solr.getCollectionName());
                 System.out.println("and Solr URL: " + solr.getSolrUrl());
@@ -61,10 +62,10 @@ public class UIExample extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("in Action listener of ms connection");
-                List<User> users = solr.msConnector.getUsers();
-                for(User user : users){
+                List<String> users = solr.msConnector.getAllFiles();
+                /*for(User user : users){
                     System.out.println("User found: " + user.displayName);
-                }
+                }*/
             }
         });
         

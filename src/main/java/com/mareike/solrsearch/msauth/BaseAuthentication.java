@@ -1,4 +1,4 @@
-package com.mareike.solrsearch.msauth;
+package com.mareike.solrsearch.MSAuth;
 
 import java.util.HashMap;
 import java.util.List;
