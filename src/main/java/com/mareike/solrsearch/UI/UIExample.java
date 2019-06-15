@@ -33,9 +33,6 @@ public class UIExample extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 solr = new SolrInstance("http://localhost:8983/solr", "testtesttest");
-                System.out.println("solr instance created");
-                System.out.println("with collection name: " + solr.getCollectionName());
-                System.out.println("and Solr URL: " + solr.getSolrUrl());
                 //something like ping the solr instance to see if it is there?
             }
         });
@@ -43,25 +40,14 @@ public class UIExample extends javax.swing.JFrame {
         indexDocuments.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                System.out.println("in Action listener after index handler");
-                try{
-                    System.out.println("in try");
-                    //System.out.println("Index handler is null: " + (solr.handler == null));
-                    solr.createIndex();
-                    //solr.handler.indexFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");
-                } catch(Exception ex){
-                    System.out.println(ex.getMessage());
-                    
-                }
-                
+                solr.fillIndex();
             }
         });
 
         connectWithMicrosoft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("in Action listener of ms connection");
-                //List<String> fileURLs = solr.msConnector.getAllFiles();
+                List<String> fileURLs = solr.msConnector.getAllFiles();
             }
         });
     }

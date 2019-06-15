@@ -1,7 +1,10 @@
 package com.mareike.solrsearch;
 
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import com.mareike.solrsearch.Indexing.IndexHandler;
+
+import java.io.IOException;
 
 
 public class SolrInstance {
@@ -19,6 +22,7 @@ public class SolrInstance {
         firstInit();
         startClient();
         handler = new IndexHandler(this);
+        //TODO: does solr instance need a connector?
         msConnector = new MicrosoftConnector();
     }
 
@@ -27,22 +31,24 @@ public class SolrInstance {
         //TODO: check if Solr is running on provided URL. If this is not the case, show message that Solr is down and how to install it?
     }
     
-    private void startClient(){
-        client = new HttpSolrClient.Builder(urlString).build();
-    }
-    
-    public void createIndex(){
-        //TODO: needs to be async, in a new thread or need a loading spinner while indexing files
+    private void startClient(){ client = new HttpSolrClient.Builder(urlString).build(); }
+
+    //TODO: exception handling
+    public void fillIndex(){
         String filePath = "C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2";
         try{
-            System.out.println("Index handler is null: " + (handler == null));
             handler.indexLocalFiles(filePath);
-            System.out.println("Private files finished.");
-            //handler.indexSharepointFiles();
-            //System.out.println("SharePoint files finished. Index filled");
-            handler.addDirectorWatcher(filePath);
+            handler.indexSharepointFiles();
+            //TODO: remove after watcher is created in filehandler
+            //handler.addDirectorWatcher(filePath);
+        } catch(IOException io){
+            System.out.println("IOException: " + io.getMessage());
+        } catch(SolrServerException serv){
+            System.out.println("SolrServerException: " + serv.getMessage());
+        } catch(HttpSolrClient.RemoteSolrException rem){
+            System.out.println("RemoteSolrException: " + rem.getMessage());
         } catch(Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("Unknown Exception: " + e.getMessage());
         }
     }
     
@@ -50,7 +56,7 @@ public class SolrInstance {
         
         return true;
     }
-    
+
     public String getSolrUrl(){
         return urlString;
     }

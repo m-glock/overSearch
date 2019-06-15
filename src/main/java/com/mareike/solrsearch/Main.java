@@ -1,11 +1,6 @@
 package com.mareike.solrsearch;
 
-import com.mareike.solrsearch.Indexing.WatchDirectory;
 import com.mareike.solrsearch.UI.UIExample;
-
-import java.io.IOException;
-import java.nio.file.Paths;
-
 
 public class Main {
     

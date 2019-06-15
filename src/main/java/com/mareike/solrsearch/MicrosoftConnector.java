@@ -5,9 +5,6 @@ import com.mareike.solrsearch.MSAuth.Constants;
 import com.mareike.solrsearch.MSAuth.NationalCloud;
 import com.microsoft.graph.models.extensions.*;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
-import org.apache.commons.io.IOUtils;
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +42,7 @@ public class MicrosoftConnector {
             for(ListItem item : items){
                 urlList.add(item.webUrl);
                 //TODO: get content from files
-                InputStream content = graphClient.groups(id).sites("root").lists("Documents").items(item.id).driveItem().content().buildRequest().get();
+                /*InputStream content = graphClient.groups(id).sites("root").lists("Documents").items(item.id).driveItem().content().buildRequest().get();
                 StringWriter writer = new StringWriter();
                 String encoding = "UTF8";
                 try {
@@ -53,10 +50,9 @@ public class MicrosoftConnector {
                     System.out.println(writer.toString());
                 } catch(IOException io) {
                     System.out.println("IOException");
-                }
+                }*/
             }
         }
-
         System.out.println("end of retrieving sp files");
         return urlList;
     }
