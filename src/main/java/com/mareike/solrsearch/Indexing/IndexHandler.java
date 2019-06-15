@@ -10,10 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.WatchEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class IndexHandler {
 
+    private ArrayList<String> directoryPaths;
     private SolrInstance solr;
     private String configName = "localDocs";
     private String collectionURL;
@@ -23,6 +25,7 @@ public class IndexHandler {
         System.out.println("create index handler");
         solr = inst;
         indexer = new FileHandler();
+        directoryPaths = new ArrayList<>();
 
         //TODO: exception handling
         try{
@@ -97,4 +100,10 @@ public class IndexHandler {
             default:
         }
     }
+
+    public void addIncludedDirectory(String path){
+        directoryPaths.add(path);
+    }
+
+    public ArrayList<String> getIncludedDirectories(){return directoryPaths;}
 }

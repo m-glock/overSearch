@@ -5,6 +5,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import com.mareike.solrsearch.Indexing.IndexHandler;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class SolrInstance {
@@ -64,4 +65,6 @@ public class SolrInstance {
     public String getCollectionName(){
         return collectionName;
     }
+
+    public IndexHandler getIndexHandler(){return handler;}
 }
