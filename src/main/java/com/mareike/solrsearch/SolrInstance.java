@@ -17,8 +17,6 @@ public class SolrInstance {
         urlString = solrURL;
         collectionName = collection;
         firstInit();
-        //might not happen in initial setup in the end
-        //createIndexHandler();
         startClient();
         handler = new IndexHandler(this);
         msConnector = new MicrosoftConnector();
@@ -35,16 +33,17 @@ public class SolrInstance {
     
     public void createIndex(){
         //TODO: needs to be async, in a new thread or need a loading spinner while indexing files
+        String filePath = "C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2";
         try{
             System.out.println("Index handler is null: " + (handler == null));
-            handler.indexLocalFiles("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2");
+            handler.indexLocalFiles(filePath);
             System.out.println("Private files finished.");
-            handler.indexSharepointFiles();
-            System.out.println("SharePoint files finished. Index filled");
+            //handler.indexSharepointFiles();
+            //System.out.println("SharePoint files finished. Index filled");
+            handler.addDirectorWatcher(filePath);
         } catch(Exception e){
             System.out.println(e.getMessage());
         }
-        
     }
     
     public Boolean checkSolrConnection(){

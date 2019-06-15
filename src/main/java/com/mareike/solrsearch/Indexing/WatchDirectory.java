@@ -42,7 +42,7 @@ import java.util.*;
  * Example to watch a directory (or tree) for changes to files.
  */
 
-public class WatchDirectory {
+public class WatchDirectory implements Runnable{
 
     private final WatchService watcher;
     private final Map<WatchKey,Path> keys;
@@ -72,6 +72,13 @@ public class WatchDirectory {
 
         // enable trace after initial registration
         this.trace = true;
+    }
+
+
+    @Override
+    public void run() {
+        System.out.println("in run");
+        processEvents();
     }
 
     /**
@@ -115,6 +122,7 @@ public class WatchDirectory {
      * Process all events for keys queued to the watcher
      */
     void processEvents() {
+       System.out.println("in process");
         for (;;) {
 
             // wait for key to be signalled
@@ -142,6 +150,7 @@ public class WatchDirectory {
                 // Context for directory entry event is the file name of entry
                 WatchEvent<Path> ev = cast(event);
                 Path name = ev.context();
+                System.out.println("path name: " + name);
                 Path child = dir.resolve(name);
 
                 // print out event
@@ -179,4 +188,5 @@ public class WatchDirectory {
         System.err.println("usage: java WatchDir [-r] dir");
         System.exit(-1);
     }
+
 }

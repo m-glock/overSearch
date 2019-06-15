@@ -1,6 +1,10 @@
 package com.mareike.solrsearch;
 
+import com.mareike.solrsearch.Indexing.WatchDirectory;
 import com.mareike.solrsearch.UI.UIExample;
+
+import java.io.IOException;
+import java.nio.file.Paths;
 
 
 public class Main {
@@ -30,28 +34,15 @@ public class Main {
         //TODO: UI handling
         setLookAndFeel();
 
+
         //Create and display the form
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 UIExample ex = new UIExample();
                 ex.setVisible(true);
                 System.out.println("In runnable");
-                //cannot close normal window
-
             }
         });
-
-
-        //TODO: put it in thread so that it run next to the UI
-        //TODO: find out where loop or whatever is...
-        /*try {
-            IndexHandler.createDirectoryWatcher("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2", true);
-        }catch(IOException io){
-
-        }*/
-
-
-
 
         //TODO: make directory selector work
         /*JFrame frame = new JFrame();
@@ -64,10 +55,6 @@ public class Main {
 
         frame.setSize(800, 600);
         frame.setVisible(true);*/
-
-
-
-
 
     }
     

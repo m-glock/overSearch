@@ -12,7 +12,6 @@ import org.apache.solr.common.util.NamedList;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,20 +63,18 @@ public class IndexHandler {
         }
     }
 
-    public boolean addExcludedDir(String dirName){
-        boolean success = excludedDir.add(dirName);
-        return success;
-    }
-
-    public boolean removeExcludedDir(String dirName){
-        boolean success = false;
-        if(excludedDir.contains(dirName))
-            success = excludedDir.remove(dirName);
-        return success;
+    //TODO: make sure that only allowed directories are being watched
+    //TODO: check that it does not interfere with any other action
+    public void addDirectorWatcher(String path){
+        try{
+            Thread t = new Thread(new WatchDirectory(Paths.get(path), true));
+            t.start();
+        }catch(IOException io){
+            System.out.println("IOException: " + io.getMessage());
+        }
     }
 
     public void indexLocalFiles(String path) throws IOException, SolrServerException{
-        //TODO: how to find out if there are new files?
         File folder = new File(path);
         ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
 
@@ -90,11 +87,11 @@ public class IndexHandler {
             System.out.println(resp.toString());
         }
         catch(IOException e){
-            System.out.println("IOException message: ");
+            System.out.println("IOException message: " + e.getMessage());
         }catch(HttpSolrClient.RemoteSolrException e){
-            System.out.println("RemoteSolrException message: ");
+            System.out.println("RemoteSolrException message: " + e.getMessage());
         }catch(Exception e){
-            System.out.println("UnknownException message: ");
+            System.out.println("UnknownException message: " + e.getMessage());
         }finally{
             solr.client.commit();
             //createDirectoryWatcher(path, true);
@@ -194,14 +191,5 @@ public class IndexHandler {
                 break;
         }
         return type;
-    }
-
-
-    //TODO: is it async? change it to private later on
-    public static void createDirectoryWatcher(String path, Boolean recursive) throws IOException{
-        // register directory and process its events
-        //TODO: exception handling
-        Path dir = Paths.get(path);
-        new WatchDirectory(dir, recursive).processEvents();
     }
 }

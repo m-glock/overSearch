@@ -61,7 +61,7 @@ public class UIExample extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("in Action listener of ms connection");
-                List<String> fileURLs = solr.msConnector.getAllFiles();
+                //List<String> fileURLs = solr.msConnector.getAllFiles();
             }
         });
     }
