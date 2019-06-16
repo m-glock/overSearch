@@ -56,7 +56,7 @@ public class FileSystemModel implements TreeModel {
     }
 
     /**
-     *  stolen from http://developer.classpath.org/doc/javax/swing/tree/DefaultTreeModel-source.html
+     *  from http://developer.classpath.org/doc/javax/swing/tree/DefaultTreeModel-source.html
      *
      * <p>
      * Invoke this method if you've modified the TreeNodes upon which this model
@@ -86,7 +86,7 @@ public class FileSystemModel implements TreeModel {
     }
 
     /**
-     * stolen from http://developer.classpath.org/doc/javax/swing/tree/DefaultTreeModel-source.html
+     * from http://developer.classpath.org/doc/javax/swing/tree/DefaultTreeModel-source.html
      *
      * fireTreeStructureChanged
      *

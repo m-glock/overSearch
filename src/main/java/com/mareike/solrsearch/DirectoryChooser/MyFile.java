@@ -1,6 +1,8 @@
 package com.mareike.solrsearch.DirectoryChooser;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
 
 public class MyFile {
     private final File mFile;
@@ -14,7 +16,18 @@ public class MyFile {
     }
 
     public MyFile[] listFiles() {
-        final File[] files = mFile.listFiles();
+        //only directories are listed and hidden directories are excluded
+        //TODO: check that every directory can be opened and closed
+        final File[] files = mFile.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                if (pathname.isHidden()) {
+                    System.out.println("found a hidden file");
+                    return false;
+                }
+                return pathname.isDirectory();
+            }
+        });
         if (files == null)
             return null;
         if (files.length < 1)
@@ -25,6 +38,7 @@ public class MyFile {
             final File f = files[i];
             ret[i] = new MyFile(f);
         }
+
         return ret;
     }
 

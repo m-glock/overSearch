@@ -14,9 +14,10 @@ public class DirectoryChooser extends JFrame {
     private IndexHandler handler;
     private MultiSelectionTree tree;
 
+    //TODO: if node is selected, select all children as well?
     public DirectoryChooser(IndexHandler h){
         handler = h;
-        final MyFile mf = new MyFile(new File("C:\\"));
+        final MyFile mf = new MyFile(new File("C:\\Users"));
         final FileSystemModel model = new FileSystemModel(mf);
         tree = new MultiSelectionTree(model);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
@@ -29,7 +30,7 @@ public class DirectoryChooser extends JFrame {
         Container pane = getContentPane();
         JScrollPane scrollPane = new JScrollPane(tree);
         pane.add(scrollPane, BorderLayout.CENTER);
-        JButton button = new JButton("bla");
+        JButton button = new JButton("Select");
         //TODO: figure out size
         button.setSize(new Dimension(200, 100));
         pane.add(button, BorderLayout.PAGE_END);
@@ -37,9 +38,9 @@ public class DirectoryChooser extends JFrame {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //code to save paths in index handler and close frame
                 TreePath[] paths = tree.getSelectionPaths();
                 for(TreePath path : paths){
-                    System.out.println("Path: " + path.getLastPathComponent().toString());
                     handler.addIncludedDirectory(path.getLastPathComponent().toString());
                 }
                 dispose();
