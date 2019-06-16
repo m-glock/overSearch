@@ -58,11 +58,8 @@ public class UIExample extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("in action performed");
-                System.out.println("Solr is null: " + (solr == null));
                 IndexHandler handler = solr.getIndexHandler();
-                System.out.println("After index handler. it is null: " + (handler == null));
                 DirectoryChooser frame = new DirectoryChooser(handler);
-                System.out.println("after directory chooser");
                 frame.setSize(800, 600);
                 frame.setVisible(true);
             }
