@@ -6,41 +6,35 @@ import com.mareike.solrsearch.UI.UIExample;
 
 import javax.swing.*;
 import javax.swing.tree.TreeSelectionModel;
-import java.awt.*;
+//import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class Main {
     
     public static void main(String[] args){
 
         //TODO: add this to QueryHandler
-        /*HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
-
-        System.out.println("before query");
+        /*
         Query query = new Query();
-        System.out.println("after query");
         //happens later from UI
         query.addParameter(ParameterType.QUERY, "singleton");
         query.addParameter(ParameterType.FIELDlIST, "id,start");
 
-        SolrDocumentList results = query.sendQuery(solr);
+        SolrDocumentList results = query.sendQuery(solr);*/
 
-        try (PrintWriter out = new PrintWriter("C:\\Users\\mareike\\Desktop\\filename.txt"))  {
-            if(!results.isEmpty()){
-                for(SolrDocument doc : results){
-                    out.println(doc.toString());
-                }
-            }
-        }*/
 
+        //TODO: get Sharepoint files
+        /*MicrosoftConnector msc = new MicrosoftConnector();
+        List<String> files = msc.getAllFiles();*/
 
 
 
 
         //TODO: UI handling
-        setLookAndFeel();
+        /*setLookAndFeel();
 
 
         //Create and display the form
@@ -50,7 +44,7 @@ public class Main {
                 ex.setVisible(true);
                 System.out.println("In runnable");
             }
-        });
+        });*/
 
 
         //TODO: finish up directory watcher
@@ -60,9 +54,6 @@ public class Main {
          }catch(IOException io){
             System.out.println("IOException: " + io.getMessage());
          }*/
-
-
-        //TODO: make directory selector work
 
     }
     

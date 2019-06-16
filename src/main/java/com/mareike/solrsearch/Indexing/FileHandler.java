@@ -50,7 +50,6 @@ public class FileHandler {
         doc.addField("name", "The Legend of the Hobbit part " + i);
         doc.addField("stream_size","1");
         doc.addField("content_type", "text/plain");
-        doc.addField("content_type", "text/plain");
         return doc;
     }
 
