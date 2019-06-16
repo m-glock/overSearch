@@ -43,7 +43,7 @@ public class UIExample extends javax.swing.JFrame {
         connectToSolr.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                solr = new SolrInstance("http://localhost:8983/solr", "testtesttest");
+                solr = new SolrInstance("http://localhost:8983/solr", "test");
                 //something like ping the solr instance to see if it is there?
             }
         });

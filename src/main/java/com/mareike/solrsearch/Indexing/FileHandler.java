@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FileHandler {
 
@@ -34,6 +36,9 @@ public class FileHandler {
                 System.out.println("Name: " + file.getName() + ": " + file.getAbsolutePath());
                 if (file.isFile()) {
                     System.out.println("File: " + file.getName() + " and content type: " + getContentType(file));
+                    //TODO: find way to add fields for every file
+                    //request.setParam("literal.id", file.getPath());
+                    //request.setParam("literal.name", file.getName());
                     request.addFile(file, getContentType(file));
                 }else{
                     System.out.println("going into directory");
@@ -44,12 +49,25 @@ public class FileHandler {
         return request;
     }
 
-    public SolrInputDocument createSolrDocs(int i){
+    public static SolrInputDocument createSolrDocs(){
+        //TODO: format date if necessary
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //SimpleDateFormat timeFormat = new SimpleDateFormat("kk:mm:ss");
+        //Date today = new Date();
+        //String date = dateFormat.format(today);
+        //String time = timeFormat.format(today);
+        //"formatted date: " + date + "T" + time + "Z"
+
         SolrInputDocument doc = new SolrInputDocument();
-        doc.addField("id", "book-" + i);
-        doc.addField("name", "The Legend of the Hobbit part " + i);
+        doc.addField("id", "1"); //path -> with teamsite?
+        //doc.addField("page_count","15");
+        //doc.addField("word_count", "115");
         doc.addField("stream_size","1");
-        doc.addField("content_type", "text/plain");
+        doc.addField("content_type", "pdf");
+        doc.addField("last_modified", "2016-07-18T16:44:00Z");
+        doc.addField("creator", "Mareike");
+        doc.addField("creation_date", "2016-07-19T16:44:00Z");
+        doc.addField("_text_", "test test");
         return doc;
     }
 

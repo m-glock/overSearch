@@ -6,10 +6,6 @@ import com.mareike.solrsearch.MSAuth.Constants;
 import com.mareike.solrsearch.MSAuth.NationalCloud;
 import com.microsoft.graph.models.extensions.*;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
-import org.apache.commons.io.IOUtils;
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.extractor.WordExtractor;
-import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

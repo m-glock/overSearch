@@ -5,6 +5,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.client.solrj.request.ContentStreamUpdateRequest;
+import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.util.NamedList;
 import java.io.File;
 import java.io.IOException;
@@ -70,21 +71,18 @@ public class IndexHandler {
 
     public void indexSharepointFiles() throws IOException, SolrServerException {
         System.out.println("starting to index SharePoint files");
-        List<String> fileURLs = solr.msConnector.getAllFiles();
+        /*List<String> fileURLs = solr.msConnector.getAllFiles();
         //ContentStreamUpdateRequest request = new ContentStreamUpdateRequest("/update/extract");
         for(String url : fileURLs){
             System.out.println("URL of file is: " + url);
-        }
+        }*/
         //TODO: index files
         //TODO: handle case when file is not of expected type and cannot be indexed
         //TODO: do something if http error is returned
-
-        /*for(int i=0;i<10;++i) {
-            SolrInputDocument doc = FileHandler.createSolrDocs(i);
-            solr.client.add(doc);
-            if(i%100==0) solr.client.commit();  // periodically flush
-         }
-         solr.client.commit();*/
+        SolrInputDocument doc = FileHandler.createSolrDocs();
+        solr.client.add(doc);
+        solr.client.commit();
+        System.out.println("finished SharePoint files indexing");
     }
 
     //TODO: index or update files depending on event from watcher; depends on where watcher is called and how directory chooser is working
