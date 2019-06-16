@@ -1,6 +1,4 @@
-package com.mareike.solrsearch.UI;
-
-import com.mareike.solrsearch.Indexing.FileSystemModel;
+package com.mareike.solrsearch.DirectoryChooser;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;

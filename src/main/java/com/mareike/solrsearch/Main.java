@@ -1,18 +1,9 @@
 package com.mareike.solrsearch;
 
-import com.mareike.solrsearch.Indexing.FileSystemModel;
-import com.mareike.solrsearch.Indexing.WatchDirectory;
 import com.mareike.solrsearch.UI.UIExample;
 
-import javax.swing.*;
-import javax.swing.tree.TreeSelectionModel;
 //import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+
 
 public class Main {
     
@@ -35,7 +26,7 @@ public class Main {
 
 
         //TODO: UI handling
-        /*setLookAndFeel();
+        setLookAndFeel();
 
 
         //Create and display the form
@@ -45,7 +36,11 @@ public class Main {
                 ex.setVisible(true);
                 System.out.println("In runnable");
             }
-        });*/
+        });
+
+
+
+
 
 
         //TODO: finish up directory watcher

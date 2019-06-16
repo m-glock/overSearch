@@ -1,19 +1,11 @@
 package com.mareike.solrsearch.UI;
 
-import com.mareike.solrsearch.Indexing.FileSystemModel;
 import com.mareike.solrsearch.Indexing.IndexHandler;
 import com.mareike.solrsearch.SolrInstance;
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-import java.awt.*;
+import com.mareike.solrsearch.DirectoryChooser.DirectoryChooser;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 

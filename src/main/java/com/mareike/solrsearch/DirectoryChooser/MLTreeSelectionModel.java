@@ -1,10 +1,9 @@
-package com.mareike.solrsearch.UI;
+package com.mareike.solrsearch.DirectoryChooser;
 
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
 
 public class MLTreeSelectionModel extends DefaultTreeSelectionModel {
-    private static final long serialVersionUID = -4270031800448415780L;
 
     @Override
     public void addSelectionPath(TreePath path) {
