@@ -28,17 +28,11 @@ public class UIExample extends javax.swing.JFrame {
      */
     public UIExample() {
         initComponents();
+        solr = new SolrInstance("http://localhost:8983/solr", "test");
         createActionListeners(this);
     }
     
     private void createActionListeners(final UIExample ex){
-        connectToSolr.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                solr = new SolrInstance("http://localhost:8983/solr", "test");
-                //something like ping the solr instance to see if it is there?
-            }
-        });
         
         indexDocuments.addActionListener(new ActionListener(){
             @Override

@@ -16,7 +16,7 @@ public class DirectoryChooser extends JFrame {
 
     public DirectoryChooser(IndexHandler h){
         handler = h;
-        final MyFile mf = new MyFile(new File("C:\\Users\\mareike\\Documents\\Studium"));
+        final MyFile mf = new MyFile(new File("C:\\"));
         final FileSystemModel model = new FileSystemModel(mf);
         tree = new MultiSelectionTree(model);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
