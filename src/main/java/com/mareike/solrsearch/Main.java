@@ -1,12 +1,19 @@
 package com.mareike.solrsearch;
 
 import com.mareike.solrsearch.UI.UIExample;
+import okhttp3.Request;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.List;
 
 //import java.awt.*;
 
@@ -26,9 +33,32 @@ public class Main {
 
 
         //TODO: get Sharepoint files
-        /*MicrosoftConnector msc = new MicrosoftConnector();
-        List<String> files = msc.getAllFiles();*/
-        
+        MicrosoftConnector msc = new MicrosoftConnector();
+        List<String> files = msc.getAllFiles();
+        /*for(String st : files){
+            System.out.println(st);
+        }*/
+        try {
+            URL url = new URL("https://graph.microsoft.com/v1.0/groups/1c776fb9-0bc6-465c-a68d-2015fc852e34/sites/root/lists/Documents/items/1/DriveItem/content");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'GET' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+        }catch(Exception ex){
+            System.out.println("Exception: " + ex.getMessage());
+        }
+
 
 
         //TODO: UI handling
@@ -44,7 +74,10 @@ public class Main {
             }
         });*/
 
-        try{
+
+
+        //TODO: finish indexing function and clean up
+        /*try{
             URL url = new URL("http://localhost:7071/api/HttpTrigger-Java");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -67,7 +100,7 @@ public class Main {
 
         }catch(Exception prot){
             System.out.println("Protocol Exception: " + prot.getMessage());
-        }
+        }*/
 
 
 

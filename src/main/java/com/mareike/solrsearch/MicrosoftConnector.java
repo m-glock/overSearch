@@ -49,20 +49,8 @@ public class MicrosoftConnector {
                 urlList.add(item.webUrl);
                 //TODO: get content from files
 
-                File file = graphClient.groups(id).sites("root").lists("Documents").items(item.id).driveItem().buildRequest().get().file;
-                /*InputStream content = graphClient.groups(id).sites("root").lists("Documents").items(item.id).driveItem().content().buildRequest().get();
-                try {
-                    int i;
-                    char c;
-                    System.out.println("Characters printed:");
-                    while((i = content.read())!= -1) {
-                        c = (char)i;
-                        System.out.print(c);
-                    }
-                    content.close();
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }*/
+                InputStream stream = graphClient.groups(id).sites("root").lists("Documents").items(item.id).driveItem().content().buildRequest().get();
+
             }
         }
         System.out.println("end of retrieving sp files");
