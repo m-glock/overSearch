@@ -22,7 +22,7 @@ public class SolrInstance {
         collectionName = collection;
         firstInit();
         startClient();
-        handler = new IndexHandler(this);
+        handler = new IndexHandler();
         //TODO: does solr instance need a connector?
         msConnector = new MicrosoftConnector();
     }
@@ -37,7 +37,7 @@ public class SolrInstance {
     //TODO: exception handling
     public void fillIndex(){
         String filePath = "C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2";
-        try{
+        /*try{
             handler.indexLocalFiles(filePath);
             handler.indexSharepointFiles();
             //TODO: remove after watcher is created in filehandler
@@ -50,7 +50,7 @@ public class SolrInstance {
             System.out.println("RemoteSolrException: " + rem.getMessage());
         } catch(Exception e){
             System.out.println("Unknown Exception: " + e.getMessage());
-        }
+        }*/
     }
     
     public Boolean checkSolrConnection(){

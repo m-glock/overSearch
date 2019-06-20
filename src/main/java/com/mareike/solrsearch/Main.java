@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.List;
 
 //import java.awt.*;
@@ -33,11 +34,11 @@ public class Main {
 
 
         //TODO: get Sharepoint files
-        MicrosoftConnector msc = new MicrosoftConnector();
+        /*MicrosoftConnector msc = new MicrosoftConnector();
         List<String> files = msc.getAllFiles();
-        /*for(String st : files){
+        for(String st : files){
             System.out.println(st);
-        }*/
+        }
         try {
             URL url = new URL("https://graph.microsoft.com/v1.0/groups/1c776fb9-0bc6-465c-a68d-2015fc852e34/sites/root/lists/Documents/items/1/DriveItem/content");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -57,7 +58,7 @@ public class Main {
             in.close();
         }catch(Exception ex){
             System.out.println("Exception: " + ex.getMessage());
-        }
+        }*/
 
 
 
@@ -77,8 +78,11 @@ public class Main {
 
 
         //TODO: finish indexing function and clean up
-        /*try{
-            URL url = new URL("http://localhost:7071/api/HttpTrigger-Java");
+        try{
+            String path = "C:\\Users\\mareike\\Documents\\Studium\\8.Semester-SS19\\Bachelor\\english-words\\test files\\without query word";
+            path = path.replace(" ", "_");
+
+            URL url = new URL("http://localhost:7071/api/IndexFilesToSolr?name=" + path);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
@@ -100,7 +104,7 @@ public class Main {
 
         }catch(Exception prot){
             System.out.println("Protocol Exception: " + prot.getMessage());
-        }*/
+        }
 
 
 
