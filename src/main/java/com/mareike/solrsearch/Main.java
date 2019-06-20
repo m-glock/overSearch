@@ -1,5 +1,6 @@
 package com.mareike.solrsearch;
 
+import com.mareike.solrsearch.DirectoryChooser.DirectoryChooser;
 import com.mareike.solrsearch.UI.UIExample;
 import okhttp3.Request;
 import org.apache.http.HttpEntity;
@@ -7,8 +8,13 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.request.CollectionAdminRequest;
+import org.apache.solr.common.util.NamedList;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
@@ -60,6 +66,14 @@ public class Main {
             System.out.println("Exception: " + ex.getMessage());
         }*/
 
+        SolrInstance solr = new SolrInstance("http://localhost:8983/solr","localDocs4");
+
+
+        DirectoryChooser frame = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium/2.Semester-SS16/Info2");
+        frame.setSize(800, 600);
+        frame.setVisible(true);
+
+
 
 
         //TODO: UI handling
@@ -74,6 +88,8 @@ public class Main {
                 System.out.println("In runnable");
             }
         });*/
+
+
 
         //TODO: finish up directory watcher
         /*try{

@@ -1,28 +1,27 @@
 package com.mareike.solrsearch.DirectoryChooser;
 
-import com.mareike.solrsearch.Indexing.IndexHandler;
+import com.mareike.solrsearch.Indexer;
+
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 public class DirectoryChooser extends JFrame {
 
-    private IndexHandler handler;
     private MultiSelectionTree tree;
     private String basePath;
+    private Indexer indexer;
 
     //TODO: if node is selected, select all children as well?
-    public DirectoryChooser(IndexHandler h){
-        handler = h;
-        basePath = "C:/Users/mareike/Documents/Studium/2.Semester-SS16/Info2";
+    public DirectoryChooser(Indexer indexer, String basePath){
+        this.basePath = basePath;
+        this.indexer = indexer;
         final MyFile mf = new MyFile(new File(basePath));
         final FileSystemModel model = new FileSystemModel(mf);
         tree = new MultiSelectionTree(model);
@@ -47,7 +46,7 @@ public class DirectoryChooser extends JFrame {
                 //code to save paths in index handler and close frame
                 saveDirectories();
                 dispose();
-                indexFiles();
+                indexer.indexFiles();
             }
         });
     }
@@ -58,25 +57,7 @@ public class DirectoryChooser extends JFrame {
         String newPath = basePath.substring(0, endIndex+1);
         for(TreePath path : paths){
             String fullPath = buildPath(path);
-            handler.addIncludedDirectory(newPath + fullPath);
-        }
-    }
-
-    private void indexFiles(){
-        System.out.println("list from handler: ");
-        for(String path : handler.getDirectoryPaths()){
-            System.out.println(path);
-            path = path.replace(" ", "_");
-            try{
-                URL url = new URL("http://localhost:7071/api/IndexFilesToSolr?name=" + path);
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setRequestMethod("GET");
-                int responseCode = con.getResponseCode();
-                System.out.println("\nSending 'GET' request to URL : " + url);
-                System.out.println("Response Code : " + responseCode);
-            }catch(Exception prot){
-                System.out.println("Protocol Exception: " + prot.getClass().toString() + " and message " + prot.getMessage());
-            }
+            indexer.addDirectory(newPath + fullPath);
         }
     }
 
@@ -87,5 +68,14 @@ public class DirectoryChooser extends JFrame {
             fullPath = fullPath + pathElement + "/" ;
         }
         return fullPath;
+    }
+
+    public void addDirectoryWatcher(String path){
+        try{
+            Thread t = new Thread(new WatchDirectory(Paths.get(path), true));
+            t.start();
+        }catch(IOException io){
+            System.out.println("IOException: " + io.getMessage());
+        }
     }
 }

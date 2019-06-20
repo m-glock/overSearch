@@ -1,4 +1,4 @@
-package com.mareike.solrsearch.Indexing;
+package com.mareike.solrsearch.DirectoryChooser;
 
 /*
  * Copyright (c) 2008, 2010, Oracle and/or its affiliates. All rights reserved.
@@ -154,7 +154,7 @@ public class WatchDirectory implements Runnable{
 
                 // print out event
                 //TODO: This child (or rather the path) is needed -> call indexing from here?
-                IndexHandler.updateFiles(event, child);
+                updateFiles(event, child);
                 System.out.format("%s: %s\n", event.kind().name(), child);
 
 
@@ -181,6 +181,20 @@ public class WatchDirectory implements Runnable{
                     break;
                 }
             }
+        }
+    }
+
+    //TODO: index or update files depending on event from watcher; depends on where watcher is called and how directory chooser is working
+    public static void updateFiles(WatchEvent event, Path path){
+        System.out.println("In index handler: " + event.kind());
+        switch(event.kind().name()){
+            case "ENTRY_CREATE":
+                //indexLocalFiles(path.toString());
+            case "ENTRY_MODIFY":
+
+            case "ENTRY_DELETE":
+
+            default:
         }
     }
 

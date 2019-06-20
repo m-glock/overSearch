@@ -1,6 +1,5 @@
 package com.mareike.solrsearch.UI;
 
-import com.mareike.solrsearch.Indexing.IndexHandler;
 import com.mareike.solrsearch.SolrInstance;
 import com.mareike.solrsearch.DirectoryChooser.DirectoryChooser;
 
@@ -37,14 +36,14 @@ public class UIExample extends javax.swing.JFrame {
         indexDocuments.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                solr.fillIndex();
+                //solr.fillIndex();
             }
         });
 
         connectWithMicrosoft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<String> fileURLs = solr.msConnector.getAllFiles();
+                //List<String> fileURLs = solr.msConnector.getAllFiles();
             }
         });
     }
