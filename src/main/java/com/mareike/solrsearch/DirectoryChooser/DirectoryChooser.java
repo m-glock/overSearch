@@ -45,45 +45,39 @@ public class DirectoryChooser extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
-                TreePath[] paths = tree.getSelectionPaths();
-                int endIndex = basePath.lastIndexOf("/");
-                String newPath = basePath.substring(0, endIndex+1);
-                for(TreePath path : paths){
-                    String fullPath = buildPath(path);
-                    handler.addIncludedDirectory(newPath + fullPath);
-                }
+                saveDirectories();
                 dispose();
-                System.out.println("list from handler: ");
-                for(String path : handler.getDirectoryPaths()){
-                    System.out.println(path);
-                    path = path.replace(" ", "_");
-                    try{
-                        URL url = new URL("http://localhost:7071/api/IndexFilesToSolr?name=" + path);
-                        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                        con.setRequestMethod("GET");
-                        int responseCode = con.getResponseCode();
-                        System.out.println("\nSending 'GET' request to URL : " + url);
-                        System.out.println("Response Code : " + responseCode);
-
-                        BufferedReader in = new BufferedReader(
-                                new InputStreamReader(con.getInputStream()));
-                        String inputLine;
-                        StringBuffer response = new StringBuffer();
-
-                        while ((inputLine = in.readLine()) != null) {
-                            response.append(inputLine);
-                        }
-                        in.close();
-
-                        //print result
-                        System.out.println(response.toString());
-
-                    }catch(Exception prot){
-                        System.out.println("Protocol Exception: " + prot.getClass().toString() + " and message " + prot.getMessage());
-                    }
-                }
+                indexFiles();
             }
         });
+    }
+
+    private void saveDirectories(){
+        TreePath[] paths = tree.getSelectionPaths();
+        int endIndex = basePath.lastIndexOf("/");
+        String newPath = basePath.substring(0, endIndex+1);
+        for(TreePath path : paths){
+            String fullPath = buildPath(path);
+            handler.addIncludedDirectory(newPath + fullPath);
+        }
+    }
+
+    private void indexFiles(){
+        System.out.println("list from handler: ");
+        for(String path : handler.getDirectoryPaths()){
+            System.out.println(path);
+            path = path.replace(" ", "_");
+            try{
+                URL url = new URL("http://localhost:7071/api/IndexFilesToSolr?name=" + path);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+                int responseCode = con.getResponseCode();
+                System.out.println("\nSending 'GET' request to URL : " + url);
+                System.out.println("Response Code : " + responseCode);
+            }catch(Exception prot){
+                System.out.println("Protocol Exception: " + prot.getClass().toString() + " and message " + prot.getMessage());
+            }
+        }
     }
 
     private String buildPath(TreePath path){

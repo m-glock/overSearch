@@ -75,42 +75,6 @@ public class Main {
             }
         });*/
 
-
-
-        //TODO: finish indexing function and clean up
-        try{
-            String path = "C:\\Users\\mareike\\Documents\\Studium\\8.Semester-SS19\\Bachelor\\english-words\\test files\\without query word";
-            path = path.replace(" ", "_");
-
-            URL url = new URL("http://localhost:7071/api/IndexFilesToSolr?name=" + path);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
-
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            //print result
-            System.out.println(response.toString());
-
-        }catch(Exception prot){
-            System.out.println("Protocol Exception: " + prot.getMessage());
-        }
-
-
-
-
-
-
         //TODO: finish up directory watcher
         /*try{
             Thread t = new Thread(new WatchDirectory(Paths.get("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2"), true));
