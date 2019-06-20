@@ -1,8 +1,11 @@
 package com.mareike.solrsearch;
 
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.common.util.NamedList;
+
+import java.io.IOException;
 
 
 public class SolrInstance {
@@ -14,7 +17,7 @@ public class SolrInstance {
     private String collectionName;
     
 
-    public SolrInstance(String solrURL, String collection){
+    public SolrInstance(String solrURL, String collection) throws IOException, SolrServerException{
         urlString = solrURL;
         collectionName = collection;
 
@@ -30,18 +33,18 @@ public class SolrInstance {
         //TODO: check if Solr is running on provided URL. If this is not the case, show message that Solr is down and how to install it?
     }
     
-    private void startClient(){
+    private void startClient() throws IOException, SolrServerException {
         client = new HttpSolrClient.Builder(urlString).build();
         String configName = "localDocs";
         try{
             CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
             NamedList resp = client.request(req);
             System.out.println(resp.toString());
-            client.setBaseURL(client.getBaseURL() + "/" + collectionName);
-            System.out.println("Solr instance created with url: " + client.getBaseURL());
-        }catch(Exception ex){
-            System.out.println(ex.getClass().toString() + " with message: " + ex.getMessage());
+        }catch(HttpSolrClient.RemoteSolrException ex){
+            System.out.println("RemoteSolrException with message: " + ex.getMessage());
         }
+        client.setBaseURL(client.getBaseURL() + "/" + collectionName);
+        System.out.println("Solr instance created with url: " + client.getBaseURL());
     }
     
     public Boolean checkSolrConnection(){

@@ -66,12 +66,21 @@ public class Main {
             System.out.println("Exception: " + ex.getMessage());
         }*/
 
-        SolrInstance solr = new SolrInstance("http://localhost:8983/solr","localDocs4");
+        try {
+            SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs4");
+            DirectoryChooser frame = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium/2.Semester-SS16/Info2");
+            frame.setSize(800, 600);
+            frame.setVisible(true);
+        }catch(IOException io){
+            System.out.println("IOException: " + io.getMessage());
+        }catch(SolrServerException serv){
+            System.out.println("SolrServerException: " + serv.getMessage());
+        }catch(Exception e){
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+        }
 
 
-        DirectoryChooser frame = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium/2.Semester-SS16/Info2");
-        frame.setSize(800, 600);
-        frame.setVisible(true);
+
 
 
 

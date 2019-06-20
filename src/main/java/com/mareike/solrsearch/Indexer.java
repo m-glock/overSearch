@@ -1,6 +1,8 @@
 package com.mareike.solrsearch;
 
 import javax.swing.tree.TreePath;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Path;
@@ -23,7 +25,7 @@ public class Indexer {
         System.out.println("list from handler: ");
         for(String path : includedDirectories){
             System.out.println(path);
-            /*path = path.replace(" ", "_");
+            path = path.replace(" ", "_");
             try{
                 URL url = new URL("http://localhost:7071/api/IndexFilesToSolr?name=" + path);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -31,9 +33,18 @@ public class Indexer {
                 int responseCode = con.getResponseCode();
                 System.out.println("\nSending 'GET' request to URL : " + url);
                 System.out.println("Response Code : " + responseCode);
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
             }catch(Exception prot){
                 System.out.println("Protocol Exception: " + prot.getClass().toString() + " and message " + prot.getMessage());
-            }*/
+            }
         }
     }
 

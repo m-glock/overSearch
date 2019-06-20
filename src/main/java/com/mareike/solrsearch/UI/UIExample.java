@@ -2,9 +2,11 @@ package com.mareike.solrsearch.UI;
 
 import com.mareike.solrsearch.SolrInstance;
 import com.mareike.solrsearch.DirectoryChooser.DirectoryChooser;
+import org.apache.solr.client.solrj.SolrServerException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,15 @@ public class UIExample extends javax.swing.JFrame {
      */
     public UIExample() {
         initComponents();
-        solr = new SolrInstance("http://localhost:8983/solr", "test");
+        try {
+            solr = new SolrInstance("http://localhost:8983/solr", "test");
+        }catch(IOException io){
+            System.out.println("IOException: " + io.getMessage());
+        }catch(SolrServerException serv){
+            System.out.println("SolrServerException: " + serv.getMessage());
+        }catch(Exception e){
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         createActionListeners(this);
     }
     
