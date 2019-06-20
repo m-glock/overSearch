@@ -4,14 +4,11 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.common.util.NamedList;
-
 import java.io.IOException;
-
 
 public class SolrInstance {
 
     public HttpSolrClient client;
-    //public MicrosoftConnector msConnector;
     private final Indexer indexer;
     private final String urlString;
     private String collectionName;
@@ -24,8 +21,6 @@ public class SolrInstance {
         indexer = new Indexer();
         firstInit();
         startClient();
-        //TODO: does solr instance need a connector?
-        //msConnector = new MicrosoftConnector();
     }
 
     private void firstInit(){

@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class DirectoryChooser extends JFrame {
 
@@ -44,21 +45,23 @@ public class DirectoryChooser extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
-                saveDirectories();
+                ArrayList<String> directoryPaths = listDirectories();
                 dispose();
-                indexer.indexFiles();
+                indexer.indexFiles(directoryPaths);
             }
         });
     }
 
-    private void saveDirectories(){
+    private ArrayList<String> listDirectories(){
         TreePath[] paths = tree.getSelectionPaths();
+        ArrayList<String> fullPaths = new ArrayList<>();
         int endIndex = basePath.lastIndexOf("/");
         String newPath = basePath.substring(0, endIndex+1);
         for(TreePath path : paths){
             String fullPath = buildPath(path);
-            indexer.addDirectory(newPath + fullPath);
+            fullPaths.add(newPath + fullPath);
         }
+        return fullPaths;
     }
 
     private String buildPath(TreePath path){
@@ -70,6 +73,7 @@ public class DirectoryChooser extends JFrame {
         return fullPath;
     }
 
+    //TODO: finish directory watcher
     public void addDirectoryWatcher(String path){
         try{
             Thread t = new Thread(new WatchDirectory(Paths.get(path), true));

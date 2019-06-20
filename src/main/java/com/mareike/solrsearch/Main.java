@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
+import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.util.NamedList;
 
 import java.io.BufferedReader;
@@ -68,7 +69,8 @@ public class Main {
 
         try {
             SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs4");
-            DirectoryChooser frame = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium/2.Semester-SS16/Info2");
+            //TODO: user has to type in path, or can I get the base on in either windows or mac?
+            DirectoryChooser frame = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium");
             frame.setSize(800, 600);
             frame.setVisible(true);
         }catch(IOException io){
@@ -97,16 +99,6 @@ public class Main {
                 System.out.println("In runnable");
             }
         });*/
-
-
-
-        //TODO: finish up directory watcher
-        /*try{
-            Thread t = new Thread(new WatchDirectory(Paths.get("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2"), true));
-            t.start();
-         }catch(IOException io){
-            System.out.println("IOException: " + io.getMessage());
-         }*/
 
     }
     
