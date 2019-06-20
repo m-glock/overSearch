@@ -7,7 +7,11 @@ import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class DirectoryChooser extends JFrame {
 
@@ -18,7 +22,7 @@ public class DirectoryChooser extends JFrame {
     //TODO: if node is selected, select all children as well?
     public DirectoryChooser(IndexHandler h){
         handler = h;
-        basePath = "C:/Users/mareike/Documents/Studium";
+        basePath = "C:/Users/mareike/Documents/Studium/2.Semester-SS16/Info2";
         final MyFile mf = new MyFile(new File(basePath));
         final FileSystemModel model = new FileSystemModel(mf);
         tree = new MultiSelectionTree(model);
@@ -42,14 +46,41 @@ public class DirectoryChooser extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
                 TreePath[] paths = tree.getSelectionPaths();
+                int endIndex = basePath.lastIndexOf("/");
+                String newPath = basePath.substring(0, endIndex+1);
                 for(TreePath path : paths){
                     String fullPath = buildPath(path);
-                    handler.addIncludedDirectory(basePath + fullPath);
+                    handler.addIncludedDirectory(newPath + fullPath);
                 }
                 dispose();
                 System.out.println("list from handler: ");
-                for(String st : handler.getDirectoryPaths()){
-                    System.out.println(st);
+                for(String path : handler.getDirectoryPaths()){
+                    System.out.println(path);
+                    path = path.replace(" ", "_");
+                    try{
+                        URL url = new URL("http://localhost:7071/api/IndexFilesToSolr?name=" + path);
+                        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                        con.setRequestMethod("GET");
+                        int responseCode = con.getResponseCode();
+                        System.out.println("\nSending 'GET' request to URL : " + url);
+                        System.out.println("Response Code : " + responseCode);
+
+                        BufferedReader in = new BufferedReader(
+                                new InputStreamReader(con.getInputStream()));
+                        String inputLine;
+                        StringBuffer response = new StringBuffer();
+
+                        while ((inputLine = in.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        in.close();
+
+                        //print result
+                        System.out.println(response.toString());
+
+                    }catch(Exception prot){
+                        System.out.println("Protocol Exception: " + prot.getClass().toString() + " and message " + prot.getMessage());
+                    }
                 }
             }
         });
