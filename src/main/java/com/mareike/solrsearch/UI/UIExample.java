@@ -47,28 +47,6 @@ public class UIExample extends javax.swing.JFrame {
                 List<String> fileURLs = solr.msConnector.getAllFiles();
             }
         });
-
-        jButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("in action performed");
-                IndexHandler handler = solr.getIndexHandler();
-                DirectoryChooser frame = new DirectoryChooser(handler);
-                frame.setSize(800, 600);
-                frame.setVisible(true);
-            }
-        });
-
-        jButton2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ArrayList<String> list = solr.getIndexHandler().getIncludedDirectories();
-                System.out.println("list from handler: ");
-                for(String st : list){
-                    System.out.println(st);
-                }
-            }
-        });
     }
 
     /**

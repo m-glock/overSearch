@@ -13,11 +13,13 @@ public class DirectoryChooser extends JFrame {
 
     private IndexHandler handler;
     private MultiSelectionTree tree;
+    private String basePath;
 
     //TODO: if node is selected, select all children as well?
     public DirectoryChooser(IndexHandler h){
         handler = h;
-        final MyFile mf = new MyFile(new File("C:\\Users"));
+        basePath = "C:/Users/mareike/Documents/Studium";
+        final MyFile mf = new MyFile(new File(basePath));
         final FileSystemModel model = new FileSystemModel(mf);
         tree = new MultiSelectionTree(model);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
@@ -41,10 +43,24 @@ public class DirectoryChooser extends JFrame {
                 //code to save paths in index handler and close frame
                 TreePath[] paths = tree.getSelectionPaths();
                 for(TreePath path : paths){
-                    handler.addIncludedDirectory(path.getLastPathComponent().toString());
+                    String fullPath = buildPath(path);
+                    handler.addIncludedDirectory(basePath + fullPath);
                 }
                 dispose();
+                System.out.println("list from handler: ");
+                for(String st : handler.getDirectoryPaths()){
+                    System.out.println(st);
+                }
             }
         });
+    }
+
+    private String buildPath(TreePath path){
+        Object[] pathElements = path.getPath();
+        String fullPath = "";
+        for (Object pathElement : pathElements){
+            fullPath = fullPath + pathElement + "/" ;
+        }
+        return fullPath;
     }
 }

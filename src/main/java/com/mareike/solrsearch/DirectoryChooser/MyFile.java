@@ -22,7 +22,6 @@ public class MyFile {
             @Override
             public boolean accept(File pathname) {
                 if (pathname.isHidden()) {
-                    System.out.println("found a hidden file");
                     return false;
                 }
                 return pathname.isDirectory();
