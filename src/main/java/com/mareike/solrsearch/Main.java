@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class Main {
             System.out.println("Exception: " + ex.getMessage());
         }*/
 
-        try {
+        /*try {
             SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs4");
             //TODO: user has to type in path, or can I get the base on in either windows or mac?
             DirectoryChooser frame = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium");
@@ -79,7 +80,8 @@ public class Main {
             System.out.println("SolrServerException: " + serv.getMessage());
         }catch(Exception e){
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        }*/
+
 
 
 

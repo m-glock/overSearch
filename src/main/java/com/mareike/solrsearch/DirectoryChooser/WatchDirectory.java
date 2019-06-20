@@ -195,13 +195,12 @@ public class WatchDirectory implements Runnable{
                 Indexer.indexSingleFile(path.toString());
                 break;
             case "ENTRY_MODIFY":
-                //UpdateResponse resp = solr.client.deleteByQuery("stream_name:atypical.xlsx", 1000);
-                //System.out.println(resp.getResponse().toString());
+                System.out.println("Filename: " + path.getFileName().toString());
+                Indexer.deleteFile(path.getFileName().toString());
                 Indexer.indexSingleFile(path.toString());
                 break;
             case "ENTRY_DELETE":
-                //UpdateResponse resp = solr.client.deleteByQuery("stream_name:atypical.xlsx", 1000);
-                //System.out.println(resp.getResponse().toString());
+                Indexer.deleteFile(path.toString());
                 break;
             default:
         }

@@ -59,6 +59,8 @@ public class DirectoryChooser extends JFrame {
         String newPath = basePath.substring(0, endIndex+1);
         for(TreePath path : paths){
             String fullPath = buildPath(path);
+            //TODO: test this directory watcher when delete functionis finished
+            //addDirectoryWatcher(fullPath);
             fullPaths.add(newPath + fullPath);
         }
         return fullPaths;
@@ -73,7 +75,7 @@ public class DirectoryChooser extends JFrame {
         return fullPath;
     }
 
-    //TODO: finish directory watcher
+    //TODO: where to run this so that it does not only run when the application is open (service?)
     public void addDirectoryWatcher(String path){
         try{
             Thread t = new Thread(new WatchDirectory(Paths.get(path), true));
