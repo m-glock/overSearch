@@ -31,6 +31,9 @@ package com.mareike.solrsearch.DirectoryChooser;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import com.mareike.solrsearch.Indexer;
+import org.apache.solr.client.solrj.response.UpdateResponse;
+
 import java.nio.file.*;
 import static java.nio.file.StandardWatchEventKinds.*;
 import static java.nio.file.LinkOption.*;
@@ -185,15 +188,21 @@ public class WatchDirectory implements Runnable{
     }
 
     //TODO: index or update files depending on event from watcher; depends on where watcher is called and how directory chooser is working
-    public static void updateFiles(WatchEvent event, Path path){
+    public void updateFiles(WatchEvent event, Path path){
         System.out.println("In index handler: " + event.kind());
         switch(event.kind().name()){
             case "ENTRY_CREATE":
-                //indexLocalFiles(path.toString());
+                Indexer.indexSingleFile(path.toString());
+                break;
             case "ENTRY_MODIFY":
-
+                //UpdateResponse resp = solr.client.deleteByQuery("stream_name:atypical.xlsx", 1000);
+                //System.out.println(resp.getResponse().toString());
+                Indexer.indexSingleFile(path.toString());
+                break;
             case "ENTRY_DELETE":
-
+                //UpdateResponse resp = solr.client.deleteByQuery("stream_name:atypical.xlsx", 1000);
+                //System.out.println(resp.getResponse().toString());
+                break;
             default:
         }
     }
