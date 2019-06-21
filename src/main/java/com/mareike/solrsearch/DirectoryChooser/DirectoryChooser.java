@@ -31,6 +31,10 @@ public class DirectoryChooser extends JFrame {
 
         initComponents();
     }
+    
+    public MultiSelectionTree getTree(){
+        return tree;
+    }
 
     public void initComponents(){
         Container pane = getContentPane();

@@ -2,6 +2,7 @@ package com.mareike.solrsearch.UI;
 
 import com.mareike.solrsearch.SolrInstance;
 import com.mareike.solrsearch.DirectoryChooser.DirectoryChooser;
+import java.awt.CardLayout;
 import org.apache.solr.client.solrj.SolrServerException;
 
 import java.awt.event.ActionEvent;
@@ -30,7 +31,7 @@ public class UIExample extends javax.swing.JFrame {
     public UIExample() {
         initComponents();
         try {
-            solr = new SolrInstance("http://localhost:8983/solr", "test");
+            solr = new SolrInstance("http://localhost:8983/solr", "localDocs4");
         }catch(IOException io){
             System.out.println("IOException: " + io.getMessage());
         }catch(SolrServerException serv){
@@ -46,7 +47,9 @@ public class UIExample extends javax.swing.JFrame {
         indexDocuments.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                //solr.fillIndex();
+                DirectoryChooser frame = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium");
+                frame.setSize(800, 600);
+                frame.setVisible(true);
             }
         });
 
@@ -54,6 +57,9 @@ public class UIExample extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //List<String> fileURLs = solr.msConnector.getAllFiles();
+                //System.out.println("clicked");
+                //CardLayout card = (CardLayout)(mainPanel.getLayout());
+                //card.show(mainPanel, "mainScreen");
             }
         });
     }

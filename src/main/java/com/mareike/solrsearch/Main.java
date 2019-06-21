@@ -2,6 +2,8 @@ package com.mareike.solrsearch;
 
 import com.mareike.solrsearch.DirectoryChooser.DirectoryChooser;
 import com.mareike.solrsearch.UI.UIExample;
+import com.mareike.solrsearch.UI.UIHandler;
+import java.awt.Color;
 import okhttp3.Request;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
@@ -68,6 +70,10 @@ public class Main {
             System.out.println("Exception: " + ex.getMessage());
         }*/
 
+
+
+
+
         /*try {
             SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs4");
             //TODO: user has to type in path, or can I get the base on in either windows or mac?
@@ -90,17 +96,18 @@ public class Main {
 
 
         //TODO: UI handling
-        /*setLookAndFeel();
+        setLookAndFeel();
 
 
         //Create and display the form
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                UIExample ex = new UIExample();
+                UIHandler ex = new UIHandler();
                 ex.setVisible(true);
+                ex.getContentPane().setBackground(Color.white);
                 System.out.println("In runnable");
             }
-        });*/
+        });
 
     }
     

@@ -1,9 +1,14 @@
 package com.mareike.solrsearch.UI;
 
+import com.mareike.solrsearch.DirectoryChooser.DirectoryChooser;
+import com.mareike.solrsearch.SolrInstance;
+import org.apache.solr.client.solrj.SolrServerException;
+
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,12 +22,24 @@ import java.awt.event.ActionListener;
  */
 public class UIHandler extends javax.swing.JFrame {
 
+
+    private SolrInstance solr;
     /**
      * Creates new form UIHandler
      */
     public UIHandler() {
+
+        try {
+            solr = new SolrInstance("http://localhost:8983/solr", "localDocs4");
+        }catch(IOException io){
+            System.out.println("IOException: " + io.getMessage());
+        }catch(SolrServerException serv){
+            System.out.println("SolrServerException: " + serv.getMessage());
+        }catch(Exception e){
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         initComponents();
-        addActionListeners();
+        //createActionListeners(this);
     }
 
     /**
@@ -34,133 +51,21 @@ public class UIHandler extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        header = new javax.swing.JPanel();
-        toStart = new javax.swing.JButton();
-        toMain = new javax.swing.JButton();
-        toSearch = new javax.swing.JButton();
-        mainPanel = new javax.swing.JPanel();
-        startScreen = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        mainScreen = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        searchScreen = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setResizable(false);
-
-        toStart.setText("switch to Start");
-
-        toMain.setText("switch to Main");
-
-        toSearch.setText("switch to Searcj");
-
-        javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
-        header.setLayout(headerLayout);
-        headerLayout.setHorizontalGroup(
-            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(headerLayout.createSequentialGroup()
-                .addGap(105, 105, 105)
-                .addComponent(toStart)
-                .addGap(419, 419, 419)
-                .addComponent(toMain)
-                .addGap(309, 309, 309)
-                .addComponent(toSearch)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        headerLayout.setVerticalGroup(
-            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(headerLayout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(toMain)
-                    .addComponent(toStart)
-                    .addComponent(toSearch))
-                .addContainerGap(53, Short.MAX_VALUE))
-        );
-
-        mainPanel.setLayout(new java.awt.CardLayout());
-
-        jLabel1.setText("start screen");
-
-        javax.swing.GroupLayout startScreenLayout = new javax.swing.GroupLayout(startScreen);
-        startScreen.setLayout(startScreenLayout);
-        startScreenLayout.setHorizontalGroup(
-            startScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(startScreenLayout.createSequentialGroup()
-                .addGap(683, 683, 683)
-                .addComponent(jLabel1)
-                .addContainerGap(1195, Short.MAX_VALUE))
-        );
-        startScreenLayout.setVerticalGroup(
-            startScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(startScreenLayout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addComponent(jLabel1)
-                .addContainerGap(662, Short.MAX_VALUE))
-        );
-
-        mainPanel.add(startScreen, "startScreen");
-        startScreen.getAccessibleContext().setAccessibleName("");
-
-        jLabel2.setText("main screen");
-
-        javax.swing.GroupLayout mainScreenLayout = new javax.swing.GroupLayout(mainScreen);
-        mainScreen.setLayout(mainScreenLayout);
-        mainScreenLayout.setHorizontalGroup(
-            mainScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainScreenLayout.createSequentialGroup()
-                .addGap(644, 644, 644)
-                .addComponent(jLabel2)
-                .addContainerGap(1230, Short.MAX_VALUE))
-        );
-        mainScreenLayout.setVerticalGroup(
-            mainScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainScreenLayout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(jLabel2)
-                .addContainerGap(596, Short.MAX_VALUE))
-        );
-
-        mainPanel.add(mainScreen, "mainScreen");
-        mainScreen.getAccessibleContext().setAccessibleName("");
-
-        jLabel3.setText("search screen");
-
-        javax.swing.GroupLayout searchScreenLayout = new javax.swing.GroupLayout(searchScreen);
-        searchScreen.setLayout(searchScreenLayout);
-        searchScreenLayout.setHorizontalGroup(
-            searchScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchScreenLayout.createSequentialGroup()
-                .addGap(590, 590, 590)
-                .addComponent(jLabel3)
-                .addContainerGap(1274, Short.MAX_VALUE))
-        );
-        searchScreenLayout.setVerticalGroup(
-            searchScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchScreenLayout.createSequentialGroup()
-                .addGap(148, 148, 148)
-                .addComponent(jLabel3)
-                .addContainerGap(588, Short.MAX_VALUE))
-        );
-
-        mainPanel.add(searchScreen, "searchScreen");
-        searchScreen.getAccessibleContext().setAccessibleName("");
+        setMaximumSize(new java.awt.Dimension(1200, 900));
+        setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(1200, 900));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 950, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         pack();
@@ -168,16 +73,9 @@ public class UIHandler extends javax.swing.JFrame {
 
     
     private void addActionListeners(){
-        toMain.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("clicked");
-                CardLayout card = (CardLayout)(mainPanel.getLayout());
-                card.show(mainPanel, "mainScreen");
-            }
-        });
         
-        toSearch.addActionListener(new ActionListener(){
+        
+        /*toSearch.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("clicked");
@@ -193,20 +91,9 @@ public class UIHandler extends javax.swing.JFrame {
                 CardLayout card = (CardLayout)(mainPanel.getLayout());
                 card.show(mainPanel, "startScreen");
             }
-        });
+        });*/
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel header;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel mainPanel;
-    private javax.swing.JPanel mainScreen;
-    private javax.swing.JPanel searchScreen;
-    private javax.swing.JPanel startScreen;
-    private javax.swing.JButton toMain;
-    private javax.swing.JButton toSearch;
-    private javax.swing.JButton toStart;
     // End of variables declaration//GEN-END:variables
 }
