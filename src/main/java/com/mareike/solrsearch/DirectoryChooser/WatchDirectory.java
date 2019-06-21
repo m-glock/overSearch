@@ -32,8 +32,6 @@ package com.mareike.solrsearch.DirectoryChooser;
  */
 
 import com.mareike.solrsearch.Indexer;
-import org.apache.solr.client.solrj.response.UpdateResponse;
-
 import java.nio.file.*;
 import static java.nio.file.StandardWatchEventKinds.*;
 import static java.nio.file.LinkOption.*;
@@ -53,7 +51,7 @@ public class WatchDirectory implements Runnable{
     private boolean trace;
 
     @SuppressWarnings("unchecked")
-    static <T> WatchEvent<T> cast(WatchEvent<?> event) {
+    private static <T> WatchEvent<T> cast(WatchEvent<?> event) {
         return (WatchEvent<T>)event;
     }
 
@@ -80,7 +78,7 @@ public class WatchDirectory implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("in run");
+        System.out.println("in run of directory watcher");
         processEvents();
     }
 
@@ -108,15 +106,19 @@ public class WatchDirectory implements Runnable{
      */
     private void registerAll(final Path start) throws IOException {
         // register directory and sub-directories
+        System.out.println("in register all");
         Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
                     throws IOException
             {
+                System.out.println("directory is: " + dir);
                 register(dir);
+                System.out.println("after registering");
                 return FileVisitResult.CONTINUE;
             }
         });
+        System.out.println("end of register all");
     }
 
 
@@ -124,7 +126,7 @@ public class WatchDirectory implements Runnable{
     /**
      * Process all events for keys queued to the watcher
      */
-    void processEvents() {
+    private void processEvents() {
        System.out.println("in process");
         for (;;) {
 
@@ -156,7 +158,6 @@ public class WatchDirectory implements Runnable{
                 Path child = dir.resolve(name);
 
                 // print out event
-                //TODO: This child (or rather the path) is needed -> call indexing from here?
                 updateFiles(event, child);
                 System.out.format("%s: %s\n", event.kind().name(), child);
 
@@ -169,7 +170,7 @@ public class WatchDirectory implements Runnable{
                             registerAll(child);
                         }
                     } catch (IOException x) {
-                        // ignore to keep sample readbale
+                        // ignore to keep sample readable
                     }
                 }
             }
@@ -187,28 +188,28 @@ public class WatchDirectory implements Runnable{
         }
     }
 
-    //TODO: index or update files depending on event from watcher; depends on where watcher is called and how directory chooser is working
-    public void updateFiles(WatchEvent event, Path path){
-        System.out.println("In index handler: " + event.kind());
+    //TODO: kind of a hack and only work on windows 10
+    private void updateFiles(WatchEvent event, Path path){
+        System.out.println("update files for Event: " + event.kind());
+        System.out.println("with path: " + path.toString());
         switch(event.kind().name()){
+            case "ENTRY_MODIFY":
+                Indexer.deleteFile(path.getFileName().toString());
+                /*Indexer.indexSingleFile(path.toString());
+                break;*/
             case "ENTRY_CREATE":
                 Indexer.indexSingleFile(path.toString());
                 break;
-            case "ENTRY_MODIFY":
-                System.out.println("Filename: " + path.getFileName().toString());
-                Indexer.deleteFile(path.getFileName().toString());
-                Indexer.indexSingleFile(path.toString());
-                break;
             case "ENTRY_DELETE":
-                Indexer.deleteFile(path.toString());
+                Indexer.deleteFile(path.getFileName().toString());
                 break;
             default:
         }
     }
 
-    public static void usage() {
+    /*public static void usage() {
         System.err.println("usage: java WatchDir [-r] dir");
         System.exit(-1);
-    }
+    }*/
 
 }
