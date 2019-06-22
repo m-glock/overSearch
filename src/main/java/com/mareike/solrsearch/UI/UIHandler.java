@@ -40,7 +40,7 @@ public class UIHandler extends javax.swing.JFrame {
         }
         DirectoryChooser dir = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium");
         MultiSelectionTree tree = dir.getTree();
-        initComponents(tree);
+        initComponents();
         //createActionListeners(this);
     }
 
@@ -51,14 +51,19 @@ public class UIHandler extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents(MultiSelectionTree tree) {
+    private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        PlaceholderRight = new javax.swing.JPanel();
-        PlaceholderLeft = new javax.swing.JPanel();
-        PanelBottom = new javax.swing.JPanel();
+        mainPanel = new javax.swing.JPanel();
+        startScreen = new javax.swing.JPanel();
+        welcomeLabel = new javax.swing.JLabel();
+        startLeftPanel = new javax.swing.JPanel();
+        startRightPanel = new javax.swing.JPanel();
+        startBottomPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        DirectoryPane = new javax.swing.JScrollPane(tree);
+        jScrollPane1 = new javax.swing.JScrollPane();
+        searchScreen = new javax.swing.JPanel();
+        mainScreen = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -66,56 +71,130 @@ public class UIHandler extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(1200, 900));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Welcome to overSearch! Please choose the directories you want to index for searching");
-        jLabel1.setMaximumSize(new java.awt.Dimension(600, 100));
-        jLabel1.setMinimumSize(new java.awt.Dimension(600, 100));
-        jLabel1.setPreferredSize(new java.awt.Dimension(600, 100));
-        jLabel1.setRequestFocusEnabled(false);
-        getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
+        mainPanel.setMaximumSize(new java.awt.Dimension(1200, 900));
+        mainPanel.setMinimumSize(new java.awt.Dimension(800, 600));
+        mainPanel.setPreferredSize(new java.awt.Dimension(1200, 900));
+        mainPanel.setLayout(new java.awt.CardLayout());
 
-        PlaceholderRight.setMaximumSize(new java.awt.Dimension(100, 700));
+        startScreen.setBackground(new java.awt.Color(255, 255, 255));
+        startScreen.setMaximumSize(new java.awt.Dimension(1200, 900));
+        startScreen.setPreferredSize(new java.awt.Dimension(1200, 900));
+        startScreen.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout PlaceholderRightLayout = new javax.swing.GroupLayout(PlaceholderRight);
-        PlaceholderRight.setLayout(PlaceholderRightLayout);
-        PlaceholderRightLayout.setHorizontalGroup(
-            PlaceholderRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        welcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        welcomeLabel.setText("Welcome to overSearch! Please choose the directories to index for the search");
+        welcomeLabel.setMaximumSize(new java.awt.Dimension(1200, 100));
+        welcomeLabel.setMinimumSize(new java.awt.Dimension(800, 100));
+        welcomeLabel.setPreferredSize(new java.awt.Dimension(1200, 100));
+        startScreen.add(welcomeLabel, java.awt.BorderLayout.PAGE_START);
+
+        startLeftPanel.setBackground(new java.awt.Color(255, 255, 255));
+        startLeftPanel.setMaximumSize(new java.awt.Dimension(100, 700));
+        startLeftPanel.setMinimumSize(new java.awt.Dimension(100, 400));
+        startLeftPanel.setPreferredSize(new java.awt.Dimension(100, 700));
+
+        javax.swing.GroupLayout startLeftPanelLayout = new javax.swing.GroupLayout(startLeftPanel);
+        startLeftPanel.setLayout(startLeftPanelLayout);
+        startLeftPanelLayout.setHorizontalGroup(
+            startLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
-        PlaceholderRightLayout.setVerticalGroup(
-            PlaceholderRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        startLeftPanelLayout.setVerticalGroup(
+            startLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 401, Short.MAX_VALUE)
         );
 
-        getContentPane().add(PlaceholderRight, java.awt.BorderLayout.LINE_END);
+        startScreen.add(startLeftPanel, java.awt.BorderLayout.LINE_START);
 
-        PlaceholderLeft.setMaximumSize(new java.awt.Dimension(100, 700));
+        startRightPanel.setBackground(new java.awt.Color(255, 255, 255));
+        startRightPanel.setMaximumSize(new java.awt.Dimension(100, 700));
+        startRightPanel.setMinimumSize(new java.awt.Dimension(100, 400));
+        startRightPanel.setPreferredSize(new java.awt.Dimension(100, 700));
 
-        javax.swing.GroupLayout PlaceholderLeftLayout = new javax.swing.GroupLayout(PlaceholderLeft);
-        PlaceholderLeft.setLayout(PlaceholderLeftLayout);
-        PlaceholderLeftLayout.setHorizontalGroup(
-            PlaceholderLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout startRightPanelLayout = new javax.swing.GroupLayout(startRightPanel);
+        startRightPanel.setLayout(startRightPanelLayout);
+        startRightPanelLayout.setHorizontalGroup(
+            startRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
-        PlaceholderLeftLayout.setVerticalGroup(
-            PlaceholderLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        startRightPanelLayout.setVerticalGroup(
+            startRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 401, Short.MAX_VALUE)
         );
 
-        getContentPane().add(PlaceholderLeft, java.awt.BorderLayout.LINE_START);
+        startScreen.add(startRightPanel, java.awt.BorderLayout.LINE_END);
 
-        PanelBottom.setMaximumSize(new java.awt.Dimension(1200, 100));
-        PanelBottom.setMinimumSize(new java.awt.Dimension(800, 100));
-        PanelBottom.setPreferredSize(new java.awt.Dimension(1200, 100));
-        PanelBottom.setLayout(new java.awt.GridBagLayout());
+        startBottomPanel.setBackground(new java.awt.Color(255, 255, 255));
+        startBottomPanel.setMaximumSize(new java.awt.Dimension(1200, 100));
+        startBottomPanel.setMinimumSize(new java.awt.Dimension(800, 100));
+        startBottomPanel.setPreferredSize(new java.awt.Dimension(1200, 100));
+        startBottomPanel.setLayout(new java.awt.GridBagLayout());
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jButton1.setText("confirm");
-        PanelBottom.add(jButton1, new java.awt.GridBagConstraints());
+        jButton1.setText("index files");
+        jButton1.setMinimumSize(new java.awt.Dimension(150, 50));
+        jButton1.setPreferredSize(new java.awt.Dimension(150, 50));
+        startBottomPanel.add(jButton1, new java.awt.GridBagConstraints());
 
-        getContentPane().add(PanelBottom, java.awt.BorderLayout.PAGE_END);
-        getContentPane().add(DirectoryPane, java.awt.BorderLayout.CENTER);
+        startScreen.add(startBottomPanel, java.awt.BorderLayout.PAGE_END);
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        startScreen.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        mainPanel.add(startScreen, "card2");
+
+        searchScreen.setMaximumSize(new java.awt.Dimension(1200, 900));
+        searchScreen.setMinimumSize(new java.awt.Dimension(800, 600));
+        searchScreen.setPreferredSize(new java.awt.Dimension(1200, 600));
+
+        javax.swing.GroupLayout searchScreenLayout = new javax.swing.GroupLayout(searchScreen);
+        searchScreen.setLayout(searchScreenLayout);
+        searchScreenLayout.setHorizontalGroup(
+            searchScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
+        searchScreenLayout.setVerticalGroup(
+            searchScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 601, Short.MAX_VALUE)
+        );
+
+        mainPanel.add(searchScreen, "card2");
+
+        mainScreen.setMaximumSize(new java.awt.Dimension(1200, 900));
+        mainScreen.setMinimumSize(new java.awt.Dimension(800, 600));
+        mainScreen.setPreferredSize(new java.awt.Dimension(1200, 900));
+
+        jButton2.setText("jButton2");
+
+        javax.swing.GroupLayout mainScreenLayout = new javax.swing.GroupLayout(mainScreen);
+        mainScreen.setLayout(mainScreenLayout);
+        mainScreenLayout.setHorizontalGroup(
+            mainScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainScreenLayout.createSequentialGroup()
+                .addContainerGap(356, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(351, 351, 351))
+        );
+        mainScreenLayout.setVerticalGroup(
+            mainScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainScreenLayout.createSequentialGroup()
+                .addGap(0, 572, Short.MAX_VALUE)
+                .addComponent(jButton2))
+        );
+
+        mainPanel.add(mainScreen, "card2");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -154,11 +233,16 @@ public class UIHandler extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane DirectoryPane;
-    private javax.swing.JPanel PanelBottom;
-    private javax.swing.JPanel PlaceholderLeft;
-    private javax.swing.JPanel PlaceholderRight;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel mainScreen;
+    private javax.swing.JPanel searchScreen;
+    private javax.swing.JPanel startBottomPanel;
+    private javax.swing.JPanel startLeftPanel;
+    private javax.swing.JPanel startRightPanel;
+    private javax.swing.JPanel startScreen;
+    private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 }
