@@ -78,7 +78,6 @@ public class WatchDirectory implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("in run of directory watcher");
         processEvents();
     }
 
@@ -106,19 +105,15 @@ public class WatchDirectory implements Runnable{
      */
     private void registerAll(final Path start) throws IOException {
         // register directory and sub-directories
-        System.out.println("in register all");
         Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
                     throws IOException
             {
-                System.out.println("directory is: " + dir);
                 register(dir);
-                System.out.println("after registering");
                 return FileVisitResult.CONTINUE;
             }
         });
-        System.out.println("end of register all");
     }
 
 
@@ -188,7 +183,7 @@ public class WatchDirectory implements Runnable{
         }
     }
 
-    //TODO: kind of a hack and only work on windows 10
+    //TODO: for a new file windows 10 fires the create and modify event - kind of a hack and only work on windows 10
     private void updateFiles(WatchEvent event, Path path){
         System.out.println("update files for Event: " + event.kind());
         System.out.println("with path: " + path.toString());

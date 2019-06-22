@@ -40,9 +40,10 @@ public class UIHandler extends javax.swing.JFrame {
         }catch(Exception e){
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }
+        //TODO: let user choose start directory?
         DirectoryChooser dir = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium");
         MultiSelectionTree tree = dir.getTree();
-        initComponents();
+        initComponents(tree);
         addActionListeners(solr.getIndexer(), dir);
     }
 
@@ -53,13 +54,15 @@ public class UIHandler extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents(MultiSelectionTree tree) {
+
+        Color backgroundColor = Color.white;
 
         mainPanel = new javax.swing.JPanel();
         startScreen = new javax.swing.JPanel();
         startWelcomeLabel = new javax.swing.JLabel();
         directoryPanel = new javax.swing.JPanel();
-        directoryScrollPane = new javax.swing.JScrollPane();
+        directoryScrollPane = new javax.swing.JScrollPane(tree);
         startBottomPanel = new javax.swing.JPanel();
         indexButton = new javax.swing.JButton();
         searchScreen = new javax.swing.JPanel();
@@ -71,10 +74,10 @@ public class UIHandler extends javax.swing.JFrame {
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
-        startScreen.setBackground(new java.awt.Color(255, 255, 255));
+        startScreen.setBackground(backgroundColor);
         startScreen.setLayout(new javax.swing.BoxLayout(startScreen, javax.swing.BoxLayout.Y_AXIS));
 
-        startWelcomeLabel.setBackground(new java.awt.Color(255, 255, 255));
+        startWelcomeLabel.setBackground(backgroundColor);
         startWelcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         startWelcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         startWelcomeLabel.setText("Welcome to overSearch! Please choose the directories you want to index for the search");
@@ -84,14 +87,14 @@ public class UIHandler extends javax.swing.JFrame {
 
         directoryPanel.setLayout(new javax.swing.BoxLayout(directoryPanel, javax.swing.BoxLayout.LINE_AXIS));
 
-        directoryScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+        directoryScrollPane.setBackground(backgroundColor);
         directoryScrollPane.setMaximumSize(new java.awt.Dimension(600, 32767));
         directoryScrollPane.setPreferredSize(new java.awt.Dimension(600, 2));
         directoryPanel.add(directoryScrollPane);
 
         startScreen.add(directoryPanel);
 
-        startBottomPanel.setBackground(new java.awt.Color(255, 255, 255));
+        startBottomPanel.setBackground(backgroundColor);
         startBottomPanel.setMaximumSize(new java.awt.Dimension(800, 100));
         startBottomPanel.setMinimumSize(new java.awt.Dimension(800, 100));
         startBottomPanel.setPreferredSize(new java.awt.Dimension(800, 100));
@@ -186,10 +189,10 @@ public class UIHandler extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
-                /*ArrayList<String> directoryPaths = dir.listDirectories();
+                ArrayList<String> directoryPaths = dir.listDirectories();
                 for(String path : directoryPaths){
                     System.out.println(path);
-                }*/
+                }
                 //indexer.indexFiles(directoryPaths);
                 CardLayout card = (CardLayout)(mainPanel.getLayout());
                 card.show(mainPanel, "mainPanel");

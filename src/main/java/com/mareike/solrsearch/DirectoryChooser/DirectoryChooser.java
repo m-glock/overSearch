@@ -44,7 +44,6 @@ public class DirectoryChooser extends JFrame {
         String newBasePath = basePath.substring(0, endIndex+1);
         for(TreePath path : paths){
             String fullPath = newBasePath + buildPath(path);
-            //TODO: test this directory watcher when delete functionis finished
             addDirectoryWatcher(fullPath);
             fullPaths.add(fullPath);
         }
@@ -65,10 +64,7 @@ public class DirectoryChooser extends JFrame {
         System.out.println("start directory watcher on: " + path);
         try{
             Thread t = new Thread(new WatchDirectory(Paths.get(path), true));
-            System.out.println("Thread created, starting ...");
             t.start();
-            if(t.isAlive())
-                System.out.println("Thread is alive.");
         }catch(IOException io){
             System.out.println("IOException: " + io.getMessage());
         }

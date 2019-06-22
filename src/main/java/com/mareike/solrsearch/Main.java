@@ -43,57 +43,6 @@ public class Main {
         SolrDocumentList results = query.sendQuery(solr);*/
 
 
-        //TODO: get Sharepoint files
-        /*MicrosoftConnector msc = new MicrosoftConnector();
-        List<String> files = msc.getAllFiles();
-        for(String st : files){
-            System.out.println(st);
-        }
-        try {
-            URL url = new URL("https://graph.microsoft.com/v1.0/groups/1c776fb9-0bc6-465c-a68d-2015fc852e34/sites/root/lists/Documents/items/1/DriveItem/content");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
-
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-        }catch(Exception ex){
-            System.out.println("Exception: " + ex.getMessage());
-        }*/
-
-
-
-
-
-        /*try {
-            SolrInstance solr = new SolrInstance("http://localhost:8983/solr", "localDocs4");
-            //TODO: user has to type in path, or can I get the base on in either windows or mac?
-            DirectoryChooser frame = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium");
-            frame.setSize(800, 600);
-            frame.setVisible(true);
-        }catch(IOException io){
-            System.out.println("IOException: " + io.getMessage());
-        }catch(SolrServerException serv){
-            System.out.println("SolrServerException: " + serv.getMessage());
-        }catch(Exception e){
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
-        }*/
-
-
-
-
-
-
-
 
         //TODO: UI handling
         setLookAndFeel();
