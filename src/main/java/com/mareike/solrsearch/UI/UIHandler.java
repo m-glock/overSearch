@@ -193,7 +193,7 @@ public class UIHandler extends javax.swing.JFrame {
                 for(String path : directoryPaths){
                     System.out.println(path);
                 }
-                //indexer.indexFiles(directoryPaths);
+                indexer.indexFiles(directoryPaths);
                 CardLayout card = (CardLayout)(mainPanel.getLayout());
                 card.show(mainPanel, "mainPanel");
             }
