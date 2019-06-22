@@ -51,25 +51,98 @@ public class UIHandler extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        PlaceholderRight = new javax.swing.JPanel();
+        PlaceholderLeft = new javax.swing.JPanel();
+        PanelBottom = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        DirectoryPane = new javax.swing.JScrollPane();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1200, 900));
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(1200, 900));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Welcome to overSearch! Please choose the directories you want to index for searching");
+        jLabel1.setMaximumSize(new java.awt.Dimension(607, 100));
+        jLabel1.setMinimumSize(new java.awt.Dimension(607, 100));
+        jLabel1.setPreferredSize(new java.awt.Dimension(607, 100));
+        jLabel1.setRequestFocusEnabled(false);
+        getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
+
+        PlaceholderRight.setMaximumSize(new java.awt.Dimension(100, 700));
+
+        javax.swing.GroupLayout PlaceholderRightLayout = new javax.swing.GroupLayout(PlaceholderRight);
+        PlaceholderRight.setLayout(PlaceholderRightLayout);
+        PlaceholderRightLayout.setHorizontalGroup(
+            PlaceholderRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+        PlaceholderRightLayout.setVerticalGroup(
+            PlaceholderRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
+
+        getContentPane().add(PlaceholderRight, java.awt.BorderLayout.LINE_END);
+
+        PlaceholderLeft.setMaximumSize(new java.awt.Dimension(100, 700));
+
+        javax.swing.GroupLayout PlaceholderLeftLayout = new javax.swing.GroupLayout(PlaceholderLeft);
+        PlaceholderLeft.setLayout(PlaceholderLeftLayout);
+        PlaceholderLeftLayout.setHorizontalGroup(
+            PlaceholderLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        PlaceholderLeftLayout.setVerticalGroup(
+            PlaceholderLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(PlaceholderLeft, java.awt.BorderLayout.LINE_START);
+
+        PanelBottom.setMaximumSize(new java.awt.Dimension(1200, 100));
+        PanelBottom.setMinimumSize(new java.awt.Dimension(800, 100));
+        PanelBottom.setPreferredSize(new java.awt.Dimension(1200, 100));
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jButton2.setText("confirm");
+        jButton2.setMaximumSize(new java.awt.Dimension(100, 50));
+        jButton2.setMinimumSize(new java.awt.Dimension(100, 50));
+        jButton2.setPreferredSize(new java.awt.Dimension(100, 50));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelBottomLayout = new javax.swing.GroupLayout(PanelBottom);
+        PanelBottom.setLayout(PanelBottomLayout);
+        PanelBottomLayout.setHorizontalGroup(
+            PanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelBottomLayout.createSequentialGroup()
+                .addGap(350, 350, 350)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        PanelBottomLayout.setVerticalGroup(
+            PanelBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelBottomLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(PanelBottom, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(DirectoryPane, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     
     private void addActionListeners(){
@@ -95,5 +168,11 @@ public class UIHandler extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane DirectoryPane;
+    private javax.swing.JPanel PanelBottom;
+    private javax.swing.JPanel PlaceholderLeft;
+    private javax.swing.JPanel PlaceholderRight;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
