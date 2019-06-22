@@ -28,6 +28,11 @@ public class DirectoryChooser extends JFrame {
         tree = new MultiSelectionTree(model);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
         tree.setSelectionModel(new MLTreeSelectionModel());
+
+        //increase default font size
+        final Font currentFont = tree.getFont();
+        final Font bigFont = new Font(currentFont.getName(), currentFont.getStyle(), currentFont.getSize() + 5);
+        tree.setFont(bigFont);
     }
     
     public MultiSelectionTree getTree(){

@@ -5,8 +5,7 @@ import com.mareike.solrsearch.DirectoryChooser.MultiSelectionTree;
 import com.mareike.solrsearch.SolrInstance;
 import org.apache.solr.client.solrj.SolrServerException;
 
-import java.awt.CardLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -40,7 +39,8 @@ public class UIHandler extends javax.swing.JFrame {
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }
         DirectoryChooser dir = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium");
-        initComponents(dir.getTree());
+        MultiSelectionTree tree = dir.getTree();
+        initComponents(tree);
         //createActionListeners(this);
     }
 
@@ -69,9 +69,9 @@ public class UIHandler extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Welcome to overSearch! Please choose the directories you want to index for searching");
-        jLabel1.setMaximumSize(new java.awt.Dimension(607, 100));
-        jLabel1.setMinimumSize(new java.awt.Dimension(607, 100));
-        jLabel1.setPreferredSize(new java.awt.Dimension(607, 100));
+        jLabel1.setMaximumSize(new java.awt.Dimension(600, 100));
+        jLabel1.setMinimumSize(new java.awt.Dimension(600, 100));
+        jLabel1.setPreferredSize(new java.awt.Dimension(600, 100));
         jLabel1.setRequestFocusEnabled(false);
         getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
