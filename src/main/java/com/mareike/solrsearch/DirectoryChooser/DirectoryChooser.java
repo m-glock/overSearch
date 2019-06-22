@@ -28,32 +28,10 @@ public class DirectoryChooser extends JFrame {
         tree = new MultiSelectionTree(model);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
         tree.setSelectionModel(new MLTreeSelectionModel());
-
-        initComponents();
     }
     
     public MultiSelectionTree getTree(){
         return tree;
-    }
-
-    public void initComponents(){
-        Container pane = getContentPane();
-        JScrollPane scrollPane = new JScrollPane(tree);
-        pane.add(scrollPane, BorderLayout.CENTER);
-        JButton button = new JButton("Select");
-        //TODO: figure out size
-        button.setSize(new Dimension(200, 100));
-        pane.add(button, BorderLayout.PAGE_END);
-
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //code to save paths in index handler and close frame
-                ArrayList<String> directoryPaths = listDirectories();
-                dispose();
-                indexer.indexFiles(directoryPaths);
-            }
-        });
     }
 
     private ArrayList<String> listDirectories(){

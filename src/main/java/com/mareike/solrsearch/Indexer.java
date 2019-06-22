@@ -56,8 +56,6 @@ public class Indexer {
         fileName = fileName.replace(" ", "_");
         try{
             //TODO: change function to choose between indexing and deleting -> if both (update) the the two methods here are called
-            //UpdateResponse resp = solr.client.deleteByQuery("stream_name:atypical.xlsx", 1000);
-            //System.out.println(resp.getResponse().toString());
             URL url = new URL(functionURL + fileName);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
