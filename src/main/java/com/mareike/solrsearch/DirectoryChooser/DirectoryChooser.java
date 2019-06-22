@@ -6,8 +6,6 @@ import javax.swing.*;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -39,7 +37,7 @@ public class DirectoryChooser extends JFrame {
         return tree;
     }
 
-    private ArrayList<String> listDirectories(){
+    public ArrayList<String> listDirectories(){
         TreePath[] paths = tree.getSelectionPaths();
         ArrayList<String> fullPaths = new ArrayList<>();
         int endIndex = basePath.lastIndexOf("/");

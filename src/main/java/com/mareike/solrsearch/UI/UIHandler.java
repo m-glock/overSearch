@@ -2,6 +2,7 @@ package com.mareike.solrsearch.UI;
 
 import com.mareike.solrsearch.DirectoryChooser.DirectoryChooser;
 import com.mareike.solrsearch.DirectoryChooser.MultiSelectionTree;
+import com.mareike.solrsearch.Indexer;
 import com.mareike.solrsearch.SolrInstance;
 import org.apache.solr.client.solrj.SolrServerException;
 
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -40,8 +42,8 @@ public class UIHandler extends javax.swing.JFrame {
         }
         DirectoryChooser dir = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium");
         MultiSelectionTree tree = dir.getTree();
-        initComponents();
-        //createActionListeners(this);
+        initComponents(tree);
+        addActionListeners(solr.getIndexer(), dir);
     }
 
     /**
@@ -51,102 +53,23 @@ public class UIHandler extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents(MultiSelectionTree tree) {
 
         mainPanel = new javax.swing.JPanel();
-        startScreen = new javax.swing.JPanel();
-        welcomeLabel = new javax.swing.JLabel();
-        startLeftPanel = new javax.swing.JPanel();
-        startRightPanel = new javax.swing.JPanel();
-        startBottomPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
         searchScreen = new javax.swing.JPanel();
         mainScreen = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        startScreen = new javax.swing.JPanel();
+        startWelcomeLabel = new javax.swing.JLabel();
+        directoryPanel = new javax.swing.JPanel();
+        directoryScrollPane = new javax.swing.JScrollPane(tree);
+        startBottomPanel = new javax.swing.JPanel();
+        indexingButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new java.awt.Dimension(1200, 900));
-        setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(1200, 900));
+        setBackground(Color.white);
+        setMinimumSize(new java.awt.Dimension(1000, 700));
 
-        mainPanel.setMaximumSize(new java.awt.Dimension(1200, 900));
-        mainPanel.setMinimumSize(new java.awt.Dimension(800, 600));
-        mainPanel.setPreferredSize(new java.awt.Dimension(1200, 900));
         mainPanel.setLayout(new java.awt.CardLayout());
-
-        startScreen.setBackground(new java.awt.Color(255, 255, 255));
-        startScreen.setMaximumSize(new java.awt.Dimension(1200, 900));
-        startScreen.setPreferredSize(new java.awt.Dimension(1200, 900));
-        startScreen.setLayout(new java.awt.BorderLayout());
-
-        welcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        welcomeLabel.setText("Welcome to overSearch! Please choose the directories to index for the search");
-        welcomeLabel.setMaximumSize(new java.awt.Dimension(1200, 100));
-        welcomeLabel.setMinimumSize(new java.awt.Dimension(800, 100));
-        welcomeLabel.setPreferredSize(new java.awt.Dimension(1200, 100));
-        startScreen.add(welcomeLabel, java.awt.BorderLayout.PAGE_START);
-
-        startLeftPanel.setBackground(new java.awt.Color(255, 255, 255));
-        startLeftPanel.setMaximumSize(new java.awt.Dimension(100, 700));
-        startLeftPanel.setMinimumSize(new java.awt.Dimension(100, 400));
-        startLeftPanel.setPreferredSize(new java.awt.Dimension(100, 700));
-
-        javax.swing.GroupLayout startLeftPanelLayout = new javax.swing.GroupLayout(startLeftPanel);
-        startLeftPanel.setLayout(startLeftPanelLayout);
-        startLeftPanelLayout.setHorizontalGroup(
-            startLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        startLeftPanelLayout.setVerticalGroup(
-            startLeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 401, Short.MAX_VALUE)
-        );
-
-        startScreen.add(startLeftPanel, java.awt.BorderLayout.LINE_START);
-
-        startRightPanel.setBackground(new java.awt.Color(255, 255, 255));
-        startRightPanel.setMaximumSize(new java.awt.Dimension(100, 700));
-        startRightPanel.setMinimumSize(new java.awt.Dimension(100, 400));
-        startRightPanel.setPreferredSize(new java.awt.Dimension(100, 700));
-
-        javax.swing.GroupLayout startRightPanelLayout = new javax.swing.GroupLayout(startRightPanel);
-        startRightPanel.setLayout(startRightPanelLayout);
-        startRightPanelLayout.setHorizontalGroup(
-            startRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        startRightPanelLayout.setVerticalGroup(
-            startRightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 401, Short.MAX_VALUE)
-        );
-
-        startScreen.add(startRightPanel, java.awt.BorderLayout.LINE_END);
-
-        startBottomPanel.setBackground(new java.awt.Color(255, 255, 255));
-        startBottomPanel.setMaximumSize(new java.awt.Dimension(1200, 100));
-        startBottomPanel.setMinimumSize(new java.awt.Dimension(800, 100));
-        startBottomPanel.setPreferredSize(new java.awt.Dimension(1200, 100));
-        startBottomPanel.setLayout(new java.awt.GridBagLayout());
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jButton1.setText("index files");
-        jButton1.setMinimumSize(new java.awt.Dimension(150, 50));
-        jButton1.setPreferredSize(new java.awt.Dimension(150, 50));
-        startBottomPanel.add(jButton1, new java.awt.GridBagConstraints());
-
-        startScreen.add(startBottomPanel, java.awt.BorderLayout.PAGE_END);
-
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        startScreen.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        mainPanel.add(startScreen, "card2");
-
-        searchScreen.setMaximumSize(new java.awt.Dimension(1200, 900));
-        searchScreen.setMinimumSize(new java.awt.Dimension(800, 600));
-        searchScreen.setPreferredSize(new java.awt.Dimension(1200, 600));
 
         javax.swing.GroupLayout searchScreenLayout = new javax.swing.GroupLayout(searchScreen);
         searchScreen.setLayout(searchScreenLayout);
@@ -156,51 +79,89 @@ public class UIHandler extends javax.swing.JFrame {
         );
         searchScreenLayout.setVerticalGroup(
             searchScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 601, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         mainPanel.add(searchScreen, "card2");
-
-        mainScreen.setMaximumSize(new java.awt.Dimension(1200, 900));
-        mainScreen.setMinimumSize(new java.awt.Dimension(800, 600));
-        mainScreen.setPreferredSize(new java.awt.Dimension(1200, 900));
-
-        jButton2.setText("jButton2");
 
         javax.swing.GroupLayout mainScreenLayout = new javax.swing.GroupLayout(mainScreen);
         mainScreen.setLayout(mainScreenLayout);
         mainScreenLayout.setHorizontalGroup(
             mainScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainScreenLayout.createSequentialGroup()
-                .addContainerGap(356, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(351, 351, 351))
+            .addGap(0, 800, Short.MAX_VALUE)
         );
         mainScreenLayout.setVerticalGroup(
             mainScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainScreenLayout.createSequentialGroup()
-                .addGap(0, 572, Short.MAX_VALUE)
-                .addComponent(jButton2))
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         mainPanel.add(mainScreen, "card2");
+
+        startScreen.setBackground(Color.white);
+        startScreen.setLayout(new javax.swing.BoxLayout(startScreen, javax.swing.BoxLayout.Y_AXIS));
+
+        startWelcomeLabel.setBackground(Color.white);
+        startWelcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        startWelcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        startWelcomeLabel.setText("Welcome to overSearch! Please choose the directories you want to index for the search");
+        startWelcomeLabel.setAlignmentX(0.5F);
+        startWelcomeLabel.setPreferredSize(new java.awt.Dimension(800, 100));
+        startScreen.add(startWelcomeLabel);
+
+        directoryPanel.setLayout(new javax.swing.BoxLayout(directoryPanel, javax.swing.BoxLayout.LINE_AXIS));
+
+        directoryScrollPane.setBackground(Color.white);
+        directoryScrollPane.setMaximumSize(new java.awt.Dimension(600, 32767));
+        directoryScrollPane.setPreferredSize(new java.awt.Dimension(600, 2));
+        directoryPanel.add(directoryScrollPane);
+
+        startScreen.add(directoryPanel);
+
+        startBottomPanel.setBackground(Color.white);
+        startBottomPanel.setMaximumSize(new java.awt.Dimension(800, 100));
+        startBottomPanel.setMinimumSize(new java.awt.Dimension(800, 100));
+        startBottomPanel.setPreferredSize(new java.awt.Dimension(800, 100));
+
+        indexingButton.setText("index files");
+        indexingButton.setAlignmentX(0.5F);
+
+        javax.swing.GroupLayout startBottomPanelLayout = new javax.swing.GroupLayout(startBottomPanel);
+        startBottomPanel.setLayout(startBottomPanelLayout);
+        startBottomPanelLayout.setHorizontalGroup(
+            startBottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(startBottomPanelLayout.createSequentialGroup()
+                .addGap(353, 353, 353)
+                .addComponent(indexingButton)
+                .addContainerGap(344, Short.MAX_VALUE))
+        );
+        startBottomPanelLayout.setVerticalGroup(
+            startBottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, startBottomPanelLayout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(indexingButton)
+                .addGap(33, 33, 33))
+        );
+
+        startScreen.add(startBottomPanel);
+
+        mainPanel.add(startScreen, "card2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     
-    private void addActionListeners(){
+    private void addActionListeners(final Indexer indexer, final DirectoryChooser dir){
         
         
         /*toSearch.addActionListener(new ActionListener(){
@@ -221,28 +182,28 @@ public class UIHandler extends javax.swing.JFrame {
             }
         });*/
 
-        /*button.addActionListener(new ActionListener() {
+        indexingButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
-                ArrayList<String> directoryPaths = listDirectories();
-                dispose();
-                indexer.indexFiles(directoryPaths);
+                ArrayList<String> directoryPaths = dir.listDirectories();
+                //dispose();
+                //indexer.indexFiles(directoryPaths);
+                //CardLayout card = (CardLayout)(mainPanel.getLayout());
+                //card.show(mainPanel, "mainScreen");
             }
-        });*/
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel directoryPanel;
+    private javax.swing.JScrollPane directoryScrollPane;
+    private javax.swing.JButton indexingButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel mainScreen;
     private javax.swing.JPanel searchScreen;
     private javax.swing.JPanel startBottomPanel;
-    private javax.swing.JPanel startLeftPanel;
-    private javax.swing.JPanel startRightPanel;
     private javax.swing.JPanel startScreen;
-    private javax.swing.JLabel welcomeLabel;
+    private javax.swing.JLabel startWelcomeLabel;
     // End of variables declaration//GEN-END:variables
 }
