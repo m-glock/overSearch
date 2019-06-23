@@ -11,9 +11,12 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -208,38 +211,13 @@ public class UIHandler extends javax.swing.JFrame{
         //TODO: show all results? or somehow only load more when user is scrolling?
         qHandler.addParameter(ParameterType.QUERY, queryWord);
         SolrDocumentList results = qHandler.sendQuery(solr.client);
-        System.out.println("results received");
         response = SearchResultBuilder.getHTMLForResults(results);
 
         editorPaneResults.setText(response);
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void FilterActionPerformed(java.awt.event.ActionEvent evt){//GEN-FIRST:event_FilterActionPerformed
-        // TODO: open file from link or folder?
-        /*File file = new File("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2\\folder\\Mappe1.xlsx");
-        try {
-            System.out.println("file url: " + file.toURI().toURL());
-            editorPaneResults.setText("<a href=\"" + file.toURI().toURL() + "\">this is suppose to be a file</a>");
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }
-        editorPaneResults.addHyperlinkListener(new HyperlinkListener() {
-            public void hyperlinkUpdate(HyperlinkEvent e){
-                if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                    // Do something with e.getURL() here
-                    if (Desktop.isDesktopSupported()) {
-                        try {
-                            System.out.println("URL: " + e.getURL().toURI().toString().replace("file:",""));
-                            File myFile = new File(e.getURL().toURI().toString().replace("file:",""));
-                            Desktop.getDesktop().open(myFile);
-                        } catch (Exception ex) {
-                            // no application registered for PDFs
-                            System.out.println(ex.getMessage());
-                        }
-                    }
-                }
-            }
-        });*/
+
     }//GEN-LAST:event_FilterActionPerformed
 
     
@@ -256,6 +234,23 @@ public class UIHandler extends javax.swing.JFrame{
                 Indexer.indexFiles(directoryPaths);*/
                 CardLayout card = (CardLayout)(mainPanel.getLayout());
                 card.show(mainPanel, "mainPanel");
+            }
+        });
+
+        editorPaneResults.addHyperlinkListener(new HyperlinkListener() {
+            public void hyperlinkUpdate(HyperlinkEvent e){
+                if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                    if (Desktop.isDesktopSupported()) {
+                        try {
+                            String uri = e.getURL().toURI().toString();
+                            //TODO: open folder or file? and exception handling
+                            File myFile = new File(uri.replace("file:","").replace("%20"," "));
+                            Desktop.getDesktop().open(myFile.getParentFile());
+                        } catch (Exception ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                    }
+                }
             }
         });
     }
