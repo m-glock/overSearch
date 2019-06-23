@@ -1,5 +1,7 @@
 package com.mareike.solrsearch.UI;
 
+import com.mareike.solrsearch.Indexer;
+import com.mareike.solrsearch.Queries.SearchResultBuilder;
 import com.mareike.solrsearch.localDirectories.DirectoryChooser;
 import com.mareike.solrsearch.localDirectories.MultiSelectionTree;
 import com.mareike.solrsearch.ParameterType;
@@ -13,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -47,7 +50,7 @@ public class UIHandler extends javax.swing.JFrame{
         DirectoryChooser dir = new DirectoryChooser("C:/Users/mareike/Documents/Studium");
         qHandler = new QueryHandler();
         MultiSelectionTree tree = dir.getTree();
-        initComponents();
+        initComponents(tree);
         setEditorPane();
         addActionListeners(dir);
     }
@@ -65,13 +68,13 @@ public class UIHandler extends javax.swing.JFrame{
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents(MultiSelectionTree tree) {
 
         mainPanel = new javax.swing.JPanel();
         startScreen = new javax.swing.JPanel();
         startWelcomeLabel = new javax.swing.JLabel();
         directoryPanel = new javax.swing.JPanel();
-        directoryScrollPane = new javax.swing.JScrollPane();
+        directoryScrollPane = new javax.swing.JScrollPane(tree);
         startBottomPanel = new javax.swing.JPanel();
         indexButton = new javax.swing.JButton();
         searchScreen = new javax.swing.JPanel();
@@ -202,12 +205,11 @@ public class UIHandler extends javax.swing.JFrame{
         String response = "";
         String queryWord = searchBar.getText();
         //TODO: what happens if query word has weird characters
+        //TODO: show all results? or somehow only load more when user is scrolling?
         qHandler.addParameter(ParameterType.QUERY, queryWord);
         SolrDocumentList results = qHandler.sendQuery(solr.client);
-        //TODO: add all information with some HTML creator
-        for(SolrDocument doc : results){
-            response += "<p>" + doc.getFieldValue("stream_name") + "</p>";
-        }
+        System.out.println("results received");
+        response = SearchResultBuilder.getHTMLForResults(results);
 
         editorPaneResults.setText(response);
     }//GEN-LAST:event_searchBarActionPerformed
@@ -242,35 +244,16 @@ public class UIHandler extends javax.swing.JFrame{
 
     
     private void addActionListeners(final DirectoryChooser dir){
-        
-        
-        /*toSearch.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("clicked");
-                CardLayout card = (CardLayout)(mainPanel.getLayout());
-                card.show(mainPanel, "searchScreen");
-            }
-        });
-        
-        toStart.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("clicked");
-                CardLayout card = (CardLayout)(mainPanel.getLayout());
-                card.show(mainPanel, "startScreen");
-            }
-        });*/
 
         indexButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
-                /*ArrayList<String> directoryPaths = dir.listDirectories();
+                ArrayList<String> directoryPaths = dir.listDirectories();
                 for(String path : directoryPaths){
                     System.out.println(path);
                 }
-                indexer.indexFiles(directoryPaths);*/
+                Indexer.indexFiles(directoryPaths);
                 CardLayout card = (CardLayout)(mainPanel.getLayout());
                 card.show(mainPanel, "mainPanel");
             }

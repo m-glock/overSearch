@@ -32,7 +32,6 @@ public class QueryHandler {
         System.out.println("parameter are: " + params);
         try{
             QueryResponse response = client.query(params);
-            //System.out.println("response: " + response.toString());
             docs = response.getResults();
         }catch(IOException io){
             System.out.println("IOException");

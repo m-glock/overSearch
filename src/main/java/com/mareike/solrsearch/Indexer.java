@@ -8,16 +8,6 @@ import java.util.ArrayList;
 
 public class Indexer {
 
-    /*private ArrayList<String> includedDirectories;
-
-    public Indexer(){
-        includedDirectories = new ArrayList<>();
-    }
-
-    public void addDirectory(String path){
-        includedDirectories.add(path);
-    }*/
-
     private static String functionURL = "http://localhost:7071/api/IndexFilesToSolr?name=";
 
     public static void indexFiles(ArrayList<String> paths){
