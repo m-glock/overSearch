@@ -3,8 +3,12 @@ package com.mareike.solrsearch.UI;
 import com.mareike.solrsearch.DirectoryChooser.DirectoryChooser;
 import com.mareike.solrsearch.DirectoryChooser.MultiSelectionTree;
 import com.mareike.solrsearch.Indexer;
+import com.mareike.solrsearch.ParameterType;
+import com.mareike.solrsearch.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -32,11 +36,12 @@ public class UIHandler extends javax.swing.JFrame{
 
 
     private SolrInstance solr;
+    private QueryHandler qHandler;
+
     /**
      * Creates new form UIHandler
      */
     public UIHandler() {
-
         try {
             solr = new SolrInstance("http://localhost:8983/solr", "localDocs4");
         }catch(IOException io){
@@ -47,11 +52,12 @@ public class UIHandler extends javax.swing.JFrame{
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }
         //TODO: let user choose start directory?
-        DirectoryChooser dir = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium");
+        DirectoryChooser dir = new DirectoryChooser("C:/Users/mareike/Documents/Studium");
+        qHandler = new QueryHandler();
         MultiSelectionTree tree = dir.getTree();
         initComponents();
         setEditorPane();
-        addActionListeners(solr.getIndexer(), dir);
+        addActionListeners(dir);
     }
 
 
@@ -200,14 +206,23 @@ public class UIHandler extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        // TODO add your handling code here:
         //perform query on input string
+        String response = "";
+        String queryWord = searchBar.getText();
+        //TODO: what happens if query word has weird characters
+        qHandler.addParameter(ParameterType.QUERY, queryWord);
+        SolrDocumentList results = qHandler.sendQuery(solr.client);
+        //TODO: add all information with some HTML creator
+        for(SolrDocument doc : results){
+            response += "<p>" + doc.getFieldValue("stream_name") + "</p>";
+        }
 
+        editorPaneResults.setText(response);
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void FilterActionPerformed(java.awt.event.ActionEvent evt){//GEN-FIRST:event_FilterActionPerformed
         // TODO: open file from link or folder?
-        File file = new File("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2\\folder\\Mappe1.xlsx");
+        /*File file = new File("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2\\folder\\Mappe1.xlsx");
         try {
             System.out.println("file url: " + file.toURI().toURL());
             editorPaneResults.setText("<a href=\"" + file.toURI().toURL() + "\">this is suppose to be a file</a>");
@@ -230,11 +245,11 @@ public class UIHandler extends javax.swing.JFrame{
                     }
                 }
             }
-        });
+        });*/
     }//GEN-LAST:event_FilterActionPerformed
 
     
-    private void addActionListeners(final Indexer indexer, final DirectoryChooser dir){
+    private void addActionListeners(final DirectoryChooser dir){
         
         
         /*toSearch.addActionListener(new ActionListener(){
