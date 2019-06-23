@@ -249,11 +249,11 @@ public class UIHandler extends javax.swing.JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
-                ArrayList<String> directoryPaths = dir.listDirectories();
+                /*ArrayList<String> directoryPaths = dir.listDirectories();
                 for(String path : directoryPaths){
                     System.out.println(path);
                 }
-                Indexer.indexFiles(directoryPaths);
+                Indexer.indexFiles(directoryPaths);*/
                 CardLayout card = (CardLayout)(mainPanel.getLayout());
                 card.show(mainPanel, "mainPanel");
             }
