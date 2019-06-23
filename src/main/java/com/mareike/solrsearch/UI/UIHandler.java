@@ -6,11 +6,17 @@ import com.mareike.solrsearch.Indexer;
 import com.mareike.solrsearch.SolrInstance;
 import org.apache.solr.client.solrj.SolrServerException;
 
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,7 +28,7 @@ import java.util.ArrayList;
  *
  * @author mareike
  */
-public class UIHandler extends javax.swing.JFrame {
+public class UIHandler extends javax.swing.JFrame{
 
 
     private SolrInstance solr;
@@ -43,8 +49,15 @@ public class UIHandler extends javax.swing.JFrame {
         //TODO: let user choose start directory?
         DirectoryChooser dir = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium");
         MultiSelectionTree tree = dir.getTree();
-        initComponents(tree);
+        initComponents();
+        setEditorPane();
         addActionListeners(solr.getIndexer(), dir);
+    }
+
+
+    private void setEditorPane(){
+        editorPaneResults.setEditorKit(javax.swing.JEditorPane.createEditorKitForContentType("text/html"));
+        editorPaneResults.setEditable(false);
     }
 
     /**
@@ -54,30 +67,33 @@ public class UIHandler extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents(MultiSelectionTree tree) {
-
-        Color backgroundColor = Color.white;
+    private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
         startScreen = new javax.swing.JPanel();
         startWelcomeLabel = new javax.swing.JLabel();
         directoryPanel = new javax.swing.JPanel();
-        directoryScrollPane = new javax.swing.JScrollPane(tree);
+        directoryScrollPane = new javax.swing.JScrollPane();
         startBottomPanel = new javax.swing.JPanel();
         indexButton = new javax.swing.JButton();
         searchScreen = new javax.swing.JPanel();
         mainScreen = new javax.swing.JPanel();
+        searchBarPanel = new javax.swing.JPanel();
+        searchBar = new javax.swing.JTextField();
+        Filter = new javax.swing.JButton();
+        scrollPaneResults = new javax.swing.JScrollPane();
+        editorPaneResults = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setMinimumSize(new java.awt.Dimension(1000, 700));
+        setMinimumSize(new java.awt.Dimension(815, 600));
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
-        startScreen.setBackground(backgroundColor);
+        startScreen.setBackground(new java.awt.Color(255, 255, 255));
         startScreen.setLayout(new javax.swing.BoxLayout(startScreen, javax.swing.BoxLayout.Y_AXIS));
 
-        startWelcomeLabel.setBackground(backgroundColor);
+        startWelcomeLabel.setBackground(new java.awt.Color(255, 255, 255));
         startWelcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         startWelcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         startWelcomeLabel.setText("Welcome to overSearch! Please choose the directories you want to index for the search");
@@ -87,14 +103,14 @@ public class UIHandler extends javax.swing.JFrame {
 
         directoryPanel.setLayout(new javax.swing.BoxLayout(directoryPanel, javax.swing.BoxLayout.LINE_AXIS));
 
-        directoryScrollPane.setBackground(backgroundColor);
+        directoryScrollPane.setBackground(new java.awt.Color(255, 255, 255));
         directoryScrollPane.setMaximumSize(new java.awt.Dimension(600, 32767));
         directoryScrollPane.setPreferredSize(new java.awt.Dimension(600, 2));
         directoryPanel.add(directoryScrollPane);
 
         startScreen.add(directoryPanel);
 
-        startBottomPanel.setBackground(backgroundColor);
+        startBottomPanel.setBackground(new java.awt.Color(255, 255, 255));
         startBottomPanel.setMaximumSize(new java.awt.Dimension(800, 100));
         startBottomPanel.setMinimumSize(new java.awt.Dimension(800, 100));
         startBottomPanel.setPreferredSize(new java.awt.Dimension(800, 100));
@@ -127,7 +143,7 @@ public class UIHandler extends javax.swing.JFrame {
         searchScreen.setLayout(searchScreenLayout);
         searchScreenLayout.setHorizontalGroup(
             searchScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGap(0, 815, Short.MAX_VALUE)
         );
         searchScreenLayout.setVerticalGroup(
             searchScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,16 +152,36 @@ public class UIHandler extends javax.swing.JFrame {
 
         mainPanel.add(searchScreen, "searchPanel");
 
-        javax.swing.GroupLayout mainScreenLayout = new javax.swing.GroupLayout(mainScreen);
-        mainScreen.setLayout(mainScreenLayout);
-        mainScreenLayout.setHorizontalGroup(
-            mainScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-        mainScreenLayout.setVerticalGroup(
-            mainScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
-        );
+        mainScreen.setLayout(new javax.swing.BoxLayout(mainScreen, javax.swing.BoxLayout.Y_AXIS));
+
+        searchBarPanel.setMaximumSize(new java.awt.Dimension(800, 60));
+        searchBarPanel.setMinimumSize(new java.awt.Dimension(800, 60));
+        searchBarPanel.setPreferredSize(new java.awt.Dimension(800, 60));
+
+        searchBar.setText("Search");
+        searchBar.setMaximumSize(new java.awt.Dimension(700, 40));
+        searchBar.setMinimumSize(new java.awt.Dimension(700, 40));
+        searchBar.setPreferredSize(new java.awt.Dimension(700, 40));
+        searchBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBarActionPerformed(evt);
+            }
+        });
+        searchBarPanel.add(searchBar);
+
+        Filter.setText("Filter");
+        Filter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FilterActionPerformed(evt);
+            }
+        });
+        searchBarPanel.add(Filter);
+
+        mainScreen.add(searchBarPanel);
+
+        scrollPaneResults.setViewportView(editorPaneResults);
+
+        mainScreen.add(scrollPaneResults);
 
         mainPanel.add(mainScreen, "mainPanel");
 
@@ -162,6 +198,40 @@ public class UIHandler extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
+        // TODO add your handling code here:
+        //perform query on input string
+
+    }//GEN-LAST:event_searchBarActionPerformed
+
+    private void FilterActionPerformed(java.awt.event.ActionEvent evt){//GEN-FIRST:event_FilterActionPerformed
+        // TODO: open file from link or folder?
+        File file = new File("C:\\Users\\mareike\\Documents\\Studium\\2.Semester-SS16\\Info2\\folder\\Mappe1.xlsx");
+        try {
+            System.out.println("file url: " + file.toURI().toURL());
+            editorPaneResults.setText("<a href=\"" + file.toURI().toURL() + "\">this is suppose to be a file</a>");
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        editorPaneResults.addHyperlinkListener(new HyperlinkListener() {
+            public void hyperlinkUpdate(HyperlinkEvent e){
+                if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                    // Do something with e.getURL() here
+                    if (Desktop.isDesktopSupported()) {
+                        try {
+                            System.out.println("URL: " + e.getURL().toURI().toString().replace("file:",""));
+                            File myFile = new File(e.getURL().toURI().toString().replace("file:",""));
+                            Desktop.getDesktop().open(myFile);
+                        } catch (Exception ex) {
+                            // no application registered for PDFs
+                            System.out.println(ex.getMessage());
+                        }
+                    }
+                }
+            }
+        });
+    }//GEN-LAST:event_FilterActionPerformed
 
     
     private void addActionListeners(final Indexer indexer, final DirectoryChooser dir){
@@ -189,11 +259,11 @@ public class UIHandler extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
-                ArrayList<String> directoryPaths = dir.listDirectories();
+                /*ArrayList<String> directoryPaths = dir.listDirectories();
                 for(String path : directoryPaths){
                     System.out.println(path);
                 }
-                indexer.indexFiles(directoryPaths);
+                indexer.indexFiles(directoryPaths);*/
                 CardLayout card = (CardLayout)(mainPanel.getLayout());
                 card.show(mainPanel, "mainPanel");
             }
@@ -201,11 +271,16 @@ public class UIHandler extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Filter;
     private javax.swing.JPanel directoryPanel;
     private javax.swing.JScrollPane directoryScrollPane;
+    private javax.swing.JEditorPane editorPaneResults;
     private javax.swing.JButton indexButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel mainScreen;
+    private javax.swing.JScrollPane scrollPaneResults;
+    private javax.swing.JTextField searchBar;
+    private javax.swing.JPanel searchBarPanel;
     private javax.swing.JPanel searchScreen;
     private javax.swing.JPanel startBottomPanel;
     private javax.swing.JPanel startScreen;
