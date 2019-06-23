@@ -1,4 +1,4 @@
-package com.mareike.solrsearch.DirectoryChooser;
+package com.mareike.solrsearch.localDirectories;
 
 import java.io.File;
 import java.util.ArrayList;

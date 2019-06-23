@@ -1,4 +1,4 @@
-package com.mareike.solrsearch.DirectoryChooser;
+package com.mareike.solrsearch.localDirectories;
 
 /*
  * Copyright (c) 2008, 2010, Oracle and/or its affiliates. All rights reserved.

@@ -1,4 +1,4 @@
-package com.mareike.solrsearch;
+package com.mareike.solrsearch.Queries;
 
 public class SearchResultBuilder {
 
@@ -7,6 +7,8 @@ public class SearchResultBuilder {
     public SearchResultBuilder(){
 
     }
+
+    public String 
 
 
 

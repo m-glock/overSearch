@@ -1,15 +1,12 @@
 package com.mareike.solrsearch.UI;
 
 import com.mareike.solrsearch.SolrInstance;
-import com.mareike.solrsearch.DirectoryChooser.DirectoryChooser;
-import java.awt.CardLayout;
+import com.mareike.solrsearch.localDirectories.DirectoryChooser;
 import org.apache.solr.client.solrj.SolrServerException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

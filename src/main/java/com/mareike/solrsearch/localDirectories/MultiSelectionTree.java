@@ -1,4 +1,4 @@
-package com.mareike.solrsearch.DirectoryChooser;
+package com.mareike.solrsearch.localDirectories;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;

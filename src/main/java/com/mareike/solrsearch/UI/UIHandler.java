@@ -1,26 +1,18 @@
 package com.mareike.solrsearch.UI;
 
-import com.mareike.solrsearch.DirectoryChooser.DirectoryChooser;
-import com.mareike.solrsearch.DirectoryChooser.MultiSelectionTree;
-import com.mareike.solrsearch.Indexer;
+import com.mareike.solrsearch.localDirectories.DirectoryChooser;
+import com.mareike.solrsearch.localDirectories.MultiSelectionTree;
 import com.mareike.solrsearch.ParameterType;
-import com.mareike.solrsearch.QueryHandler;
+import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

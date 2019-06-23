@@ -1,5 +1,6 @@
-package com.mareike.solrsearch;
+package com.mareike.solrsearch.Queries;
 
+import com.mareike.solrsearch.ParameterType;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;

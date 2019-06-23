@@ -1,8 +1,7 @@
-package com.mareike.solrsearch.DirectoryChooser;
+package com.mareike.solrsearch.localDirectories;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
 
 public class MyFile {
     private final File mFile;
