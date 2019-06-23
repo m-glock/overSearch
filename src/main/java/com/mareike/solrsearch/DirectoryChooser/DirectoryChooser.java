@@ -15,12 +15,10 @@ public class DirectoryChooser extends JFrame {
 
     private MultiSelectionTree tree;
     private String basePath;
-    private Indexer indexer;
 
     //TODO: if node is selected, select all children as well?
-    public DirectoryChooser(Indexer indexer, String basePath){
+    public DirectoryChooser(String basePath){
         this.basePath = basePath;
-        this.indexer = indexer;
         final MyFile mf = new MyFile(new File(basePath));
         final FileSystemModel model = new FileSystemModel(mf);
         tree = new MultiSelectionTree(model);

@@ -9,7 +9,6 @@ import java.io.IOException;
 public class SolrInstance {
 
     public HttpSolrClient client;
-    private final Indexer indexer;
     private final String urlString;
     private String collectionName;
     
@@ -17,15 +16,17 @@ public class SolrInstance {
     public SolrInstance(String solrURL, String collection) throws IOException, SolrServerException{
         urlString = solrURL;
         collectionName = collection;
-
-        indexer = new Indexer();
         firstInit();
         startClient();
     }
 
     private void firstInit(){
-        //TODO: start solr as a service and add the config file
+        //TODO: start solr as a service and add the config file -> manually
         //TODO: check if Solr is running on provided URL. If this is not the case, show message that Solr is down and how to install it?
+        if(checkSolrConnection())
+            System.out.println("Solr is up and running");
+        else
+            System.out.println("Could not connect to Slr. Please ...");
     }
     
     private void startClient() throws IOException, SolrServerException {
@@ -35,7 +36,7 @@ public class SolrInstance {
             CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
             NamedList resp = client.request(req);
             System.out.println(resp.toString());
-        }catch(HttpSolrClient.RemoteSolrException ex){
+        }catch(HttpSolrClient.RemoteSolrException ex){ //TODO: need to do something if 'collection already exists'?
             System.out.println("RemoteSolrException with message: " + ex.getMessage());
         }
         client.setBaseURL(client.getBaseURL() + "/" + collectionName);
@@ -43,13 +44,12 @@ public class SolrInstance {
     }
     
     public Boolean checkSolrConnection(){
-        
-        return true;
+        Boolean canConnect = false;
+
+        return canConnect;
     }
 
     public String getSolrUrl(){ return urlString; }
 
     public String getCollectionName(){ return collectionName; }
-
-    public Indexer getIndexer() {return indexer; }
 }

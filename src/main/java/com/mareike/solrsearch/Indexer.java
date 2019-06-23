@@ -24,11 +24,11 @@ public class Indexer {
         System.out.println("list from handler: ");
         for(String path : paths){
             System.out.println(path);
-            indexSingleFile(path);
+            indexFileOrFolder(path);
         }
     }
 
-    public static void indexSingleFile(String path){
+    public static void indexFileOrFolder(String path){
         path = path.replace(" ", "_");
         try{
             URL url = new URL(functionURL + path);

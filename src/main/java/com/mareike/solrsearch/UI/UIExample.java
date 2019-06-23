@@ -47,7 +47,7 @@ public class UIExample extends javax.swing.JFrame {
         indexDocuments.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                DirectoryChooser frame = new DirectoryChooser(solr.getIndexer(), "C:/Users/mareike/Documents/Studium");
+                DirectoryChooser frame = new DirectoryChooser("C:/Users/mareike/Documents/Studium");
                 frame.setSize(800, 600);
                 frame.setVisible(true);
             }

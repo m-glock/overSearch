@@ -2,23 +2,12 @@ package com.mareike.solrsearch;
 
 import com.mareike.solrsearch.UI.UIExample;
 import com.mareike.solrsearch.UI.UIHandler;
+
 import java.awt.Color;
 
 public class Main {
     
     public static void main(String[] args){
-
-        //TODO: add this to QueryHandler
-        /*
-        Query query = new Query();
-        //happens later from UI
-        query.addParameter(ParameterType.QUERY, "singleton");
-        query.addParameter(ParameterType.FIELDlIST, "id,start");
-
-        SolrDocumentList results = query.sendQuery(solr);*/
-
-
-
 
         setLookAndFeel();
 

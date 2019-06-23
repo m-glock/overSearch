@@ -193,7 +193,7 @@ public class WatchDirectory implements Runnable{
                 /*Indexer.indexSingleFile(path.toString());
                 break;*/
             case "ENTRY_CREATE":
-                Indexer.indexSingleFile(path.toString());
+                Indexer.indexFileOrFolder(path.toString());
                 break;
             case "ENTRY_DELETE":
                 Indexer.deleteFile(path.getFileName().toString());
