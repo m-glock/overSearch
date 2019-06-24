@@ -13,21 +13,10 @@ public class Constants {
     public static final String TOKEN_ENDPOINT = "/oauth2/v2.0/token";
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    //solrSearchEnterprise imiba - working
-    /*public final static String CLIENTID = "f790fe06-5b01-439a-af4b-3d1c8c6ea2f1";
-    public final static String CLIENTSECRET = "I_UEMKyPlm:.7/CMUM81kxteTSCcurC3";
-    public final static String TENANT = "f535a890-cd9a-4331-88f6-3c188ce19127";*/
-
-    //solrSearch imiba AAD - working
-    /*public final static String CLIENTID = "4e4d4263-af02-4741-bd67-ac0e3befccf1";
-    public final static String CLIENTSECRET = "O.GIGj9uk/FLinMNgGh8+aJnrDAP7T+8";
-    public final static String TENANT = "f535a890-cd9a-4331-88f6-3c188ce19127";*/
-
     //solrSearch imibachelor
     public final static String CLIENTID = "65ce0e28-4e0d-4e19-b1b3-d81b34cc5f9c";
     public final static String CLIENTSECRET = "lhe_c-?532EV1f/k6Wnb08aTn-OgvSh6";
     public final static String TENANT = "e4a09b27-9de1-4dba-a0bf-84c861f3fe2e";
 
-    //public final static String REDIRECTURI = "overSearch://auth";
     public final static String[] SCOPES = {"https://graph.microsoft.com/.default"};
 }
