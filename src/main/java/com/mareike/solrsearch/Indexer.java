@@ -24,6 +24,31 @@ public class Indexer {
             URL url = new URL(functionURL + path);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
+
+            int responseCode = con.getResponseCode();
+            //TODO: remove this when everything is working
+            System.out.println("\nSending 'GET' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+        }catch(Exception prot){
+            System.out.println("Protocol Exception: " + prot.getClass().toString() + " and message " + prot.getMessage());
+        }
+    }
+
+    public static void indexSharePointFiles(){
+        try{
+            URL url = new URL("http://localhost:7074/api/SharePointConnector?name=Mareike");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+
             int responseCode = con.getResponseCode();
             //TODO: remove this when everything is working
             System.out.println("\nSending 'GET' request to URL : " + url);
