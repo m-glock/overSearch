@@ -1,19 +1,17 @@
 package com.mareike.solrsearch;
 
-import com.mareike.solrsearch.localDirectories.WatchDirectory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class Indexer {
 
-    private static String indexFunctionURL = "http://localhost:7071/api/IndexFilesToSolr?name=";
+    private static final String indexFunctionURL = "http://localhost:7071/api/IndexFilesToSolr?name=";
+    private static final String SharePointFunctionURL = "http://localhost:7074/api/SharePointConnector?name=default";
 
 
     public static void indexFiles(ArrayList<String> paths){
@@ -28,8 +26,9 @@ public class Indexer {
         path = path.replace(" ", "_");
         try{
             final URL url;
-            if(path == "") {
-                url = new URL("http://localhost:7074/api/SharePointConnector?name=Mareike");
+            //TODO: else if?
+            if(path == SharePointFunctionURL) {
+                url = new URL("");
             }else{
                 url = new URL(indexFunctionURL + path);
             }

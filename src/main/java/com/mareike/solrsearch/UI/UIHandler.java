@@ -40,6 +40,7 @@ public class UIHandler extends javax.swing.JFrame{
      * Creates new form UIHandler
      */
     public UIHandler() {
+        //TODO: if function name exists: immediately open main screen without directory chooser
         try {
             solr = new SolrInstance("http://localhost:8983/solr", "localDocs4");
         }catch(IOException io){
