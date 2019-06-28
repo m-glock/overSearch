@@ -13,7 +13,7 @@ public class SolrInstance {
     private String collectionName;
     
 
-    public SolrInstance(String solrURL, String collection) throws IOException, SolrServerException{
+    public SolrInstance(String solrURL, String collection) throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
         urlString = solrURL;
         collectionName = collection;
         firstInit();
@@ -29,16 +29,12 @@ public class SolrInstance {
             System.out.println("Could not connect to Slr. Please ...");
     }
     
-    private void startClient() throws IOException, SolrServerException {
+    private void startClient() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
         client = new HttpSolrClient.Builder(urlString).build();
         String configName = "localDocs";
-        try{
-            CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
-            NamedList resp = client.request(req);
-            System.out.println(resp.toString());
-        }catch(HttpSolrClient.RemoteSolrException ex){ //TODO: need to do something if 'collection already exists'?
-            System.out.println("RemoteSolrException with message: " + ex.getMessage());
-        }
+        CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
+        NamedList resp = client.request(req);
+        System.out.println(resp.toString());
         client.setBaseURL(client.getBaseURL() + "/" + collectionName);
         System.out.println("Solr instance created with url: " + client.getBaseURL());
     }

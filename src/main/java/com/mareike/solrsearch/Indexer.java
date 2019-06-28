@@ -20,22 +20,20 @@ public class Indexer {
             System.out.println(path);
             indexFileOrFolder(path);
         }
+        indexSharePointFiles();
     }
 
     public static void indexFileOrFolder(String path){
+        //TODO: find better character for replacement and change it in the function as well
         path = path.replace(" ", "_");
         try{
-            final URL url;
-            //TODO: else if?
-            if(path == null) {
-                url = new URL(SharePointFunctionURL);
-            }else{
-                url = new URL(indexFunctionURL + path);
-            }
+            final URL url = new URL(indexFunctionURL + path);
             final HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            //TODO: add body to request
             con.setRequestMethod("GET");
+            //TODO: add body to request
 
+            System.out.println("Path is: " + path);
+            System.out.println("url is: " + url.toString());
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run(){
@@ -64,6 +62,43 @@ public class Indexer {
             }
         }catch(Exception prot){
             System.out.println("Protocol Exception: " + prot.getClass().toString() + " and message " + prot.getMessage());
+        }
+    }
+
+    public static void indexSharePointFiles(){
+        try {
+            final URL url = new URL(SharePointFunctionURL);
+            final HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            //TODO: better to call connect()?
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run(){
+                    try (BufferedReader in = new BufferedReader(
+                            new InputStreamReader(con.getInputStream()))){
+                        int responseCode = con.getResponseCode();
+                        //TODO: remove this when everything is working
+                        System.out.println("\nSending 'GET' request to URL : " + url);
+                        System.out.println("Response Code : " + responseCode);
+
+                        String inputLine;
+                        StringBuffer response = new StringBuffer();
+
+                        while ((inputLine = in.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                    }catch(IOException ex){
+                        System.out.println(ex.getMessage());
+                    }
+                }
+            });
+            t.start();
+            while(t.isAlive()){
+                System.out.println(".");
+                TimeUnit.SECONDS.sleep(5);
+            }
+        }catch(Exception ex){
+            System.out.println("Error occured while trying to send the request to the SharePointConnector function: " + ex.getMessage());
         }
     }
 

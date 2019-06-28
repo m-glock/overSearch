@@ -8,6 +8,7 @@ import com.mareike.solrsearch.ParameterType;
 import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
@@ -47,6 +48,12 @@ public class UIHandler extends javax.swing.JFrame{
             System.out.println("IOException: " + io.getMessage());
         }catch(SolrServerException serv){
             System.out.println("SolrServerException: " + serv.getMessage());
+        }catch(HttpSolrClient.RemoteSolrException ex){
+            System.out.println("RemoteSolrException with message: " + ex.getMessage());
+            if(ex.getMessage().contains("collection already exists")){
+                //TODO: open search screen
+                System.out.println("Collection exists");
+            }
         }catch(Exception e){
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }
@@ -229,9 +236,7 @@ public class UIHandler extends javax.swing.JFrame{
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
                 ArrayList<String> directoryPaths = dir.listDirectories();
-                for(String path : directoryPaths){
-                    System.out.println(path);
-                }
+                //Indexes all files from the paths as well as the SharePoint files
                 Indexer.indexFiles(directoryPaths);
                 CardLayout card = (CardLayout)(mainPanel.getLayout());
                 card.show(mainPanel, "mainPanel");
