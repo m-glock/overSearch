@@ -240,7 +240,7 @@ public class UIHandler extends javax.swing.JFrame{
                 //code to save paths in index handler and close frame
                 ArrayList<String> directoryPaths = dir.listDirectories();
                 //Indexes all files from the paths as well as the SharePoint files
-                Indexer.indexFiles(directoryPaths);
+                Indexer.indexFiles(directoryPaths, solr.getCollectionName());
                 CardLayout card = (CardLayout)(mainPanel.getLayout());
                 card.show(mainPanel, "mainPanel");
             }
