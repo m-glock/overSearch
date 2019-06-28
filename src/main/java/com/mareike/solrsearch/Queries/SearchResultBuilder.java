@@ -26,7 +26,7 @@ public class SearchResultBuilder {
             }
             document += fieldValue(doc, "content_type");
             document += fieldValue(doc, "meta_creation_date");
-            document += fieldValue(doc, "owner");
+            document += fieldValue(doc, "creator");
             document += path;
 
             document += "</div>";
@@ -37,7 +37,7 @@ public class SearchResultBuilder {
 
     private static String fieldValue(SolrDocument doc, String fieldName){
         //returns "[true]" -> remove square brackets
-        String fieldValue = (doc.getFieldValue(fieldName) == null) ? "unknown" : doc.getFieldValue(fieldName).toString();
+        String fieldValue = (doc.getFieldValue(fieldName) == null) ? "" : doc.getFieldValue(fieldName).toString();
         return fieldValue.replaceAll("\\[", "").replaceAll("]","");
     }
 }

@@ -22,7 +22,7 @@ public class Indexer {
             System.out.println(path);
             indexFileOrFolder(path);
         }
-        //indexSharePointFiles();
+        indexSharePointFiles();
     }
 
     public static void indexFileOrFolder(String path){
@@ -36,7 +36,9 @@ public class Indexer {
             con.setDoOutput(true);
             OutputStream os = con.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
-            osw.write("{\"collection name\": \"" + collectionName + "\"}");
+            String st = "{\"collectionName\": \"" + collectionName + "\"}";
+            osw.write(st);
+            System.out.println(st);
             osw.flush();
             osw.close();
             os.close();  //don't forget to close the OutputStream
@@ -46,7 +48,14 @@ public class Indexer {
                 public void run(){
                     try{
                         System.out.println("\nSending 'POST' request to URL : " + url);
-                        con.connect();
+                        //con.getResponseCode();
+                        BufferedReader in = new BufferedReader(new InputStreamReader(
+                                con.getInputStream()));
+                        String inputLine;
+                        while ((inputLine = in.readLine()) != null)
+                            System.out.println(inputLine);
+                        in.close();
+
                     }catch(IOException ex){
                         System.out.println(ex.getMessage());
                     }
@@ -72,7 +81,12 @@ public class Indexer {
                 public void run(){
                     try{
                         System.out.println("\nSending 'GET' request to URL : " + url);
-                        con.connect();
+                        BufferedReader in = new BufferedReader(new InputStreamReader(
+                                con.getInputStream()));
+                        String inputLine;
+                        while ((inputLine = in.readLine()) != null)
+                            System.out.println(inputLine);
+                        in.close();
                     }catch(IOException ex){
                         System.out.println(ex.getMessage());
                     }

@@ -22,6 +22,9 @@ public class SolrInstance {
 
     public SolrInstance(String solrURL){
         urlString = solrURL;
+        int index = solrURL.lastIndexOf("/");
+        collectionName = solrURL.substring(index+1);
+        System.out.println("collection name: " + collectionName);
         client = new HttpSolrClient.Builder(urlString).build();
     }
 
