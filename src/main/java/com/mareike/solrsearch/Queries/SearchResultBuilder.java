@@ -36,7 +36,7 @@ public class SearchResultBuilder {
             //document += "<h2>" + url + " " + fieldValue(doc, "stream_name") + "</h2>";
             document += fieldValue(doc, "content_type");
             document += fieldValue(doc, "meta_creation_date");
-            document += fieldValue(doc, "creator");
+            document += fieldValue(doc, "owner");
             document += path;
 
             document += "</div>";
