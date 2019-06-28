@@ -27,8 +27,8 @@ public class Indexer {
         try{
             final URL url;
             //TODO: else if?
-            if(path == SharePointFunctionURL) {
-                url = new URL("");
+            if(path == null) {
+                url = new URL(SharePointFunctionURL);
             }else{
                 url = new URL(indexFunctionURL + path);
             }

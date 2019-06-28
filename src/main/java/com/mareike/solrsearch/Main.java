@@ -3,7 +3,7 @@ package com.mareike.solrsearch;
 import com.mareike.solrsearch.UI.UIExample;
 import com.mareike.solrsearch.UI.UIHandler;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class Main {
     
@@ -20,6 +20,22 @@ public class Main {
                 ex.getContentPane().setBackground(Color.white);
             }
         });
+
+
+        /*try{
+            Parser parser = new AutoDetectParser();
+            BodyContentHandler handler = new BodyContentHandler();
+            Metadata metadata = new Metadata();
+            File file = new File("C:\\Users\\mareike\\Documents\\Studium\\8.Semester-SS19\\Bachelor\\english-words\\test files\\with query word\\cump.txt");
+            InputStream content = new FileInputStream(file);
+            parser.parse(content, handler, metadata, new ParseContext());
+            for (String name: metadata.names()) {
+                System.out.println(name + ": " + metadata.get(name));
+            }
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }*/
+
 
     }
     
