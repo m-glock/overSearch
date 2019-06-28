@@ -38,7 +38,6 @@ public class Indexer {
             OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
             String st = "{\"collectionName\": \"" + collectionName + "\"}";
             osw.write(st);
-            System.out.println(st);
             osw.flush();
             osw.close();
             os.close();  //don't forget to close the OutputStream

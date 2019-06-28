@@ -19,6 +19,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /*
@@ -257,12 +260,22 @@ public class UIHandler extends javax.swing.JFrame{
                 if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
                     if (Desktop.isDesktopSupported()) {
                         try {
-                            String uri = e.getURL().toURI().toString();
+                            System.out.println("url: " + e.getURL().toString());
+                            URI uri = e.getURL().toURI();
                             //TODO: open folder or file? and exception handling
-                            File myFile = new File(uri.replace("file:","").replace("%20"," "));
-                            Desktop.getDesktop().open(myFile);
-                        } catch (Exception ex) {
-                            System.out.println(ex.getMessage());
+                            if(uri.toString().contains("sharepoint")){
+                                System.out.println("URI " + uri + "is a sharepoint uri.");
+                                Desktop.getDesktop().browse(uri);
+                            }else{
+                                System.out.println("before create file");
+                                File myFile = new File(uri.toString().replace("file:","").replace("%20"," "));
+                                System.out.println("after create file. path is: " + myFile.getAbsolutePath());
+                                Desktop.getDesktop().open(myFile);
+                            }
+                        } catch (URISyntaxException ex) {
+                            System.out.println("Message uri: " + ex.getMessage());
+                        } catch(IOException io){
+                            System.out.println("Message io: " + io.getMessage());
                         }
                     }
                 }

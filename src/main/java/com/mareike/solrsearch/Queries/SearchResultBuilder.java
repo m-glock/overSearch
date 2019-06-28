@@ -14,16 +14,26 @@ public class SearchResultBuilder {
         for (SolrDocument doc : list){
             String document = "<div>";
             //TODO: add picture for content type
-            //String path = fieldValue(doc, "path").replaceAll("\\\\","/");
+            //String path = fieldValue(doc, "path").replace("\\","/");
             String path = fieldValue(doc, "path");
-            File file = new File(path);
             //TODO: exception handling
+            URL url;
             try {
-                URL url = file.toURI().toURL();
-                document += "<h2><a href=\"" + url + "\">" + fieldValue(doc, "stream_name") + "</a></h2>";
+                if(path.contains("sharepoint")){
+                    url = new URL(path);
+                }else{
+                    File file = new File(path);
+                    url = file.toURI().toURL();
+                }
             }catch(MalformedURLException ex){
-                document += "<h2>" + fieldValue(doc, "stream_name") + "</a></h2>";
+                System.out.println("URL exception");
+                //TODO
+                url = null;
             }
+            System.out.println("Path is: " + url.toString());
+
+            document += "<h2><a href=\"" + url + "\">" + fieldValue(doc, "stream_name") + "</a></h2>";
+            //document += "<h2>" + url + " " + fieldValue(doc, "stream_name") + "</h2>";
             document += fieldValue(doc, "content_type");
             document += fieldValue(doc, "meta_creation_date");
             document += fieldValue(doc, "creator");
