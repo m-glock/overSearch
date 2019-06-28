@@ -42,8 +42,10 @@ public class UIHandler extends javax.swing.JFrame{
      */
     public UIHandler() {
         //TODO: if function name exists: immediately open main screen without directory chooser
+        String solrURL = "http://localhost:8983/solr";
+        String collectionName = "localDocs4";
         try {
-            solr = new SolrInstance("http://localhost:8983/solr", "localDocs4");
+            solr = new SolrInstance(solrURL, collectionName);
         }catch(IOException io){
             System.out.println("IOException: " + io.getMessage());
         }catch(SolrServerException serv){
@@ -53,6 +55,7 @@ public class UIHandler extends javax.swing.JFrame{
             if(ex.getMessage().contains("collection already exists")){
                 //TODO: open search screen
                 System.out.println("Collection exists");
+                solr= new SolrInstance(solrURL + "/" + collectionName);
             }
         }catch(Exception e){
             System.out.println(e.getClass().getName() + ": " + e.getMessage());

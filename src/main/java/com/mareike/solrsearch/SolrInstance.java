@@ -20,6 +20,11 @@ public class SolrInstance {
         startClient();
     }
 
+    public SolrInstance(String solrURL){
+        urlString = solrURL;
+        client = new HttpSolrClient.Builder(urlString).build();
+    }
+
     private void firstInit(){
         //TODO: start solr as a service and add the config file -> manually
         //TODO: check if Solr is running on provided URL. If this is not the case, show message that Solr is down and how to install it?
