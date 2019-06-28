@@ -44,6 +44,7 @@ public class UIHandler extends javax.swing.JFrame{
         //TODO: if function name exists: immediately open main screen without directory chooser
         String solrURL = "http://localhost:8983/solr";
         String collectionName = "localDocs4";
+        Boolean collectionExists = false;
         try {
             solr = new SolrInstance(solrURL, collectionName);
         }catch(IOException io){
@@ -56,6 +57,7 @@ public class UIHandler extends javax.swing.JFrame{
                 //TODO: open search screen
                 System.out.println("Collection exists");
                 solr= new SolrInstance(solrURL + "/" + collectionName);
+                collectionExists = true;
             }
         }catch(Exception e){
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
@@ -65,6 +67,10 @@ public class UIHandler extends javax.swing.JFrame{
         qHandler = new QueryHandler();
         MultiSelectionTree tree = dir.getTree();
         initComponents(tree);
+        if(collectionExists) {
+            CardLayout card = (CardLayout) (mainPanel.getLayout());
+            card.show(mainPanel, "mainPanel");
+        }
         setEditorPane();
         addActionListeners(dir);
     }
@@ -254,7 +260,7 @@ public class UIHandler extends javax.swing.JFrame{
                             String uri = e.getURL().toURI().toString();
                             //TODO: open folder or file? and exception handling
                             File myFile = new File(uri.replace("file:","").replace("%20"," "));
-                            Desktop.getDesktop().open(myFile.getParentFile());
+                            Desktop.getDesktop().open(myFile);
                         } catch (Exception ex) {
                             System.out.println(ex.getMessage());
                         }
