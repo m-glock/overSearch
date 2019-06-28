@@ -1,96 +1,96 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.mareike.solr-search</groupId>
-  <artifactId>overSearch</artifactId>
-  <packaging>jar</packaging>
-  <version>1.0</version>
-  <name>overSearch</name>
-  <url>http://maven.apache.org</url>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mareike.solr-search</groupId>
+    <artifactId>overSearch</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0</version>
+    <name>overSearch</name>
+    <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+    </properties>
 
-  <build>
-      <defaultGoal>package</defaultGoal>
-      <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.5.1</version>
-            <configuration>
-                <source>1.7</source>
-                <target>1.7</target>
-            </configuration>
-        </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>1.7.1</version>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>shade</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <shadedArtifactAttached>true</shadedArtifactAttached>
-                <shadedClassifierName>shaded</shadedClassifierName>
-                <transformers>
-                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                        <mainClass>com.mareike.solrsearch.Main</mainClass>
-                    </transformer>
-                </transformers>
-            </configuration>
-        </plugin>
-        <plugin>
-            <groupId>com.akathist.maven.plugins.launch4j</groupId>
-            <artifactId>launch4j-maven-plugin</artifactId>
-            <version>1.5.1</version>
-            <executions>
-                <execution>
-                    <id>l4j-clui</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>launch4j</goal>
-                    </goals>
-                    <configuration>
-                        <headerType>gui</headerType>
-                        <jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
-                        <outfile>${project.build.directory}/overSearch.exe</outfile>
-                        <downloadUrl>http://java.com/download</downloadUrl>
-                        <classPath>
+    <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.7.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                    <shadedClassifierName>shaded</shadedClassifierName>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                             <mainClass>com.mareike.solrsearch.Main</mainClass>
-                            <preCp>anything</preCp>
-                        </classPath>
-                        
-                        <jre>
-                            <minVersion>1.6.0</minVersion>
-                            <jdkPreference>preferJre</jdkPreference>
-                        </jre>
-                        <versionInfo>
-                            <fileVersion>1.0.0.0</fileVersion>
-                            <txtFileVersion>${project.version}</txtFileVersion>
-                            <fileDescription>${project.name}</fileDescription>
-                            <copyright>2012 hasCode.com</copyright>
-                            <productVersion>1.0.0.0</productVersion>
-                            <txtProductVersion>1.0.0.0</txtProductVersion>
-                            <productName>${project.name}</productName>
-                            <companyName>hasCode.com</companyName>
-                            <internalName>hasCode</internalName>
-                            <originalFilename>hasCode.exe</originalFilename>
-                        </versionInfo>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
+                        </transformer>
+                    </transformers>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <version>1.5.1</version>
+                <executions>
+                    <execution>
+                        <id>l4j-clui</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                        <configuration>
+                            <headerType>gui</headerType>
+                            <jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
+                            <outfile>${project.build.directory}/overSearch.exe</outfile>
+                            <downloadUrl>http://java.com/download</downloadUrl>
+                            <classPath>
+                                <mainClass>com.mareike.solrsearch.Main</mainClass>
+                                <preCp>anything</preCp>
+                            </classPath>
+
+                            <jre>
+                                <minVersion>1.6.0</minVersion>
+                                <jdkPreference>preferJre</jdkPreference>
+                            </jre>
+                            <versionInfo>
+                                <fileVersion>1.0.0.0</fileVersion>
+                                <txtFileVersion>${project.version}</txtFileVersion>
+                                <fileDescription>${project.name}</fileDescription>
+                                <copyright>2012 hasCode.com</copyright>
+                                <productVersion>1.0.0.0</productVersion>
+                                <txtProductVersion>1.0.0.0</txtProductVersion>
+                                <productName>${project.name}</productName>
+                                <companyName>hasCode.com</companyName>
+                                <internalName>hasCode</internalName>
+                                <originalFilename>hasCode.exe</originalFilename>
+                            </versionInfo>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     <repositories>
         <repository>
             <id>unknown-jars-temp-repo</id>
@@ -99,35 +99,30 @@
         </repository>
     </repositories>
     <dependencies>
-    <dependency>
-      <groupId>org.apache.solr</groupId>
-      <artifactId>solr-solrj</artifactId>
-      <version>7.7.0</version>
-    </dependency>
-      <dependency>
-          <groupId>com.microsoft.graph</groupId>
-          <artifactId>microsoft-graph</artifactId>
-          <version>1.4.0</version>
-      </dependency>
-      <dependency>
-          <groupId>org.apache.oltu.oauth2</groupId>
-          <artifactId>org.apache.oltu.oauth2.client</artifactId>
-          <version>1.0.2</version>
-      </dependency>
-      <dependency>
-          <groupId>com.squareup.okhttp3</groupId>
-          <artifactId>okhttp</artifactId>
-          <version>3.12.1</version>
-      </dependency>
-      <dependency>
-          <groupId>com.microsoft.graph</groupId>
-          <artifactId>microsoft-graph-core</artifactId>
-          <version>1.0.0</version>
-      </dependency>
         <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>AbsoluteLayout</artifactId>
-            <version>SNAPSHOT</version>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>7.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.graph</groupId>
+            <artifactId>microsoft-graph</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.client</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.graph</groupId>
+            <artifactId>microsoft-graph-core</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>
