@@ -36,7 +36,7 @@ public class Indexer {
             con.setDoOutput(true);
             OutputStream os = con.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
-            osw.write("\"collection name\": \"" + collectionName + "\",\"files\": {}");
+            osw.write("{\"collection name\": \"" + collectionName + "\"}");
             osw.flush();
             osw.close();
             os.close();  //don't forget to close the OutputStream
