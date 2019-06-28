@@ -13,7 +13,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Indexer {
 
-    private static String functionURL = "http://localhost:7071/api/IndexFilesToSolr?name=";
+    private static String indexFunctionURL = "http://localhost:7071/api/IndexFilesToSolr?name=";
+
 
     public static void indexFiles(ArrayList<String> paths){
         System.out.println("list from handler: ");
@@ -26,8 +27,14 @@ public class Indexer {
     public static void indexFileOrFolder(String path){
         path = path.replace(" ", "_");
         try{
-            final URL url = new URL(functionURL + path);
+            final URL url;
+            if(path == "") {
+                url = new URL("http://localhost:7074/api/SharePointConnector?name=Mareike");
+            }else{
+                url = new URL(indexFunctionURL + path);
+            }
             final HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            //TODO: add body to request
             con.setRequestMethod("GET");
 
             Thread t = new Thread(new Runnable() {
@@ -61,35 +68,11 @@ public class Indexer {
         }
     }
 
-    public static void indexSharePointFiles(){
-        try{
-            URL url = new URL("http://localhost:7074/api/SharePointConnector?name=Mareike");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-
-            int responseCode = con.getResponseCode();
-            //TODO: remove this when everything is working
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-        }catch(Exception prot){
-            System.out.println("Protocol Exception: " + prot.getClass().toString() + " and message " + prot.getMessage());
-        }
-    }
-
     public static void deleteFile(String fileName){
         fileName = fileName.replace(" ", "_");
         try{
             //TODO: change function to choose between indexing and deleting -> if both (update) the the two methods here are called
-            URL url = new URL(functionURL + fileName);
+            URL url = new URL(indexFunctionURL + fileName);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
