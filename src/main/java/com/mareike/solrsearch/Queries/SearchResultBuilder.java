@@ -10,7 +10,6 @@ import java.util.List;
 
 public class SearchResultBuilder {
 
-
     public static String getHTMLForResults(QueryResponse response){
         SolrDocumentList list = response.getResults();
 

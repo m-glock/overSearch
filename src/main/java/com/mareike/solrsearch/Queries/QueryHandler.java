@@ -4,24 +4,17 @@ import com.mareike.solrsearch.ParameterType;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.MapSolrParams;
 import org.apache.solr.common.params.SolrParams;
-
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class QueryHandler {
 
     private HashMap<String, String> parameters;
-    private SolrDocumentList docs;
 
     public QueryHandler(){
         parameters = new HashMap<>();
-        docs = new SolrDocumentList();
     }
 
     public void addParameter(ParameterType type, String values){
@@ -50,7 +43,6 @@ public class QueryHandler {
             System.out.println("Unknown Exception");
         }finally {
             parameters.clear();
-            System.out.println("parameters removed: " + parameters.isEmpty());
         }
         return null;
     }
@@ -61,10 +53,10 @@ public class QueryHandler {
         //these parameters are the same for every query
         parameters.put("defType", "edismax");
         parameters.put("timeAllowed", "10000");
+        parameters.put(ParameterType.ROWS.parameter,"20");
         parameters.put("hl", "true");
         parameters.put("hl.fragsize", "500");
         parameters.put("hl.fl", "_text_");
-        //parameters.put(ParameterType.FIELDlIST.parameter,"stream");
 
         return new MapSolrParams(parameters);
     }
