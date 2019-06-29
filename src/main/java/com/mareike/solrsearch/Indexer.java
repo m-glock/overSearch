@@ -105,7 +105,7 @@ public class Indexer {
             //TODO: change function to choose between indexing and deleting -> if both (update) the the two methods here are called
             URL url = new URL(indexFunctionURL + fileName);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
+            con.setRequestMethod(HttpMethod.GET.name());
             con.setRequestProperty("collection",collectionName);
 
             System.out.println("Sending request to delete " + fileName + " with http method " + con.getRequestMethod());

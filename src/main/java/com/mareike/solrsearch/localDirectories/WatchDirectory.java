@@ -190,41 +190,11 @@ public class WatchDirectory implements Runnable{
 
     private void updateFiles(WatchEvent event, Path path){
         String extension = FilenameUtils.getExtension(path.toString());
-        /*if(extension == "" && event.kind().name() == "ENTRY_DELETE"){
-            System.out.println("folder has been deleted: " + path.toString());
-            folderDeleted = true;
-        }
-        if(extension != "" && !path.toString().contains("~$") && !path.toString().endsWith("tmp")){
-            switch(event.kind().name()){
-                case "ENTRY_MODIFY":
-                    if(onlyModify){
-                        System.out.println("modify-deleting file " + path.toString());
-                        Indexer.deleteFile(path.getFileName().toString());
-                    }
-                    if(!folderDeleted){
-                        System.out.println("modify-index file " + path.toString());
-                        Indexer.indexFileOrFolder(path.toString());
-                    }
-                    folderDeleted = false;
-                    onlyModify = true;
-                    break;
-                case "ENTRY_CREATE":
-                    onlyModify = false;
-                    break;
-                case "ENTRY_DELETE":
-                    System.out.println("delete-deleting file " + path.toString());
-                    Indexer.deleteFile(path.getFileName().toString());
-                    break;
-                default:
-                    break;
-            }
-        }*/
         if(extension.equals("") && event.kind().name() == "ENTRY_DELETE"){
             System.out.println("folder has been deleted: " + path.toString());
             deleteAllFilesInFolder(path.toFile());
             deletedFolder = path.toString();
         }
-
         if(!extension.equals("") && !path.toString().contains("~$") && !path.toString().endsWith("tmp") && !path.toString().contains(deletedFolder)){
             switch(event.kind().name()){
                 case "ENTRY_MODIFY":
