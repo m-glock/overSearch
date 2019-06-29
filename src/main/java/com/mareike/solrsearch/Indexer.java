@@ -17,9 +17,7 @@ public class Indexer {
 
     public static void indexFiles(ArrayList<String> paths, String collection){
         collectionName = collection;
-        System.out.println("list from handler: ");
         for(String path : paths){
-            System.out.println(path);
             indexFileOrFolder(path);
         }
         indexSharePointFiles();
@@ -32,15 +30,13 @@ public class Indexer {
             final URL url = new URL(indexFunctionURL + path);
             final HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(HttpMethod.POST.name());
+            con.setRequestProperty("collection", collectionName);
             //TODO: add body to request
             con.setDoOutput(true);
-            OutputStream os = con.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
-            String st = "{\"collectionName\": \"" + collectionName + "\"}";
-            osw.write(st);
+            OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), "UTF-8");
+            osw.write("{}");
             osw.flush();
             osw.close();
-            os.close();  //don't forget to close the OutputStream
 
             Thread t = new Thread(new Runnable() {
                 @Override
@@ -74,7 +70,8 @@ public class Indexer {
         try {
             final URL url = new URL(SharePointFunctionURL + collectionName);
             final HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
+            con.setRequestMethod(HttpMethod.GET.name());
+
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run(){
@@ -108,6 +105,9 @@ public class Indexer {
             URL url = new URL(indexFunctionURL + fileName);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
+            con.setRequestProperty("collection",collectionName);
+
+            System.out.println("Sending " + con.getRequestMethod() + " request");
             int responseCode = con.getResponseCode();
             //TODO: remove this when everything is working
             System.out.println("\nSending 'GET' request to URL : " + url);
