@@ -1,20 +1,23 @@
 package com.mareike.solrsearch.Queries;
 
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class SearchResultBuilder {
 
 
-    public static String getHTMLForResults(SolrDocumentList list){
+    public static String getHTMLForResults(QueryResponse response){
+        SolrDocumentList list = response.getResults();
+
         String html = "";
         for (SolrDocument doc : list){
             String document = "<div>";
             //TODO: add picture for content type
-            //String path = fieldValue(doc, "path").replace("\\","/");
             String path = fieldValue(doc, "path");
             //TODO: exception handling
             URL url;
@@ -38,6 +41,11 @@ public class SearchResultBuilder {
             document += fieldValue(doc, "meta_creation_date");
             document += fieldValue(doc, "owner");
             document += path;
+            //TODO: check that there are no unnecessary characters or metadata in the highlight text
+            //TODO: show multiple snippets for one document?
+            String id = fieldValue(doc, "id");
+            String highlight = response.getHighlighting().get(id).get("_text_").get(0).replace("no_Spacing", "");
+            document += highlight;
 
             document += "</div>";
             html += document;

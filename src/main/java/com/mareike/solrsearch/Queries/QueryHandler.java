@@ -28,28 +28,31 @@ public class QueryHandler {
         parameters.put(type.parameter, values);
     }
 
-    public SolrDocumentList sendQuery(HttpSolrClient client){
+    public QueryResponse sendQuery(HttpSolrClient client){
         //send query to Solr server
         SolrParams params = generateQueryParameters();
         System.out.println("parameter are: " + params);
+        QueryResponse response;
         try{
-            QueryResponse response = client.query(params);
-            List<String> content = response.getHighlighting().get("778c5b0e-91cd-4140-b509-64d6e62d1d4f").get("_text_");
+            response = client.query(params);
+            /*List<String> content = response.getHighlighting().get("778c5b0e-91cd-4140-b509-64d6e62d1d4f").get("_text_");
             for(String st : content){
                 System.out.println("highlight is: " + st);
-            }
+            }*/
             //System.out.println("response is: " + response);
-            docs = response.getResults();
+            //docs = response.getResults();
+            return response;
         }catch(IOException io){
             System.out.println("IOException");
         }catch(SolrServerException ser){
             System.out.println("SolrServerException");
         }catch(Exception e){
             System.out.println("Unknown Exception");
+        }finally {
+            parameters.clear();
+            System.out.println("parameters removed: " + parameters.isEmpty());
         }
-        parameters.clear();
-        System.out.println("map is empty: " + parameters.isEmpty());
-        return docs;
+        return null;
     }
 
     private MapSolrParams generateQueryParameters(){
@@ -59,8 +62,9 @@ public class QueryHandler {
         parameters.put("defType", "edismax");
         parameters.put("timeAllowed", "10000");
         parameters.put("hl", "true");
-        parameters.put("hl.snippets", "100");
+        parameters.put("hl.fragsize", "500");
         parameters.put("hl.fl", "_text_");
+        //parameters.put(ParameterType.FIELDlIST.parameter,"stream");
 
         return new MapSolrParams(parameters);
     }

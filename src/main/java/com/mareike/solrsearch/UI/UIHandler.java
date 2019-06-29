@@ -9,6 +9,7 @@ import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
@@ -230,8 +231,8 @@ public class UIHandler extends javax.swing.JFrame{
         //TODO: what happens if query word has weird characters
         //TODO: show all results? or somehow only load more when user is scrolling?
         qHandler.addParameter(ParameterType.QUERY, queryWord);
-        SolrDocumentList results = qHandler.sendQuery(solr.client);
-        response = SearchResultBuilder.getHTMLForResults(results);
+        QueryResponse queryResponse = qHandler.sendQuery(solr.client);
+        response = SearchResultBuilder.getHTMLForResults(queryResponse);
 
         editorPaneResults.setText(response);
     }//GEN-LAST:event_searchBarActionPerformed
