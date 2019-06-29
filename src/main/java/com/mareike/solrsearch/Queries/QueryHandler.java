@@ -11,6 +11,8 @@ import org.apache.solr.common.params.SolrParams;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class QueryHandler {
 
@@ -32,6 +34,11 @@ public class QueryHandler {
         System.out.println("parameter are: " + params);
         try{
             QueryResponse response = client.query(params);
+            List<String> content = response.getHighlighting().get("778c5b0e-91cd-4140-b509-64d6e62d1d4f").get("_text_");
+            for(String st : content){
+                System.out.println("highlight is: " + st);
+            }
+            //System.out.println("response is: " + response);
             docs = response.getResults();
         }catch(IOException io){
             System.out.println("IOException");
@@ -51,6 +58,9 @@ public class QueryHandler {
         //these parameters are the same for every query
         parameters.put("defType", "edismax");
         parameters.put("timeAllowed", "10000");
+        parameters.put("hl", "true");
+        parameters.put("hl.snippets", "100");
+        parameters.put("hl.fl", "_text_");
 
         return new MapSolrParams(parameters);
     }
