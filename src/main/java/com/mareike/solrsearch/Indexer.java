@@ -5,6 +5,7 @@ import com.microsoft.graph.http.HttpMethod;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -25,7 +26,7 @@ public class Indexer {
 
     public static void indexFileOrFolder(String path){
         //TODO: find better character for replacement and change it in the function as well
-        path = path.replace(" ", "_");
+        path = path.replace(" ", "%20");
         try{
             final URL url = new URL(indexFunctionURL + path);
             final HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -33,7 +34,7 @@ public class Indexer {
             con.setRequestProperty("collection", collectionName);
             //TODO: add body to request
             con.setDoOutput(true);
-            OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), "UTF-8");
+            OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8);
             osw.write("{}");
             osw.flush();
             osw.close();
@@ -94,12 +95,12 @@ public class Indexer {
                 TimeUnit.SECONDS.sleep(5);
             }
         }catch(Exception ex){
-            System.out.println("Error occured while trying to send the request to the SharePointConnector function: " + ex.getMessage());
+            System.out.println("Error occurred while trying to send the request to the SharePointConnector function: " + ex.getMessage());
         }
     }
 
     public static void deleteFile(String fileName){
-        fileName = fileName.replace(" ", "_");
+        fileName = fileName.replace(" ", "%20");
         try{
             //TODO: change function to choose between indexing and deleting -> if both (update) the the two methods here are called
             URL url = new URL(indexFunctionURL + fileName);
@@ -107,19 +108,12 @@ public class Indexer {
             con.setRequestMethod("GET");
             con.setRequestProperty("collection",collectionName);
 
-            System.out.println("Sending " + con.getRequestMethod() + " request");
-            int responseCode = con.getResponseCode();
-            //TODO: remove this when everything is working
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
+            System.out.println("Sending request to delete " + fileName + " with http method " + con.getRequestMethod());
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+            while ((inputLine = in.readLine()) != null)
+                System.out.println(inputLine);
             in.close();
         }catch(Exception prot){
             System.out.println("Protocol Exception: " + prot.getClass().toString() + " and message " + prot.getMessage());

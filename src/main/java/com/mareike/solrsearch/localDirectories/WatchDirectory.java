@@ -32,6 +32,8 @@ package com.mareike.solrsearch.localDirectories;
  */
 
 import com.mareike.solrsearch.Indexer;
+import org.apache.commons.io.FilenameUtils;
+
 import java.nio.file.*;
 import static java.nio.file.StandardWatchEventKinds.*;
 import static java.nio.file.LinkOption.*;
@@ -49,6 +51,7 @@ public class WatchDirectory implements Runnable{
     private final Map<WatchKey,Path> keys;
     private final boolean recursive;
     private boolean trace;
+    private String deletedFolder = "@";
 
     @SuppressWarnings("unchecked")
     private static <T> WatchEvent<T> cast(WatchEvent<?> event) {
@@ -152,9 +155,6 @@ public class WatchDirectory implements Runnable{
                 Path name = ev.context();
                 Path child = dir.resolve(name);
 
-                // print out event
-                updateFiles(event, child);
-                System.out.format("%s: %s\n", event.kind().name(), child);
 
 
                 // if directory is created, and watching recursively, then
@@ -163,11 +163,16 @@ public class WatchDirectory implements Runnable{
                     try {
                         if (Files.isDirectory(child, NOFOLLOW_LINKS)) {
                             registerAll(child);
+                            if(child.toString().equals(deletedFolder)) {
+                                deletedFolder = "@";
+                            }
                         }
                     } catch (IOException x) {
                         // ignore to keep sample readable
                     }
                 }
+
+                updateFiles(event, child);
             }
 
             // reset key and remove from set if directory no longer accessible
@@ -183,28 +188,60 @@ public class WatchDirectory implements Runnable{
         }
     }
 
-    //TODO: for a new file windows 10 fires the create and modify event - kind of a hack and only work on windows 10
     private void updateFiles(WatchEvent event, Path path){
-        System.out.println("update files for Event: " + event.kind());
-        System.out.println("with path: " + path.toString());
-        switch(event.kind().name()){
-            case "ENTRY_MODIFY":
-                Indexer.deleteFile(path.getFileName().toString());
-                /*Indexer.indexSingleFile(path.toString());
-                break;*/
-            case "ENTRY_CREATE":
-                Indexer.indexFileOrFolder(path.toString());
-                break;
-            case "ENTRY_DELETE":
-                Indexer.deleteFile(path.getFileName().toString());
-                break;
-            default:
+        String extension = FilenameUtils.getExtension(path.toString());
+        /*if(extension == "" && event.kind().name() == "ENTRY_DELETE"){
+            System.out.println("folder has been deleted: " + path.toString());
+            folderDeleted = true;
+        }
+        if(extension != "" && !path.toString().contains("~$") && !path.toString().endsWith("tmp")){
+            switch(event.kind().name()){
+                case "ENTRY_MODIFY":
+                    if(onlyModify){
+                        System.out.println("modify-deleting file " + path.toString());
+                        Indexer.deleteFile(path.getFileName().toString());
+                    }
+                    if(!folderDeleted){
+                        System.out.println("modify-index file " + path.toString());
+                        Indexer.indexFileOrFolder(path.toString());
+                    }
+                    folderDeleted = false;
+                    onlyModify = true;
+                    break;
+                case "ENTRY_CREATE":
+                    onlyModify = false;
+                    break;
+                case "ENTRY_DELETE":
+                    System.out.println("delete-deleting file " + path.toString());
+                    Indexer.deleteFile(path.getFileName().toString());
+                    break;
+                default:
+                    break;
+            }
+        }*/
+        if(extension.equals("") && event.kind().name() == "ENTRY_DELETE"){
+            System.out.println("folder has been deleted: " + path.toString());
+            deleteAllFilesInFolder(path.toFile());
+            deletedFolder = path.toString();
+        }
+
+        if(!extension.equals("") && !path.toString().contains("~$") && !path.toString().endsWith("tmp") && !path.toString().contains(deletedFolder)){
+            switch(event.kind().name()){
+                case "ENTRY_MODIFY":
+                    System.out.println("create file " + path.toString());
+                    Indexer.indexFileOrFolder(path.toString());
+                    break;
+                case "ENTRY_DELETE":
+                    System.out.println("delete file " + path.toString());
+                    Indexer.deleteFile(path.toString());
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    /*public static void usage() {
-        System.err.println("usage: java WatchDir [-r] dir");
-        System.exit(-1);
-    }*/
-
+    private void deleteAllFilesInFolder(File folder){
+        Indexer.deleteFile(folder.toString());
+    }
 }
