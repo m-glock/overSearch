@@ -182,11 +182,6 @@ public class UIHandler extends javax.swing.JFrame{
         searchBar.setMaximumSize(new java.awt.Dimension(700, 40));
         searchBar.setMinimumSize(new java.awt.Dimension(700, 40));
         searchBar.setPreferredSize(new java.awt.Dimension(700, 40));
-        searchBar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchBarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout searchBarPanelLayout = new javax.swing.GroupLayout(searchBarPanel);
         searchBarPanel.setLayout(searchBarPanelLayout);
@@ -221,11 +216,7 @@ public class UIHandler extends javax.swing.JFrame{
 
         Filter.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Filter.setText("Filter");
-        Filter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FilterActionPerformed(evt);
-            }
-        });
+
         buttonPanel.add(Filter);
 
         newCollection.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -258,7 +249,7 @@ public class UIHandler extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     //executed when user hits enter in the search bar
-    private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
+    private void executeSearch() {
         //TODO: same code for search button
         //perform query on input string
         String response = "";
@@ -270,11 +261,8 @@ public class UIHandler extends javax.swing.JFrame{
         response = SearchResultBuilder.getHTMLForResults(queryResponse);
 
         editorPaneResults.setText(response);
-    }//GEN-LAST:event_searchBarActionPerformed
+    }
 
-    private void FilterActionPerformed(java.awt.event.ActionEvent evt){//GEN-FIRST:event_FilterActionPerformed
-
-    }//GEN-LAST:event_FilterActionPerformed
 
     
     private void addActionListeners(final DirectoryChooser dir){
@@ -300,6 +288,16 @@ public class UIHandler extends javax.swing.JFrame{
                 }
             }
         });
+
+        ActionListener searcher = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                executeSearch();
+            }
+        };
+
+        search.addActionListener(searcher);
+        searchBar.addActionListener(searcher);
 
         newCollection.addActionListener(new ActionListener() {
             @Override

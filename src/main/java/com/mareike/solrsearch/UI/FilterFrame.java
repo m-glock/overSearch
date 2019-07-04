@@ -1,5 +1,6 @@
 package com.mareike.solrsearch.UI;
 
+import com.mareike.solrsearch.ContentTypes;
 import com.mareike.solrsearch.SolrInstance;
 
 import javax.swing.*;
@@ -266,8 +267,22 @@ public class FilterFrame extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void setBoxModels(SolrInstance solr){
-        formatComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" });
-        dateComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" });
-        creatorComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" });
+        dateComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[]{"last week", "last month", "last year"});
+        try {
+            String[] contentTypes = solr.getFilterOptions("content_type");
+            for(int i = 0; i < contentTypes.length; i++){
+                contentTypes[i] = ContentTypes.getSimpleName(contentTypes[i]);
+            }
+            String[] creators = solr.getFilterOptions("owner");
+
+            formatComboBoxModel = new javax.swing.DefaultComboBoxModel<>(contentTypes);
+            creatorComboBoxModel = new javax.swing.DefaultComboBoxModel<>(creators);
+        }catch(Exception ex){
+            System.out.println("Error when retrieving filter options: " + ex.getMessage());
+            formatComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[]{""});
+            dateComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[]{"last week", "last month", "last year"});
+            creatorComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[]{""});
+        }
+
     }
 }

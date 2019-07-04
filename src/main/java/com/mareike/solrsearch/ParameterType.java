@@ -11,17 +11,8 @@ public enum ParameterType {
     BOOST("bq");
 
     final public String parameter;
-    //private String[] values;
 
     ParameterType(String queryString){
         parameter = queryString;
     }
-
-    /*public void setValues(String[] values){
-        this.values = values;
-    }
-
-    public String[] getValues(){
-        return values;
-    }*/
 }

@@ -1,12 +1,19 @@
 package com.mareike.solrsearch;
 
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
+import org.apache.solr.client.solrj.request.QueryRequest;
 import org.apache.solr.client.solrj.request.SolrPing;
+import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.SolrPingResponse;
+import org.apache.solr.common.params.MapSolrParams;
+import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.common.util.NamedList;
 import java.io.IOException;
+import java.util.*;
 
 public class SolrInstance {
 
@@ -83,7 +90,35 @@ public class SolrInstance {
         }
     }*/
 
-    public String getSolrUrl(){ return urlString; }
+    public String[] getFilterOptions(String fieldName) throws IOException, SolrServerException{
+        SolrQuery query = buildQuery(fieldName);
+        System.out.println("Query is: " + query.getQuery());
+        QueryResponse response = client.query(query);
+        return getListOfValues(response, fieldName);
+    }
+
+    private SolrQuery buildQuery(String fieldName){
+        SolrQuery query = new SolrQuery();
+        query.setFacet(true);
+        query.addFacetField(fieldName);
+        query.setFacetLimit(-1);
+        query.setRows(0);
+        query.setQuery("*");
+        return query;
+    }
+
+    private String[] getListOfValues(QueryResponse response, String fieldName){
+        FacetField contentType = response.getFacetField(fieldName);
+        List<FacetField.Count> counts = contentType.getValues();
+        String[] formats = new String[counts.size()];
+        int i = 0;
+        for(FacetField.Count c : counts){
+            System.out.println("value: " + c.getName());
+            formats[i] = c.getName();
+            i++;
+        }
+        return formats;
+    }
 
     public String getCollectionName(){ return collectionName; }
 }
