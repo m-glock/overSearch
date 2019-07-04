@@ -290,11 +290,17 @@ public class UIHandler extends javax.swing.JFrame{
                 try {
                     ArrayList<String> directoryPaths = dir.listDirectories();
                     //Indexes all files from the paths as well as the SharePoint files
-                    Indexer.indexFiles(directoryPaths, solr.getCollectionName());
+                    solr.createCollection();
+                    //Indexer.indexFiles(directoryPaths, solr.getCollectionName());
                     CardLayout card = (CardLayout)(mainPanel.getLayout());
                     card.show(mainPanel, "mainPanel");
                 }catch(NullPointerException ex){
                     JOptionPane.showMessageDialog(null, "Please select at least one Directory for indexing.");
+                    //TODO: exception handling
+                }catch(IOException ex){
+                    System.out.println("IOException: " + ex.getMessage());
+                }catch(SolrServerException ex){
+                    System.out.println("SolrServerException: " + ex.getMessage());
                 }
             }
         });

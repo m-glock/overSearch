@@ -20,7 +20,7 @@ public class SolrInstance {
         collectionName = collection;
         startClient();
         //firstInit();
-        createCollection();
+        //createCollection();
         //checkSolrConnection();
     }
 
@@ -44,7 +44,7 @@ public class SolrInstance {
         client = new HttpSolrClient.Builder(urlString).build();
     }
     
-    private void createCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
+    public void createCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
         String configName = "localDocs";
         CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
         NamedList resp = client.request(req);
