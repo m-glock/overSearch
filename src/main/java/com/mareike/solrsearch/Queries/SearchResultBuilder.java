@@ -43,10 +43,13 @@ public class SearchResultBuilder {
             //TODO: check that there are no unnecessary characters or metadata in the highlight text
             //TODO: show multiple snippets for one document?
             String id = fieldValue(doc, "id");
+            document += "</div>";
+            //TODO: multiple snippets of relevant word?
+            document += "<p>";
             String highlight = response.getHighlighting().get(id).get("_text_").get(0).replace("no_Spacing", "");
             document += highlight;
 
-            document += "</div>";
+            document += "</p>";
             html += document;
         }
         return html;

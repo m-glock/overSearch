@@ -14,13 +14,17 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /*
@@ -80,6 +84,17 @@ public class UIHandler extends javax.swing.JFrame{
     private void setEditorPane(){
         editorPaneResults.setEditorKit(javax.swing.JEditorPane.createEditorKitForContentType("text/html"));
         editorPaneResults.setEditable(false);
+        try {
+            URL styleSheetURL = new URL(System.getProperty("user.dir").replace("\\", "/") + "/res/default.css");
+            System.out.println("URL is: " + styleSheetURL.toString());
+            StyleSheet ss = new StyleSheet();
+            ss.importStyleSheet(styleSheetURL);
+            HTMLEditorKit kit = (HTMLEditorKit)editorPaneResults.getEditorKit();
+            kit.setStyleSheet(ss);
+        }catch(MalformedURLException ex){
+            System.out.println("URL problem: " + ex.getMessage());
+        }
+
     }
 
     /**
