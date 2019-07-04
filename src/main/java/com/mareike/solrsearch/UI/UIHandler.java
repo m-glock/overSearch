@@ -13,6 +13,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
+import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import java.awt.*;
@@ -101,17 +102,21 @@ public class UIHandler extends javax.swing.JFrame{
         directoryScrollPane = new javax.swing.JScrollPane(tree);
         startBottomPanel = new javax.swing.JPanel();
         indexButton = new javax.swing.JButton();
-        searchScreen = new javax.swing.JPanel();
         mainScreen = new javax.swing.JPanel();
+        Header = new javax.swing.JPanel();
         searchBarPanel = new javax.swing.JPanel();
         searchBar = new javax.swing.JTextField();
+        buttonPanel = new javax.swing.JPanel();
+        search = new javax.swing.JButton();
         Filter = new javax.swing.JButton();
+        newCollection = new javax.swing.JButton();
         scrollPaneResults = new javax.swing.JScrollPane();
         editorPaneResults = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setMinimumSize(new java.awt.Dimension(815, 600));
+        setMinimumSize(new java.awt.Dimension(1200, 900));
+        setPreferredSize(new java.awt.Dimension(1080, 720));
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
@@ -119,9 +124,9 @@ public class UIHandler extends javax.swing.JFrame{
         startScreen.setLayout(new javax.swing.BoxLayout(startScreen, javax.swing.BoxLayout.Y_AXIS));
 
         startWelcomeLabel.setBackground(new java.awt.Color(255, 255, 255));
-        startWelcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        startWelcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         startWelcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        startWelcomeLabel.setText("Welcome to overSearch! Please choose the directories you want to index for the search");
+        startWelcomeLabel.setText("Welcome to overSearch! Please choose the directories you want to index for the search.");
         startWelcomeLabel.setAlignmentX(0.5F);
         startWelcomeLabel.setPreferredSize(new java.awt.Dimension(800, 100));
         startScreen.add(startWelcomeLabel);
@@ -140,6 +145,7 @@ public class UIHandler extends javax.swing.JFrame{
         startBottomPanel.setMinimumSize(new java.awt.Dimension(800, 100));
         startBottomPanel.setPreferredSize(new java.awt.Dimension(800, 100));
 
+        indexButton.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         indexButton.setText("index files");
         indexButton.setAlignmentX(0.5F);
 
@@ -150,12 +156,12 @@ public class UIHandler extends javax.swing.JFrame{
             .addGroup(startBottomPanelLayout.createSequentialGroup()
                 .addGap(353, 353, 353)
                 .addComponent(indexButton)
-                .addContainerGap(344, Short.MAX_VALUE))
+                .addContainerGap(324, Short.MAX_VALUE))
         );
         startBottomPanelLayout.setVerticalGroup(
             startBottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, startBottomPanelLayout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addContainerGap(34, Short.MAX_VALUE)
                 .addComponent(indexButton)
                 .addGap(33, 33, 33))
         );
@@ -164,25 +170,18 @@ public class UIHandler extends javax.swing.JFrame{
 
         mainPanel.add(startScreen, "startPanel");
 
-        javax.swing.GroupLayout searchScreenLayout = new javax.swing.GroupLayout(searchScreen);
-        searchScreen.setLayout(searchScreenLayout);
-        searchScreenLayout.setHorizontalGroup(
-            searchScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 815, Short.MAX_VALUE)
-        );
-        searchScreenLayout.setVerticalGroup(
-            searchScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
-        );
-
-        mainPanel.add(searchScreen, "searchPanel");
-
         mainScreen.setLayout(new javax.swing.BoxLayout(mainScreen, javax.swing.BoxLayout.Y_AXIS));
 
-        searchBarPanel.setMaximumSize(new java.awt.Dimension(800, 60));
-        searchBarPanel.setMinimumSize(new java.awt.Dimension(800, 60));
-        searchBarPanel.setPreferredSize(new java.awt.Dimension(800, 60));
+        Header.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        Header.setMaximumSize(new java.awt.Dimension(1080, 90));
+        Header.setMinimumSize(new java.awt.Dimension(900, 90));
+        Header.setPreferredSize(new java.awt.Dimension(1080, 90));
+        Header.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 3));
 
+        searchBarPanel.setMinimumSize(new java.awt.Dimension(1080, 40));
+        searchBarPanel.setPreferredSize(new java.awt.Dimension(1080, 40));
+
+        searchBar.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         searchBar.setText("Search");
         searchBar.setMaximumSize(new java.awt.Dimension(700, 40));
         searchBar.setMinimumSize(new java.awt.Dimension(700, 40));
@@ -192,17 +191,55 @@ public class UIHandler extends javax.swing.JFrame{
                 searchBarActionPerformed(evt);
             }
         });
-        searchBarPanel.add(searchBar);
 
+        javax.swing.GroupLayout searchBarPanelLayout = new javax.swing.GroupLayout(searchBarPanel);
+        searchBarPanel.setLayout(searchBarPanelLayout);
+        searchBarPanelLayout.setHorizontalGroup(
+            searchBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1080, Short.MAX_VALUE)
+            .addGroup(searchBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(searchBarPanelLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        searchBarPanelLayout.setVerticalGroup(
+            searchBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+            .addGroup(searchBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(searchBarPanelLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        Header.add(searchBarPanel);
+
+        buttonPanel.setMinimumSize(new java.awt.Dimension(1080, 40));
+        buttonPanel.setPreferredSize(new java.awt.Dimension(700, 40));
+        buttonPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 25, 5));
+
+        search.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        search.setText("Search");
+        buttonPanel.add(search);
+
+        Filter.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Filter.setText("Filter");
         Filter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FilterActionPerformed(evt);
             }
         });
-        searchBarPanel.add(Filter);
+        buttonPanel.add(Filter);
 
-        mainScreen.add(searchBarPanel);
+        newCollection.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        newCollection.setText("Index again");
+        newCollection.setActionCommand("");
+        buttonPanel.add(newCollection);
+
+        Header.add(buttonPanel);
+
+        mainScreen.add(Header);
 
         scrollPaneResults.setViewportView(editorPaneResults);
 
@@ -224,7 +261,9 @@ public class UIHandler extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //executed when user hits enter in the search bar
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
+        //TODO: same code for search button
         //perform query on input string
         String response = "";
         String queryWord = searchBar.getText();
@@ -248,11 +287,15 @@ public class UIHandler extends javax.swing.JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
-                ArrayList<String> directoryPaths = dir.listDirectories();
-                //Indexes all files from the paths as well as the SharePoint files
-                Indexer.indexFiles(directoryPaths, solr.getCollectionName());
-                CardLayout card = (CardLayout)(mainPanel.getLayout());
-                card.show(mainPanel, "mainPanel");
+                try {
+                    ArrayList<String> directoryPaths = dir.listDirectories();
+                    //Indexes all files from the paths as well as the SharePoint files
+                    Indexer.indexFiles(directoryPaths, solr.getCollectionName());
+                    CardLayout card = (CardLayout)(mainPanel.getLayout());
+                    card.show(mainPanel, "mainPanel");
+                }catch(NullPointerException ex){
+                    JOptionPane.showMessageDialog(null, "Please select at least one Directory for indexing.");
+                }
             }
         });
 
@@ -286,16 +329,19 @@ public class UIHandler extends javax.swing.JFrame{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Filter;
+    private javax.swing.JPanel Header;
+    private javax.swing.JPanel buttonPanel;
     private javax.swing.JPanel directoryPanel;
     private javax.swing.JScrollPane directoryScrollPane;
     private javax.swing.JEditorPane editorPaneResults;
     private javax.swing.JButton indexButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel mainScreen;
+    private javax.swing.JButton newCollection;
     private javax.swing.JScrollPane scrollPaneResults;
+    private javax.swing.JButton search;
     private javax.swing.JTextField searchBar;
     private javax.swing.JPanel searchBarPanel;
-    private javax.swing.JPanel searchScreen;
     private javax.swing.JPanel startBottomPanel;
     private javax.swing.JPanel startScreen;
     private javax.swing.JLabel startWelcomeLabel;

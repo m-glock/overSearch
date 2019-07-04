@@ -33,7 +33,7 @@ public class DirectoryChooser extends JFrame {
         return tree;
     }
 
-    public ArrayList<String> listDirectories(){
+    public ArrayList<String> listDirectories() throws NullPointerException{
         TreePath[] paths = tree.getSelectionPaths();
         ArrayList<String> fullPaths = new ArrayList<>();
         int endIndex = basePath.lastIndexOf("/");
