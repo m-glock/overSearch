@@ -1,6 +1,5 @@
 package com.mareike.solrsearch;
 
-import com.mareike.solrsearch.UI.UIExample;
 import com.mareike.solrsearch.UI.UIHandler;
 
 import java.awt.*;
@@ -53,7 +52,7 @@ public class Main {
                 }
             }
         } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(UIExample.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UIHandler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
     }

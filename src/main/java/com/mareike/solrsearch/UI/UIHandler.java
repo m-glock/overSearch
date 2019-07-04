@@ -316,6 +316,15 @@ public class UIHandler extends javax.swing.JFrame{
             }
         });
 
+        Filter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FilterFrame frame = new FilterFrame(solr);
+                frame.getContentPane().setBackground(Color.white);
+                frame.setVisible(true);
+            }
+        });
+
         editorPaneResults.addHyperlinkListener(new HyperlinkListener() {
             public void hyperlinkUpdate(HyperlinkEvent e){
                 if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
