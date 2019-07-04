@@ -9,10 +9,8 @@ import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrDocumentList;
-
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -23,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 
 /*
@@ -52,18 +49,17 @@ public class UIHandler extends javax.swing.JFrame{
         Boolean collectionExists = false;
         try {
             solr = new SolrInstance(solrURL, collectionName);
+            java.util.List<String> collections = CollectionAdminRequest.listCollections(solr.client);
+            if(collections.contains(collectionName)){
+                solr= new SolrInstance(solrURL + "/" + collectionName);
+                collectionExists = true;
+            }
         }catch(IOException io){
             System.out.println("IOException: " + io.getMessage());
         }catch(SolrServerException serv){
             System.out.println("SolrServerException: " + serv.getMessage());
         }catch(HttpSolrClient.RemoteSolrException ex){
             System.out.println("RemoteSolrException with message: " + ex.getMessage());
-            if(ex.getMessage().contains("collection already exists")){
-                //TODO: open search screen
-                System.out.println("Collection exists");
-                solr= new SolrInstance(solrURL + "/" + collectionName);
-                collectionExists = true;
-            }
         }catch(Exception e){
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }
@@ -74,7 +70,7 @@ public class UIHandler extends javax.swing.JFrame{
         initComponents(tree);
         if(collectionExists) {
             CardLayout card = (CardLayout) (mainPanel.getLayout());
-            card.show(mainPanel, "mainPanel");
+            card.show(mainPanel, "mainScreen");
         }
         setEditorPane();
         addActionListeners(dir);
@@ -168,7 +164,7 @@ public class UIHandler extends javax.swing.JFrame{
 
         startScreen.add(startBottomPanel);
 
-        mainPanel.add(startScreen, "startPanel");
+        mainPanel.add(startScreen, "startScreen");
 
         mainScreen.setLayout(new javax.swing.BoxLayout(mainScreen, javax.swing.BoxLayout.Y_AXIS));
 
@@ -245,7 +241,7 @@ public class UIHandler extends javax.swing.JFrame{
 
         mainScreen.add(scrollPaneResults);
 
-        mainPanel.add(mainScreen, "mainPanel");
+        mainPanel.add(mainScreen, "mainScreen");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -291,9 +287,9 @@ public class UIHandler extends javax.swing.JFrame{
                     ArrayList<String> directoryPaths = dir.listDirectories();
                     //Indexes all files from the paths as well as the SharePoint files
                     solr.createCollection();
-                    //Indexer.indexFiles(directoryPaths, solr.getCollectionName());
+                    Indexer.indexFiles(directoryPaths, solr.getCollectionName());
                     CardLayout card = (CardLayout)(mainPanel.getLayout());
-                    card.show(mainPanel, "mainPanel");
+                    card.show(mainPanel, "mainScreen");
                 }catch(NullPointerException ex){
                     JOptionPane.showMessageDialog(null, "Please select at least one Directory for indexing.");
                     //TODO: exception handling
@@ -301,6 +297,21 @@ public class UIHandler extends javax.swing.JFrame{
                     System.out.println("IOException: " + ex.getMessage());
                 }catch(SolrServerException ex){
                     System.out.println("SolrServerException: " + ex.getMessage());
+                }
+            }
+        });
+
+        newCollection.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    solr.deleteCollection();
+                    CardLayout card = (CardLayout)(mainPanel.getLayout());
+                    card.show(mainPanel, "startScreen");
+                    //TODO: remove directory watcher and empty list of directories
+                }catch(Exception ex){
+                    //TODO: exception handling
+                    System.out.println(ex.getMessage());
                 }
             }
         });
