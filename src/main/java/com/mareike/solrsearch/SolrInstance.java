@@ -47,10 +47,20 @@ public class SolrInstance {
     public void createCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
         String configName = "localDocs";
         CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
+
         NamedList resp = client.request(req);
         System.out.println("Collection created. Response: " + resp.toString());
         client.setBaseURL(client.getBaseURL() + "/" + collectionName);
-        System.out.println("Solr instance created with url: " + client.getBaseURL());
+        System.out.println("Solr instance created with URL: " + client.getBaseURL());
+    }
+
+    public void deleteCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
+        //client.setBaseURL(urlString);
+        String solrBaseURL = client.getBaseURL().replaceAll("/" + collectionName, "");
+        client.setBaseURL(solrBaseURL);
+        CollectionAdminRequest.Delete request = CollectionAdminRequest.Delete.deleteCollection(collectionName);
+        NamedList resp = client.request(request);
+        System.out.println("Collection removed. Solr instance now uses the URL: " + client.getBaseURL());
     }
 
     //TODO: fix ping maybe?
