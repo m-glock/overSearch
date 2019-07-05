@@ -1,6 +1,7 @@
 package com.mareike.solrsearch.Queries;
 
 import com.mareike.solrsearch.ParameterType;
+import com.sun.research.ws.wadl.Param;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -45,8 +46,7 @@ public class QueryHandler {
     }
 
     private MapSolrParams generateQueryParameters(){
-        //TODO: get parameters from UI and call addParameter()
-
+        addFilterAndPreferences();
         //these parameters are the same for every query
         parameters.put("defType", "edismax");
         parameters.put("timeAllowed", "10000");
@@ -54,7 +54,24 @@ public class QueryHandler {
         parameters.put("hl", "true");
         parameters.put("hl.fragsize", "500");
         parameters.put("hl.fl", "_text_");
-
         return new MapSolrParams(parameters);
+    }
+
+    private void addFilterAndPreferences(){
+        for (Filter f : filters.keySet()){
+            switch(f.type){
+                case "filter":
+                    addParameter(ParameterType.FILTERQUERY, "");
+                    break;
+                case "preference":
+                    addParameter(ParameterType.BOOST, "");
+                    break;
+                case "sort":
+                    addParameter(ParameterType.SORT, "");
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
