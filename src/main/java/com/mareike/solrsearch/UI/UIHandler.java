@@ -329,6 +329,7 @@ public class UIHandler extends javax.swing.JFrame{
         Filter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //TODO: calll different constructor or something when filters are saved?
                 FilterFrame frame = new FilterFrame(solr, qHandler);
                 frame.getContentPane().setBackground(Color.white);
                 frame.setVisible(true);

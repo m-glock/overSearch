@@ -6,15 +6,13 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.params.MapSolrParams;
 import org.apache.solr.common.params.SolrParams;
-
-import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class QueryHandler {
 
     private HashMap<String, String> parameters;
+    private HashMap<Filter, String> filters;
 
     public QueryHandler(){
         parameters = new HashMap<>();
@@ -23,6 +21,8 @@ public class QueryHandler {
     public void addParameter(ParameterType type, String values){
         parameters.put(type.parameter, values);
     }
+
+    public void setFilters(HashMap<Filter, String> filters){ this.filters = filters; }
 
     public QueryResponse sendQuery(HttpSolrClient client){
         //send query to Solr server
@@ -56,10 +56,5 @@ public class QueryHandler {
         parameters.put("hl.fl", "_text_");
 
         return new MapSolrParams(parameters);
-    }
-
-
-    public void saveFilters(ArrayList<Button> buttons){
-
     }
 }

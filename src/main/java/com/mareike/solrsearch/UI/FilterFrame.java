@@ -1,6 +1,7 @@
 package com.mareike.solrsearch.UI;
 
 import com.mareike.solrsearch.ContentTypes;
+import com.mareike.solrsearch.Queries.Filter;
 import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
 
@@ -13,6 +14,47 @@ import java.util.HashMap;
 
 public class FilterFrame extends javax.swing.JFrame {
 
+    private ButtonGroup buttonGroupSort;
+    private Box.Filler filler2;
+    private JPanel preferencePanel;
+    private Box.Filler filler4;
+    private JLabel preferencesLabel;
+    private JPanel preferencesContentPane;
+    private JPanel creatorPreferencesPanel;
+    private JCheckBox creatorPreferencesCheckBox;
+    private JComboBox creatorPreferencesComboBox;
+    private JPanel datePreferencesPanel;
+    private JCheckBox datePreferencesCheckBox;
+    private JComboBox datePreferencesComboBox;
+    private JPanel formatPreferencesPanel;
+    private JCheckBox formatPreferencesCheckBox;
+    private JComboBox formatPreferencesComboBox;
+    private JSeparator jSeparator1;
+    private Box.Filler filler1;
+    private JPanel filterPanel;
+    private Box.Filler filler3;
+    private JLabel filterLabel;
+    private JPanel filterContentPane;
+    private JPanel creatorFilterPanel;
+    private JCheckBox creatorFilterCheckBox;
+    private JComboBox creatorFilterComboBox;
+    private JPanel dateFilterPanel;
+    private JCheckBox dateFilterCheckBox;
+    private JComboBox dateFilterComboBox;
+    private JPanel fileFilterPanel;
+    private JCheckBox formatFilterCheckBox;
+    private JComboBox formatFilterComboBox;
+    private JSeparator jSeparator2;
+    private JPanel sortPanel;
+    private Box.Filler filler5;
+    private JLabel sortLabel;
+    private Box.Filler filler7;
+    private JPanel filterContentPane1;
+    private Box.Filler filler6;
+    private JRadioButton relevanceRadioButton;
+    private JRadioButton creationDateRadioButton;
+    private JPanel footer;
+    private JButton finishButton;
     private javax.swing.DefaultComboBoxModel<String> creatorComboBoxModel;
     private javax.swing.DefaultComboBoxModel<String> dateComboBoxModel;
     private javax.swing.DefaultComboBoxModel<String> formatComboBoxModel;
@@ -27,6 +69,8 @@ public class FilterFrame extends javax.swing.JFrame {
         filters = new HashMap<>();
         setBoxModels(solr);
         initComponents();
+        createActionListeners();
+        setInitialStates();
     }
 
     /**
@@ -38,47 +82,47 @@ public class FilterFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        ButtonGroup buttonGroupSort = new javax.swing.ButtonGroup();
-        Box.Filler filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10));
-        JPanel preferencePanel = new javax.swing.JPanel();
-        Box.Filler filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0));
-        JLabel preferencesLabel = new javax.swing.JLabel();
-        JPanel preferencesContentPane = new javax.swing.JPanel();
-        JPanel creatorPreferencesPanel = new javax.swing.JPanel();
-        JCheckBox creatorPreferencesCheckBox = new javax.swing.JCheckBox();
-        JComboBox creatorPreferencesComboBox = new javax.swing.JComboBox<>();
-        JPanel datePreferencesPanel = new javax.swing.JPanel();
-        JCheckBox datePreferencesCheckBox = new javax.swing.JCheckBox();
-        JComboBox datePreferencesComboBox = new javax.swing.JComboBox<>();
-        JPanel formatPreferencesPanel = new javax.swing.JPanel();
-        JCheckBox formatPreferencesCheckBox = new javax.swing.JCheckBox();
-        JComboBox formatPreferencesComboBox = new javax.swing.JComboBox<>();
-        JSeparator jSeparator1 = new javax.swing.JSeparator();
-        Box.Filler filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10));
-        JPanel filterPanel = new javax.swing.JPanel();
-        Box.Filler filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0));
-        JLabel filterLabel = new javax.swing.JLabel();
-        JPanel filterContentPane = new javax.swing.JPanel();
-        JPanel creatorFilterPanel = new javax.swing.JPanel();
-        JCheckBox creatorFilterCheckBox = new javax.swing.JCheckBox();
-        JComboBox creatorFilterComboBox = new javax.swing.JComboBox<>();
-        JPanel dateFilterPanel = new javax.swing.JPanel();
-        JCheckBox dateFilterCheckBox = new javax.swing.JCheckBox();
-        JComboBox dateFilterComboBox = new javax.swing.JComboBox<>();
-        JPanel fileFilterPanel = new javax.swing.JPanel();
-        JCheckBox formatFilterCheckBox = new javax.swing.JCheckBox();
-        JComboBox formatFilterComboBox = new javax.swing.JComboBox<>();
-        JSeparator jSeparator2 = new javax.swing.JSeparator();
-        JPanel sortPanel = new javax.swing.JPanel();
-        Box.Filler filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0));
-        JLabel sortLabel = new javax.swing.JLabel();
-        Box.Filler filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 0));
-        JPanel filterContentPane1 = new javax.swing.JPanel();
-        Box.Filler filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0));
-        JRadioButton relevanceRadioButton = new javax.swing.JRadioButton();
-        JRadioButton creationDateRadioButton = new javax.swing.JRadioButton();
-        JPanel footer = new javax.swing.JPanel();
-        JButton finishButton = new javax.swing.JButton();
+        buttonGroupSort = new javax.swing.ButtonGroup();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10));
+        preferencePanel = new javax.swing.JPanel();
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0));
+        preferencesLabel = new javax.swing.JLabel();
+        preferencesContentPane = new javax.swing.JPanel();
+        creatorPreferencesPanel = new javax.swing.JPanel();
+        creatorPreferencesCheckBox = new javax.swing.JCheckBox();
+        creatorPreferencesComboBox = new javax.swing.JComboBox<>();
+        datePreferencesPanel = new javax.swing.JPanel();
+        datePreferencesCheckBox = new javax.swing.JCheckBox();
+        datePreferencesComboBox = new javax.swing.JComboBox<>();
+        formatPreferencesPanel = new javax.swing.JPanel();
+        formatPreferencesCheckBox = new javax.swing.JCheckBox();
+        formatPreferencesComboBox = new javax.swing.JComboBox<>();
+        jSeparator1 = new javax.swing.JSeparator();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10));
+        filterPanel = new javax.swing.JPanel();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0));
+        filterLabel = new javax.swing.JLabel();
+        filterContentPane = new javax.swing.JPanel();
+        creatorFilterPanel = new javax.swing.JPanel();
+        creatorFilterCheckBox = new javax.swing.JCheckBox();
+        creatorFilterComboBox = new javax.swing.JComboBox<>();
+        dateFilterPanel = new javax.swing.JPanel();
+        dateFilterCheckBox = new javax.swing.JCheckBox();
+        dateFilterComboBox = new javax.swing.JComboBox<>();
+        fileFilterPanel = new javax.swing.JPanel();
+        formatFilterCheckBox = new javax.swing.JCheckBox();
+        formatFilterComboBox = new javax.swing.JComboBox<>();
+        jSeparator2 = new javax.swing.JSeparator();
+        sortPanel = new javax.swing.JPanel();
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0));
+        sortLabel = new javax.swing.JLabel();
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 0));
+        filterContentPane1 = new javax.swing.JPanel();
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0));
+        relevanceRadioButton = new javax.swing.JRadioButton();
+        creationDateRadioButton = new javax.swing.JRadioButton();
+        footer = new javax.swing.JPanel();
+        finishButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
@@ -270,7 +314,6 @@ public class FilterFrame extends javax.swing.JFrame {
         footer.setLayout(new java.awt.GridBagLayout());
 
         finishButton.setText("Done");
-        finishButton.addActionListener(createActionListener());
         footer.add(finishButton, new java.awt.GridBagConstraints());
 
         getContentPane().add(footer);
@@ -278,15 +321,75 @@ public class FilterFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
-    private ActionListener createActionListener(){
-        return new ActionListener() {
+    private void createActionListeners(){
+        finishButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ArrayList<Button> buttons = new ArrayList<>();
-                qHandler.saveFilters(buttons);
+                //TODO: add values to hash map
+
+                for(Filter f : filters.keySet()){
+                    System.out.println("Filter " + f + " with value " + filters.get(f));
+                }
+                qHandler.setFilters(filters);
                 FilterFrame.this.dispose();
             }
-        };
+        });
+
+        relevanceRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addFilter(Filter.SORTRELEVANCE, "true");
+            }
+        });
+
+        creationDateRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addFilter(Filter.SORTRELEVANCE, "false");
+            }
+        });
+
+        creatorFilterCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                creatorFilterComboBox.setEnabled(!creatorFilterComboBox.isEnabled());
+            }
+        });
+
+        dateFilterCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dateFilterComboBox.setEnabled(!dateFilterComboBox.isEnabled());
+            }
+        });
+
+        formatFilterCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                formatFilterComboBox.setEnabled(!formatFilterComboBox.isEnabled());
+            }
+        });
+
+        creatorPreferencesCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                creatorPreferencesComboBox.setEnabled(!creatorPreferencesComboBox.isEnabled());
+            }
+        });
+
+        datePreferencesCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                datePreferencesComboBox.setEnabled(!datePreferencesComboBox.isEnabled());
+            }
+        });
+
+        formatPreferencesCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                formatPreferencesComboBox.setEnabled(!formatPreferencesComboBox.isEnabled());
+            }
+        });
     }
 
     private void setBoxModels(SolrInstance solr){
@@ -307,18 +410,18 @@ public class FilterFrame extends javax.swing.JFrame {
         }
     }
 
-    private void addFilter(Filter filterType, String value){
-        filters.put(filterType, value);
+    private void setInitialStates(){
+        creatorFilterComboBox.setEnabled(false);
+        creatorPreferencesComboBox.setEnabled(false);
+        dateFilterComboBox.setEnabled(false);
+        datePreferencesComboBox.setEnabled(false);
+        formatFilterComboBox.setEnabled(false);
+        formatPreferencesComboBox.setEnabled(false);
+        relevanceRadioButton.setSelected(true);
+        addFilter(Filter.SORTRELEVANCE, "true");
     }
 
-    private enum Filter{
-        CREATORFILTER,
-        DATEFILTER,
-        FORMATFILTER,
-        CREATORPREFERENECE,
-        DATEPREFERENECE,
-        FORMATPREFERENECE,
-        SORTRELEVANCE,
-        SORTDATE
+    private void addFilter(Filter filterType, String value){
+        filters.put(filterType, value);
     }
 }
