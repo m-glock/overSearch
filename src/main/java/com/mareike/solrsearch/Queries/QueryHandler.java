@@ -59,21 +59,18 @@ public class QueryHandler {
         if(filters.isEmpty()){
             System.out.println("no filters");
         }
+        String s;
         for (Filter f : filters.keySet()){
             switch(f.type){
                 case "filter":
-                    System.out.println("parameter: " + f.value + ":" + filters.get(f));
-                    String s = "\"" + filters.get(f) + "\"";
-                    if(f.value.equals("content_type")){
-                        s = "\"" + ContentTypes.getSolrValues(s) + "\"";
-                    }else if(f.value.equals("meta_creation_date")){
-                        s = getDate(filters.get(f));
-                    }
+                    s = builtQueryParameter(f);
+                    System.out.println("query will be: " + f.value + ":" + s);
                     query.addFilterQuery(f.value + ":" + s);
                     break;
                 case "boost":
-                    /*query.add
-                    addParameter(, f.value + ":[" + filters.get(f) + "]");*/
+                    s = builtQueryParameter(f);
+                    System.out.println("query will be: " + f.value + ":" + s);
+                    query.add("bq", f.value + ":" + s);
                     break;
                 case "sort":
                     if (filters.get(f).equals("creation date")){
@@ -87,17 +84,24 @@ public class QueryHandler {
     }
 
 
-    private String getDate(String timespan){
-        if(timespan.equals("24 hours")){
-            return "[NOW-1DAY TO NOW]";
-        }else if(timespan.equals("last week")){
-            return "[NOW-7DAY TO NOW]";
-        }else if(timespan.equals("last month")){
-            return "[NOW-1MONTH TO NOW]";
-        }else if(timespan.equals("last year")){
-            return "[NOW-1YEAR TO NOW]";
-        }else{
-            return null;
+    private String builtQueryParameter(Filter f){
+        String s = "\"" + filters.get(f) + "\"";
+        if(f.value.equals("content_type")){
+            s = "\"" + ContentTypes.getSolrValues(filters.get(f)) + "\"";
+        }else if(f.value.equals("meta_creation_date")){
+            String timespan = filters.get(f);
+            if(timespan.equals("24 hours")){
+                s = "[NOW-1DAY TO NOW]";
+            }else if(timespan.equals("last week")){
+                s = "[NOW-7DAY TO NOW]";
+            }else if(timespan.equals("last month")){
+                s = "[NOW-1MONTH TO NOW]";
+            }else if(timespan.equals("last year")){
+                s = "[NOW-1YEAR TO NOW]";
+            }else{
+                s = "[]";
+            }
         }
+        return s;
     }
 }
