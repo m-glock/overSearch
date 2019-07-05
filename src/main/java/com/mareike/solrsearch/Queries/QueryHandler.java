@@ -63,6 +63,8 @@ public class QueryHandler {
                     String s = filters.get(f);
                     if(f.value.equals("content_type")){
                         s = ContentTypes.getSolrValues(s);
+                    }else if(f.value.equals("meta_creation_date")){
+                        s = "";
                     }
                     query.addFilterQuery(f.value + ":" + "\"" + s + "\"");
                     break;
@@ -71,7 +73,9 @@ public class QueryHandler {
                     addParameter(, f.value + ":[" + filters.get(f) + "]");*/
                     break;
                 case "sort":
-                    //query.setSort(f.value, SolrQuery.ORDER.asc);
+                    if (filters.get(f).equals("creation date")){
+                        query.setSort("meta_creation_date", SolrQuery.ORDER.desc);
+                    }
                     break;
                 default:
                     break;

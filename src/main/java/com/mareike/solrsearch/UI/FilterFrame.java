@@ -314,14 +314,14 @@ public class FilterFrame extends javax.swing.JFrame {
         relevanceRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addFilter(Filter.SORTRELEVANCE, "true");
+                addFilter(Filter.SORTRELEVANCE, "relevance");
             }
         });
 
         creationDateRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addFilter(Filter.SORTRELEVANCE, "false");
+                addFilter(Filter.SORTRELEVANCE, "creation date");
             }
         });
 

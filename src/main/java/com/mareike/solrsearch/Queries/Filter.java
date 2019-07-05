@@ -2,10 +2,10 @@ package com.mareike.solrsearch.Queries;
 
 public enum Filter{
     CREATORFILTER("filter", "owner"),
-    DATEFILTER("filter", "date"),
+    DATEFILTER("filter", "meta_creation_date"),
     FORMATFILTER("filter", "content_type"),
     CREATORPREFERENECE("boost", "owner"),
-    DATEPREFERENECE("boost", "date"),
+    DATEPREFERENECE("boost", "meta_creation_date"),
     FORMATPREFERENECE("boost", "content_type"),
     SORTRELEVANCE("sort", "relevance");
 
