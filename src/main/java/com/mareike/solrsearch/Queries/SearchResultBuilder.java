@@ -13,7 +13,9 @@ public class SearchResultBuilder {
 
     public static String getHTMLForResults(QueryResponse response){
         SolrDocumentList list = response.getResults();
-
+        if(list.isEmpty()){
+            return "<div> No documents fit your query. </div>";
+        }
         String html = "";
         for (SolrDocument doc : list){
             String document = "";
