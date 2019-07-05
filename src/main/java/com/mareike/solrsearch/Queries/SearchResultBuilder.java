@@ -7,7 +7,6 @@ import org.apache.solr.common.SolrDocumentList;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 public class SearchResultBuilder {
 
@@ -37,7 +36,6 @@ public class SearchResultBuilder {
             }
 
             document += "<h2><a href=\"" + url + "\">" + fieldValue(doc, "stream_name") + "</a></h2>";
-            //document += "<h2>" + url + " " + fieldValue(doc, "stream_name") + "</h2>";
             document += "<div>";
             document += ContentTypes.getSimpleName(fieldValue(doc, "content_type")) + " | ";
             document += fieldValue(doc, "meta_creation_date")+ " | ";

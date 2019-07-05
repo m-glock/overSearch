@@ -1,7 +1,6 @@
 package com.mareike.solrsearch;
 
 import com.microsoft.graph.http.HttpMethod;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -102,7 +101,6 @@ public class Indexer {
     public static void deleteFile(String fileName){
         fileName = fileName.replace(" ", "%20");
         try{
-            //TODO: change function to choose between indexing and deleting -> if both (update) the the two methods here are called
             URL url = new URL(indexFunctionURL + fileName);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(HttpMethod.GET.name());

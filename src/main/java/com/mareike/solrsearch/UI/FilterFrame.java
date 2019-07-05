@@ -4,12 +4,9 @@ import com.mareike.solrsearch.ContentTypes;
 import com.mareike.solrsearch.Queries.Filter;
 import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FilterFrame extends javax.swing.JFrame {

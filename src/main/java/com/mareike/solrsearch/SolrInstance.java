@@ -4,13 +4,8 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
-import org.apache.solr.client.solrj.request.QueryRequest;
-import org.apache.solr.client.solrj.request.SolrPing;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.client.solrj.response.SolrPingResponse;
-import org.apache.solr.common.params.MapSolrParams;
-import org.apache.solr.common.params.SolrParams;
 import org.apache.solr.common.util.NamedList;
 import java.io.IOException;
 import java.util.*;
@@ -27,7 +22,6 @@ public class SolrInstance {
         collectionName = collection;
         startClient();
         //firstInit();
-        //createCollection();
         //checkSolrConnection();
     }
 
@@ -39,7 +33,6 @@ public class SolrInstance {
     }
 
     /*private void firstInit(){
-        //TODO: start solr as a service and add the config file -> manually
         //TODO: check if Solr is running on provided URL. If this is not the case, show message that Solr is down and how to install it?
         if(checkSolrConnection())
             System.out.println("Solr is up and running");
