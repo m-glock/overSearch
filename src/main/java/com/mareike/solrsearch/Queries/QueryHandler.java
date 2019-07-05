@@ -29,6 +29,7 @@ public class QueryHandler {
         //send query to Solr server
         SolrParams params = generateQueryParameters();
         System.out.println("parameter are: " + params);
+        System.out.println("response is: ");
         QueryResponse response;
         try{
             response = client.query(params);
@@ -58,13 +59,16 @@ public class QueryHandler {
     }
 
     private void addFilterAndPreferences(){
+        if(filters.isEmpty()){
+            System.out.println("no filters");
+        }
         for (Filter f : filters.keySet()){
             switch(f.type){
                 case "filter":
                     addParameter(ParameterType.FILTERQUERY, "");
                     break;
-                case "preference":
-                    addParameter(ParameterType.BOOST, "");
+                case "boost":
+                    addParameter(ParameterType.BOOST, f.value + ":[" + filters.get(f) + "]");
                     break;
                 case "sort":
                     addParameter(ParameterType.SORT, "");

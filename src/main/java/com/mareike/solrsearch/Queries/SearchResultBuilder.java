@@ -35,7 +35,6 @@ public class SearchResultBuilder {
                 //TODO
                 url = null;
             }
-            System.out.println("Path is: " + url.toString());
 
             document += "<h2><a href=\"" + url + "\">" + fieldValue(doc, "stream_name") + "</a></h2>";
             //document += "<h2>" + url + " " + fieldValue(doc, "stream_name") + "</h2>";

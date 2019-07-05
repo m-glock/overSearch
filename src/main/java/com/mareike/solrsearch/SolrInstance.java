@@ -92,7 +92,6 @@ public class SolrInstance {
 
     public String[] getFilterOptions(String fieldName) throws IOException, SolrServerException{
         SolrQuery query = buildQuery(fieldName);
-        System.out.println("Query is: " + query.getQuery());
         QueryResponse response = client.query(query);
         return getListOfValues(response, fieldName);
     }
@@ -113,7 +112,6 @@ public class SolrInstance {
         String[] formats = new String[counts.size()];
         int i = 0;
         for(FacetField.Count c : counts){
-            System.out.println("value: " + c.getName());
             formats[i] = c.getName();
             i++;
         }
