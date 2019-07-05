@@ -20,8 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -41,6 +40,7 @@ public class UIHandler extends javax.swing.JFrame{
 
     private SolrInstance solr;
     private QueryHandler qHandler;
+    private ArrayList<String> directoryPaths;
 
     /**
      * Creates new form UIHandler
@@ -57,6 +57,7 @@ public class UIHandler extends javax.swing.JFrame{
                 solr.changeSolrInstance(solrURL + "/" + collectionName);
                 collectionExists = true;
             }
+            //TODO: exception handling
         }catch(IOException io){
             System.out.println("IOException: " + io.getMessage());
         }catch(SolrServerException serv){
@@ -66,12 +67,13 @@ public class UIHandler extends javax.swing.JFrame{
         }catch(Exception e){
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }
-        //TODO: let user choose start directory?
+        //TODO: let user choose start directory? Or just use C?
         DirectoryChooser dir = new DirectoryChooser("C:/Users/mareike/Documents/Studium");
         qHandler = new QueryHandler();
         MultiSelectionTree tree = dir.getTree();
         initComponents(tree);
         if(collectionExists) {
+            directoryPaths = dir.loadIndexedPaths();
             CardLayout card = (CardLayout) (mainPanel.getLayout());
             card.show(mainPanel, "mainScreen");
         }
@@ -83,7 +85,13 @@ public class UIHandler extends javax.swing.JFrame{
     private void closeFrameActionListener(){
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                //System.exit(0);
+                String fileName = "directories.txt";
+                try(PrintWriter pw = new PrintWriter(new FileOutputStream(fileName))) {
+                    for (String path : directoryPaths)
+                        pw.println(path);
+                }catch(FileNotFoundException ex){
+                    System.out.println("Error when trying to save directory paths in a file.");
+                }
                 System.out.println("Frame closed");
             }
         });
@@ -291,15 +299,15 @@ public class UIHandler extends javax.swing.JFrame{
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
                 try {
-                    ArrayList<String> directoryPaths = dir.listDirectories();
+                    directoryPaths = dir.listDirectories();
                     //Indexes all files from the paths as well as the SharePoint files
                     solr.createCollection();
                     Indexer.indexFiles(directoryPaths, solr.getCollectionName());
                     CardLayout card = (CardLayout)(mainPanel.getLayout());
                     card.show(mainPanel, "mainScreen");
-                }catch(NullPointerException ex){
+                }catch(NullPointerException ex){ //TODO: exception handling
                     JOptionPane.showMessageDialog(null, "Please select at least one Directory for indexing.");
-                    //TODO: exception handling
+
                 }catch(IOException ex){
                     System.out.println("IOException: " + ex.getMessage());
                 }catch(SolrServerException ex){
@@ -326,6 +334,8 @@ public class UIHandler extends javax.swing.JFrame{
                     CardLayout card = (CardLayout)(mainPanel.getLayout());
                     card.show(mainPanel, "startScreen");
                     //TODO: remove directory watcher and empty list of directories
+                    dir.removeDirectoryWatchers();
+                    dir.startThreads();
                 }catch(Exception ex){
                     //TODO: exception handling
                     System.out.println(ex.getMessage());

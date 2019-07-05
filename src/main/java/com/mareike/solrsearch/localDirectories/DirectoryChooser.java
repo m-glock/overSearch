@@ -4,19 +4,23 @@ import javax.swing.*;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DirectoryChooser extends JFrame {
 
     private MultiSelectionTree tree;
     private String basePath;
+    private ExecutorService executorService;
 
     //TODO: if node is selected, select all children as well?
     public DirectoryChooser(String basePath){
         this.basePath = basePath;
+        startThreads();
+
         final MyFile mf = new MyFile(new File(basePath));
         final FileSystemModel model = new FileSystemModel(mf);
         tree = new MultiSelectionTree(model);
@@ -33,6 +37,8 @@ public class DirectoryChooser extends JFrame {
         return tree;
     }
 
+    public void startThreads(){executorService = Executors.newFixedThreadPool(4);}
+
     public ArrayList<String> listDirectories() throws NullPointerException{
         TreePath[] paths = tree.getSelectionPaths();
         ArrayList<String> fullPaths = new ArrayList<>();
@@ -46,6 +52,25 @@ public class DirectoryChooser extends JFrame {
         return fullPaths;
     }
 
+    public ArrayList<String> loadIndexedPaths(){
+        //load paths in ArrayList
+        ArrayList<String> directories = new ArrayList<>();
+        String directoryPath;
+        try {
+            FileReader reader = new FileReader("directories.txt");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            while((directoryPath = bufferedReader.readLine()) != null) {
+                directories.add(directoryPath);
+                addDirectoryWatcher(directoryPath);
+            }
+            reader.close();
+            bufferedReader.close();
+        }catch(Exception e){
+            System.out.println("Error when reading out directories. " + e.getMessage());
+        }
+        return directories;
+    }
+
     private String buildPath(TreePath path){
         Object[] pathElements = path.getPath();
         String fullPath = "";
@@ -55,13 +80,20 @@ public class DirectoryChooser extends JFrame {
         return fullPath;
     }
 
-    public void addDirectoryWatcher(String path){
+    private void addDirectoryWatcher(String path){
         System.out.println("start directory watcher on: " + path);
         try{
-            Thread t = new Thread(new WatchDirectory(Paths.get(path), true));
-            t.start();
+
+            executorService.submit(new WatchDirectory(Paths.get(path), true));
+            //Thread t = new Thread(new WatchDirectory(Paths.get(path), true));
+            //t.start();
         }catch(IOException io){
             System.out.println("IOException: " + io.getMessage());
         }
+    }
+
+    public void removeDirectoryWatchers(){
+        executorService.shutdownNow();
+        System.out.println("directory watchers removed.");
     }
 }

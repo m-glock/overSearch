@@ -20,7 +20,7 @@ public class Indexer {
         for(String path : paths){
             indexFileOrFolder(path);
         }
-        indexSharePointFiles();
+        //indexSharePointFiles();
     }
 
     public static void indexFileOrFolder(String path){
