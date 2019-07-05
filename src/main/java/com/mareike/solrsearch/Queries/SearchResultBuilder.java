@@ -1,5 +1,6 @@
 package com.mareike.solrsearch.Queries;
 
+import com.mareike.solrsearch.ContentTypes;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -15,7 +16,7 @@ public class SearchResultBuilder {
 
         String html = "";
         for (SolrDocument doc : list){
-            String document = "<div>";
+            String document = "";
             //TODO: add picture for content type
             String path = fieldValue(doc, "path");
             //TODO: exception handling
@@ -36,9 +37,10 @@ public class SearchResultBuilder {
 
             document += "<h2><a href=\"" + url + "\">" + fieldValue(doc, "stream_name") + "</a></h2>";
             //document += "<h2>" + url + " " + fieldValue(doc, "stream_name") + "</h2>";
-            document += fieldValue(doc, "content_type");
-            document += fieldValue(doc, "meta_creation_date");
-            document += fieldValue(doc, "owner");
+            document += "<div>";
+            document += ContentTypes.getSimpleName(fieldValue(doc, "content_type")) + " | ";
+            document += fieldValue(doc, "meta_creation_date")+ " | ";
+            document += fieldValue(doc, "owner")+ " | ";
             document += path;
             //TODO: check that there are no unnecessary characters or metadata in the highlight text
             //TODO: show multiple snippets for one document?

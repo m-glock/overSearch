@@ -84,16 +84,15 @@ public class UIHandler extends javax.swing.JFrame{
     private void setEditorPane(){
         editorPaneResults.setEditorKit(javax.swing.JEditorPane.createEditorKitForContentType("text/html"));
         editorPaneResults.setEditable(false);
-        try {
-            URL styleSheetURL = new URL(System.getProperty("user.dir").replace("\\", "/") + "/res/default.css");
-            System.out.println("URL is: " + styleSheetURL.toString());
-            StyleSheet ss = new StyleSheet();
-            ss.importStyleSheet(styleSheetURL);
-            HTMLEditorKit kit = (HTMLEditorKit)editorPaneResults.getEditorKit();
-            kit.setStyleSheet(ss);
-        }catch(MalformedURLException ex){
-            System.out.println("URL problem: " + ex.getMessage());
-        }
+
+        HTMLEditorKit kit = (HTMLEditorKit)editorPaneResults.getEditorKit();
+        StyleSheet ss = kit.getStyleSheet();
+        ss.addRule("h2 a {font-size: 18pt; font-weight: bold; color: teal;}");
+        ss.addRule("p { margin-bottom: 40px;}");
+        ss.addRule("p, div{font-size: 16pt;}");
+        ss.addRule("p em {font-style: normal; background-color: #FFFF00;}");
+
+        kit.setStyleSheet(ss);
 
     }
 
@@ -263,17 +262,15 @@ public class UIHandler extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //executed when user hits enter in the search bar
+    //executed when user hits enter in the search bar or when the search button is clicked
     private void executeSearch() {
-        //TODO: same code for search button
         //perform query on input string
-        String response = "";
         String queryWord = searchBar.getText();
         //TODO: what happens if query word has weird characters
         //TODO: show all results? or somehow only load more when user is scrolling?
         qHandler.addParameter(ParameterType.QUERY, queryWord);
         QueryResponse queryResponse = qHandler.sendQuery(solr.client);
-        response = SearchResultBuilder.getHTMLForResults(queryResponse);
+        String response = SearchResultBuilder.getHTMLForResults(queryResponse);
 
         editorPaneResults.setText(response);
     }
