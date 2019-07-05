@@ -55,7 +55,6 @@ public class DirectoryChooser extends JFrame {
         return fullPath;
     }
 
-    //TODO: where to run this so that it does not only run when the application is open (service?)
     public void addDirectoryWatcher(String path){
         System.out.println("start directory watcher on: " + path);
         try{

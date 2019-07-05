@@ -24,14 +24,12 @@ public class Indexer {
     }
 
     public static void indexFileOrFolder(String path){
-        //TODO: find better character for replacement and change it in the function as well
         path = path.replace(" ", "%20");
         try{
             final URL url = new URL(indexFunctionURL + path);
             final HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(HttpMethod.POST.name());
             con.setRequestProperty("collection", collectionName);
-            //TODO: add body to request
             con.setDoOutput(true);
             OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8);
             osw.write("{}");

@@ -262,7 +262,7 @@ public class UIHandler extends javax.swing.JFrame{
     private void executeSearch() {
         //perform query on input string
         String queryWords = searchBar.getText();
-        //TODO: what happens if query word has weird characters
+        //TODO: can only handle one query word?
         QueryResponse queryResponse = qHandler.sendQuery(solr.client, queryWords);
         String response = SearchResultBuilder.getHTMLForResults(queryResponse);
 

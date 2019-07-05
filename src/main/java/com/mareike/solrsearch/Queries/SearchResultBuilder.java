@@ -31,7 +31,7 @@ public class SearchResultBuilder {
                 }
             }catch(MalformedURLException ex){
                 System.out.println("URL exception");
-                //TODO
+                //TODO: exception handling
                 url = null;
             }
 
@@ -41,7 +41,6 @@ public class SearchResultBuilder {
             document += fieldValue(doc, "meta_creation_date")+ " | ";
             document += fieldValue(doc, "owner")+ " | ";
             document += path;
-            //TODO: check that there are no unnecessary characters or metadata in the highlight text
             //TODO: show multiple snippets for one document?
             String id = fieldValue(doc, "id");
             document += "</div>";
