@@ -19,4 +19,21 @@ public class ContentTypes {
         }
     }
 
+    public static String getSolrValues(String format){
+        switch(format){
+            case "Word":
+                return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            case "Excel":
+                return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            case "PowerPoint":
+                return "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+            case "PDF":
+                return "application/pdf";
+            case "Textfile":
+                return "text/plain; charset=windows-1252";
+            default:
+                return "Unknown";
+        }
+    }
+
 }

@@ -4,7 +4,6 @@ import com.mareike.solrsearch.Indexer;
 import com.mareike.solrsearch.Queries.SearchResultBuilder;
 import com.mareike.solrsearch.localDirectories.DirectoryChooser;
 import com.mareike.solrsearch.localDirectories.MultiSelectionTree;
-import com.mareike.solrsearch.ParameterType;
 import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -21,10 +20,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 
 /*
@@ -47,7 +44,6 @@ public class UIHandler extends javax.swing.JFrame{
      * Creates new form UIHandler
      */
     public UIHandler() {
-        //TODO: if function name exists: immediately open main screen without directory chooser
         String solrURL = "http://localhost:8983/solr";
         String collectionName = "localDocs4";
         Boolean collectionExists = false;
@@ -265,11 +261,9 @@ public class UIHandler extends javax.swing.JFrame{
     //executed when user hits enter in the search bar or when the search button is clicked
     private void executeSearch() {
         //perform query on input string
-        String queryWord = searchBar.getText();
+        String queryWords = searchBar.getText();
         //TODO: what happens if query word has weird characters
-        //TODO: show all results? or somehow only load more when user is scrolling?
-        qHandler.addParameter(ParameterType.QUERY, queryWord);
-        QueryResponse queryResponse = qHandler.sendQuery(solr.client);
+        QueryResponse queryResponse = qHandler.sendQuery(solr.client, queryWords);
         String response = SearchResultBuilder.getHTMLForResults(queryResponse);
 
         editorPaneResults.setText(response);
@@ -329,7 +323,7 @@ public class UIHandler extends javax.swing.JFrame{
         Filter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: calll different constructor or something when filters are saved?
+                //TODO: call different constructor or something when filters are saved?
                 FilterFrame frame = new FilterFrame(solr, qHandler);
                 frame.getContentPane().setBackground(Color.white);
                 frame.setVisible(true);
@@ -343,7 +337,7 @@ public class UIHandler extends javax.swing.JFrame{
                         try {
                             System.out.println("url: " + e.getURL().toString());
                             URI uri = e.getURL().toURI();
-                            //TODO: open folder or file? and exception handling
+                            //TODO: exception handling
                             if(uri.toString().contains("sharepoint")){
                                 System.out.println("URI " + uri + "is a sharepoint uri.");
                                 Desktop.getDesktop().browse(uri);
