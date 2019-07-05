@@ -13,7 +13,7 @@ import java.util.*;
 public class SolrInstance {
 
     public HttpSolrClient client;
-    private final String urlString;
+    private String urlString;
     private String collectionName;
     
 
@@ -25,11 +25,12 @@ public class SolrInstance {
         //checkSolrConnection();
     }
 
-    public SolrInstance(String solrURL){
+    public void changeSolrInstance(String solrURL){
         urlString = solrURL;
         int index = solrURL.lastIndexOf("/");
         collectionName = solrURL.substring(index+1);
-        client = new HttpSolrClient.Builder(urlString).build();
+        client.setBaseURL(urlString);
+        System.out.println("Base url is now: " + client.getBaseURL());
     }
 
     /*private void firstInit(){
