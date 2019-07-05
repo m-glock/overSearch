@@ -3,6 +3,7 @@ package com.mareike.solrsearch;
 import com.mareike.solrsearch.UI.UIHandler;
 
 import java.awt.*;
+import java.util.Date;
 
 public class Main {
     
@@ -19,7 +20,6 @@ public class Main {
                 ex.getContentPane().setBackground(Color.white);
             }
         });
-
 
         /*try{
             Parser parser = new AutoDetectParser();

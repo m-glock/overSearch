@@ -6,6 +6,9 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 public class QueryHandler {
@@ -60,13 +63,13 @@ public class QueryHandler {
             switch(f.type){
                 case "filter":
                     System.out.println("parameter: " + f.value + ":" + filters.get(f));
-                    String s = filters.get(f);
+                    String s = "\"" + filters.get(f) + "\"";
                     if(f.value.equals("content_type")){
-                        s = ContentTypes.getSolrValues(s);
+                        s = "\"" + ContentTypes.getSolrValues(s) + "\"";
                     }else if(f.value.equals("meta_creation_date")){
-                        s = "";
+                        s = getDate(filters.get(f));
                     }
-                    query.addFilterQuery(f.value + ":" + "\"" + s + "\"");
+                    query.addFilterQuery(f.value + ":" + s);
                     break;
                 case "boost":
                     /*query.add
@@ -80,6 +83,21 @@ public class QueryHandler {
                 default:
                     break;
             }
+        }
+    }
+
+
+    private String getDate(String timespan){
+        if(timespan.equals("24 hours")){
+            return "[NOW-1DAY TO NOW]";
+        }else if(timespan.equals("last week")){
+            return "[NOW-7DAY TO NOW]";
+        }else if(timespan.equals("last month")){
+            return "[NOW-1MONTH TO NOW]";
+        }else if(timespan.equals("last year")){
+            return "[NOW-1YEAR TO NOW]";
+        }else{
+            return null;
         }
     }
 }

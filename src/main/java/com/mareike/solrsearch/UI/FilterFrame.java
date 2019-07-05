@@ -369,7 +369,7 @@ public class FilterFrame extends javax.swing.JFrame {
     }
 
     private void setBoxModels(SolrInstance solr){
-        String[] dates = new String[]{"last week", "last month", "last year"};
+        String[] dates = new String[]{"24 hours", "last week", "last month", "last year"};
         datePreferenceComboBoxModel = new javax.swing.DefaultComboBoxModel<>(dates);
         dateFilterComboBoxModel = new javax.swing.DefaultComboBoxModel<>(dates);
         try {
