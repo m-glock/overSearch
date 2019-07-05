@@ -41,6 +41,15 @@ public class FilterFrame extends javax.swing.JFrame {
         setInitialStates();
     }
 
+    /*public FilterFrame(SolrInstance solr, QueryHandler qHandler, HashMap<Filter, String> filters){
+        this.qHandler = qHandler;
+        this.filters = filters;
+        setBoxModels(solr);
+        initComponents();
+        createActionListeners();
+        setStatesFromMap();
+    }*/
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
