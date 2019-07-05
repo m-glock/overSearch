@@ -43,29 +43,28 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/UI/FilterFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="408" column="94" lean-forward="true" selection-start-line="408" selection-start-column="94" selection-end-line="408" selection-end-column="94" />
+            <state relative-caret-position="187">
+              <caret line="22" column="145" selection-start-line="22" selection-start-column="145" selection-end-line="22" selection-end-column="145" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1203#1266#0" expanded="true" />
                 <element signature="e#15728#16218#0" expanded="true" />
                 <element signature="e#16217#16218#0" expanded="true" />
                 <element signature="e#16269#16451#0" expanded="true" />
                 <element signature="e#16450#16451#0" expanded="true" />
                 <element signature="e#16505#16688#0" expanded="true" />
                 <element signature="e#16687#16688#0" expanded="true" />
-                <element signature="e#16740#16951#0" expanded="true" />
-                <element signature="e#16950#16951#0" expanded="true" />
-                <element signature="e#17008#17213#0" expanded="true" />
-                <element signature="e#17212#17213#0" expanded="true" />
-                <element signature="e#17264#17473#0" expanded="true" />
-                <element signature="e#17472#17473#0" expanded="true" />
+                <element signature="e#16337#16548#0" expanded="true" />
+                <element signature="e#16547#16548#0" expanded="true" />
+                <element signature="e#16532#16737#0" expanded="true" />
+                <element signature="e#16736#16737#0" expanded="true" />
+                <element signature="e#16778#16987#0" expanded="true" />
+                <element signature="e#16986#16987#0" expanded="true" />
                 <element signature="e#17525#17736#0" expanded="true" />
                 <element signature="e#17735#17736#0" expanded="true" />
-                <element signature="e#17785#17990#0" expanded="true" />
-                <element signature="e#17989#17990#0" expanded="true" />
-                <element signature="e#18041#18250#0" expanded="true" />
-                <element signature="e#18249#18250#0" expanded="true" />
+                <element signature="e#17438#17653#0" expanded="true" />
+                <element signature="e#17652#17653#0" expanded="true" />
+                <element signature="e#17687#17906#0" expanded="true" />
+                <element signature="e#17905#17906#0" expanded="true" />
                 <element signature="e#18579#18580#0" expanded="true" />
                 <element signature="e#18625#18626#0" expanded="true" />
               </folding>
@@ -827,29 +826,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/UI/FilterFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="408" column="94" lean-forward="true" selection-start-line="408" selection-start-column="94" selection-end-line="408" selection-end-column="94" />
+        <state relative-caret-position="187">
+          <caret line="22" column="145" selection-start-line="22" selection-start-column="145" selection-end-line="22" selection-end-column="145" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1203#1266#0" expanded="true" />
             <element signature="e#15728#16218#0" expanded="true" />
             <element signature="e#16217#16218#0" expanded="true" />
             <element signature="e#16269#16451#0" expanded="true" />
             <element signature="e#16450#16451#0" expanded="true" />
             <element signature="e#16505#16688#0" expanded="true" />
             <element signature="e#16687#16688#0" expanded="true" />
-            <element signature="e#16740#16951#0" expanded="true" />
-            <element signature="e#16950#16951#0" expanded="true" />
-            <element signature="e#17008#17213#0" expanded="true" />
-            <element signature="e#17212#17213#0" expanded="true" />
-            <element signature="e#17264#17473#0" expanded="true" />
-            <element signature="e#17472#17473#0" expanded="true" />
+            <element signature="e#16337#16548#0" expanded="true" />
+            <element signature="e#16547#16548#0" expanded="true" />
+            <element signature="e#16532#16737#0" expanded="true" />
+            <element signature="e#16736#16737#0" expanded="true" />
+            <element signature="e#16778#16987#0" expanded="true" />
+            <element signature="e#16986#16987#0" expanded="true" />
             <element signature="e#17525#17736#0" expanded="true" />
             <element signature="e#17735#17736#0" expanded="true" />
-            <element signature="e#17785#17990#0" expanded="true" />
-            <element signature="e#17989#17990#0" expanded="true" />
-            <element signature="e#18041#18250#0" expanded="true" />
-            <element signature="e#18249#18250#0" expanded="true" />
+            <element signature="e#17438#17653#0" expanded="true" />
+            <element signature="e#17652#17653#0" expanded="true" />
+            <element signature="e#17687#17906#0" expanded="true" />
+            <element signature="e#17905#17906#0" expanded="true" />
             <element signature="e#18579#18580#0" expanded="true" />
             <element signature="e#18625#18626#0" expanded="true" />
           </folding>

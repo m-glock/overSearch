@@ -15,52 +15,17 @@ import java.util.HashMap;
 public class FilterFrame extends javax.swing.JFrame {
 
     private ButtonGroup buttonGroupSort;
-    private Box.Filler filler2;
-    private JPanel preferencePanel;
-    private Box.Filler filler4;
-    private JLabel preferencesLabel;
-    private JPanel preferencesContentPane;
-    private JPanel creatorPreferencesPanel;
-    private JCheckBox creatorPreferencesCheckBox;
-    private JComboBox creatorPreferencesComboBox;
-    private JPanel datePreferencesPanel;
-    private JCheckBox datePreferencesCheckBox;
-    private JComboBox datePreferencesComboBox;
-    private JPanel formatPreferencesPanel;
-    private JCheckBox formatPreferencesCheckBox;
-    private JComboBox formatPreferencesComboBox;
-    private JSeparator jSeparator1;
-    private Box.Filler filler1;
-    private JPanel filterPanel;
-    private Box.Filler filler3;
-    private JLabel filterLabel;
-    private JPanel filterContentPane;
-    private JPanel creatorFilterPanel;
-    private JCheckBox creatorFilterCheckBox;
-    private JComboBox creatorFilterComboBox;
-    private JPanel dateFilterPanel;
-    private JCheckBox dateFilterCheckBox;
-    private JComboBox dateFilterComboBox;
-    private JPanel fileFilterPanel;
-    private JCheckBox formatFilterCheckBox;
-    private JComboBox formatFilterComboBox;
-    private JSeparator jSeparator2;
-    private JPanel sortPanel;
-    private Box.Filler filler5;
-    private JLabel sortLabel;
-    private Box.Filler filler7;
-    private JPanel filterContentPane1;
-    private Box.Filler filler6;
-    private JRadioButton relevanceRadioButton;
-    private JRadioButton creationDateRadioButton;
-    private JPanel footer;
+    private Box.Filler filler1, filler2, filler3, filler4, filler5, filler6, filler7;
+    private JPanel preferencePanel, filterPanel, creatorFilterPanel, preferencesContentPane, creatorPreferencesPanel, datePreferencesPanel, formatPreferencesPanel, filterContentPane,
+            dateFilterPanel, fileFilterPanel, sortPanel, filterContentPane1, footer;
+    private JLabel sortLabel, preferencesLabel, filterLabel;
+    private JCheckBox creatorPreferencesCheckBox, datePreferencesCheckBox, formatPreferencesCheckBox, creatorFilterCheckBox, dateFilterCheckBox, formatFilterCheckBox;
+    private JComboBox creatorPreferencesComboBox, datePreferencesComboBox, formatPreferencesComboBox, creatorFilterComboBox, dateFilterComboBox, formatFilterComboBox;
+    private JRadioButton relevanceRadioButton, creationDateRadioButton;
     private JButton finishButton;
-    private javax.swing.DefaultComboBoxModel<String> creatorFilterComboBoxModel;
-    private javax.swing.DefaultComboBoxModel<String> creatorPreferenceComboBoxModel;
-    private javax.swing.DefaultComboBoxModel<String> dateFilterComboBoxModel;
-    private javax.swing.DefaultComboBoxModel<String> datePreferenceComboBoxModel;
-    private javax.swing.DefaultComboBoxModel<String> formatFilterComboBoxModel;
-    private javax.swing.DefaultComboBoxModel<String> formatPreferenceComboBoxModel;
+    private JSeparator jSeparator1, jSeparator2;
+    private javax.swing.DefaultComboBoxModel<String> creatorFilterComboBoxModel, creatorPreferenceComboBoxModel, dateFilterComboBoxModel, datePreferenceComboBoxModel,
+            formatFilterComboBoxModel, formatPreferenceComboBoxModel;
     private QueryHandler qHandler;
     private HashMap<Filter, String> filters;
 
@@ -157,7 +122,7 @@ public class FilterFrame extends javax.swing.JFrame {
 
         creatorPreferencesCheckBox.setBackground(new java.awt.Color(255, 255, 255));
         creatorPreferencesCheckBox.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        creatorPreferencesCheckBox.setText("created by");
+        creatorPreferencesCheckBox.setText("creator");
         creatorPreferencesCheckBox.setPreferredSize(new java.awt.Dimension(180, 33));
         creatorPreferencesPanel.add(creatorPreferencesCheckBox);
 
