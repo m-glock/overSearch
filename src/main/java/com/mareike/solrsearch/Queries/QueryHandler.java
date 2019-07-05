@@ -18,7 +18,7 @@ public class QueryHandler {
 
     public QueryHandler(){
         query = new SolrQuery();
-        //generateQueryParameters();
+        filters = new HashMap<>();
     }
 
     public void setFilters(HashMap<Filter, String> filters){ this.filters = filters; }
