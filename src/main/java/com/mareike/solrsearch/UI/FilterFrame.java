@@ -55,9 +55,12 @@ public class FilterFrame extends javax.swing.JFrame {
     private JRadioButton creationDateRadioButton;
     private JPanel footer;
     private JButton finishButton;
-    private javax.swing.DefaultComboBoxModel<String> creatorComboBoxModel;
-    private javax.swing.DefaultComboBoxModel<String> dateComboBoxModel;
-    private javax.swing.DefaultComboBoxModel<String> formatComboBoxModel;
+    private javax.swing.DefaultComboBoxModel<String> creatorFilterComboBoxModel;
+    private javax.swing.DefaultComboBoxModel<String> creatorPreferenceComboBoxModel;
+    private javax.swing.DefaultComboBoxModel<String> dateFilterComboBoxModel;
+    private javax.swing.DefaultComboBoxModel<String> datePreferenceComboBoxModel;
+    private javax.swing.DefaultComboBoxModel<String> formatFilterComboBoxModel;
+    private javax.swing.DefaultComboBoxModel<String> formatPreferenceComboBoxModel;
     private QueryHandler qHandler;
     private HashMap<Filter, String> filters;
 
@@ -159,7 +162,7 @@ public class FilterFrame extends javax.swing.JFrame {
         creatorPreferencesPanel.add(creatorPreferencesCheckBox);
 
         creatorPreferencesComboBox.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        creatorPreferencesComboBox.setModel(creatorComboBoxModel);
+        creatorPreferencesComboBox.setModel(creatorPreferenceComboBoxModel);
         creatorPreferencesPanel.add(creatorPreferencesComboBox);
 
         preferencesContentPane.add(creatorPreferencesPanel);
@@ -174,7 +177,7 @@ public class FilterFrame extends javax.swing.JFrame {
         datePreferencesPanel.add(datePreferencesCheckBox);
 
         datePreferencesComboBox.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        datePreferencesComboBox.setModel(dateComboBoxModel);
+        datePreferencesComboBox.setModel(datePreferenceComboBoxModel);
         datePreferencesPanel.add(datePreferencesComboBox);
 
         preferencesContentPane.add(datePreferencesPanel);
@@ -189,7 +192,7 @@ public class FilterFrame extends javax.swing.JFrame {
         formatPreferencesPanel.add(formatPreferencesCheckBox);
 
         formatPreferencesComboBox.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        formatPreferencesComboBox.setModel(formatComboBoxModel);
+        formatPreferencesComboBox.setModel(formatPreferenceComboBoxModel);
         formatPreferencesPanel.add(formatPreferencesComboBox);
 
         preferencesContentPane.add(formatPreferencesPanel);
@@ -230,7 +233,7 @@ public class FilterFrame extends javax.swing.JFrame {
         creatorFilterPanel.add(creatorFilterCheckBox);
 
         creatorFilterComboBox.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        creatorFilterComboBox.setModel(creatorComboBoxModel);
+        creatorFilterComboBox.setModel(creatorFilterComboBoxModel);
         creatorFilterPanel.add(creatorFilterComboBox);
 
         filterContentPane.add(creatorFilterPanel);
@@ -245,7 +248,7 @@ public class FilterFrame extends javax.swing.JFrame {
         dateFilterPanel.add(dateFilterCheckBox);
 
         dateFilterComboBox.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        dateFilterComboBox.setModel(dateComboBoxModel);
+        dateFilterComboBox.setModel(dateFilterComboBoxModel);
         dateFilterPanel.add(dateFilterComboBox);
 
         filterContentPane.add(dateFilterPanel);
@@ -260,7 +263,7 @@ public class FilterFrame extends javax.swing.JFrame {
         fileFilterPanel.add(formatFilterCheckBox);
 
         formatFilterComboBox.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        formatFilterComboBox.setModel(formatComboBoxModel);
+        formatFilterComboBox.setModel(formatFilterComboBoxModel);
         fileFilterPanel.add(formatFilterComboBox);
 
         filterContentPane.add(fileFilterPanel);
@@ -325,8 +328,7 @@ public class FilterFrame extends javax.swing.JFrame {
         finishButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: add values to hash map
-
+                readAndSaveFilters();
                 for(Filter f : filters.keySet()){
                     System.out.println("Filter " + f + " with value " + filters.get(f));
                 }
@@ -393,20 +395,21 @@ public class FilterFrame extends javax.swing.JFrame {
     }
 
     private void setBoxModels(SolrInstance solr){
-        dateComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[]{"last week", "last month", "last year"});
+        String[] dates = new String[]{"last week", "last month", "last year"};
+        datePreferenceComboBoxModel = new javax.swing.DefaultComboBoxModel<>(dates);
+        dateFilterComboBoxModel = new javax.swing.DefaultComboBoxModel<>(dates);
         try {
             String[] contentTypes = solr.getFilterOptions("content_type");
             for(int i = 0; i < contentTypes.length; i++){
                 contentTypes[i] = ContentTypes.getSimpleName(contentTypes[i]);
             }
             String[] creators = solr.getFilterOptions("owner");
-            formatComboBoxModel = new javax.swing.DefaultComboBoxModel<>(contentTypes);
-            creatorComboBoxModel = new javax.swing.DefaultComboBoxModel<>(creators);
+            formatPreferenceComboBoxModel = new javax.swing.DefaultComboBoxModel<>(contentTypes);
+            formatFilterComboBoxModel = new javax.swing.DefaultComboBoxModel<>(contentTypes);
+            creatorFilterComboBoxModel = new javax.swing.DefaultComboBoxModel<>(creators);
+            creatorPreferenceComboBoxModel = new javax.swing.DefaultComboBoxModel<>(creators);
         }catch(Exception ex){
             System.out.println("Error when retrieving filter options: " + ex.getMessage());
-            formatComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[]{""});
-            dateComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[]{"last week", "last month", "last year"});
-            creatorComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[]{""});
         }
     }
 
@@ -419,6 +422,33 @@ public class FilterFrame extends javax.swing.JFrame {
         formatPreferencesComboBox.setEnabled(false);
         relevanceRadioButton.setSelected(true);
         addFilter(Filter.SORTRELEVANCE, "true");
+    }
+
+    private void readAndSaveFilters(){
+        if(creatorFilterComboBox.isEnabled()){
+            String item = creatorFilterComboBox.getSelectedItem().toString();
+            addFilter(Filter.CREATORFILTER, item);
+        }
+        if(dateFilterComboBox.isEnabled()){
+            String item = dateFilterComboBox.getSelectedItem().toString();
+            addFilter(Filter.DATEFILTER, item);
+        }
+        if(formatFilterComboBox.isEnabled()){
+            String item = formatFilterComboBox.getSelectedItem().toString();
+            addFilter(Filter.FORMATFILTER, item);
+        }
+        if(creatorPreferencesComboBox.isEnabled()){
+            String item = creatorPreferencesComboBox.getSelectedItem().toString();
+            addFilter(Filter.CREATORPREFERENECE, item);
+        }
+        if(datePreferencesComboBox.isEnabled()){
+            String item = datePreferencesComboBox.getSelectedItem().toString();
+            addFilter(Filter.DATEPREFERENECE, item);
+        }
+        if(formatPreferencesComboBox.isEnabled()){
+            String item = formatPreferencesComboBox.getSelectedItem().toString();
+            addFilter(Filter.FORMATPREFERENECE, item);
+        }
     }
 
     private void addFilter(Filter filterType, String value){
