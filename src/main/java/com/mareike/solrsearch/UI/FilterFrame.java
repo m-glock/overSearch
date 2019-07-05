@@ -1,19 +1,30 @@
 package com.mareike.solrsearch.UI;
 
 import com.mareike.solrsearch.ContentTypes;
+import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FilterFrame extends javax.swing.JFrame {
 
     private javax.swing.DefaultComboBoxModel<String> creatorComboBoxModel;
     private javax.swing.DefaultComboBoxModel<String> dateComboBoxModel;
     private javax.swing.DefaultComboBoxModel<String> formatComboBoxModel;
+    private QueryHandler qHandler;
+    private HashMap<Filter, String> filters;
+
     /**
      * Creates new form NewJFrame
      */
-    public FilterFrame(SolrInstance solr) {
+    public FilterFrame(SolrInstance solr, QueryHandler qHandler) {
+        this.qHandler = qHandler;
+        filters = new HashMap<>();
         setBoxModels(solr);
         initComponents();
     }
@@ -69,7 +80,7 @@ public class FilterFrame extends javax.swing.JFrame {
         JPanel footer = new javax.swing.JPanel();
         JButton finishButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
@@ -259,12 +270,24 @@ public class FilterFrame extends javax.swing.JFrame {
         footer.setLayout(new java.awt.GridBagLayout());
 
         finishButton.setText("Done");
+        finishButton.addActionListener(createActionListener());
         footer.add(finishButton, new java.awt.GridBagConstraints());
 
         getContentPane().add(footer);
 
         pack();
     }// </editor-fold>
+
+    private ActionListener createActionListener(){
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<Button> buttons = new ArrayList<>();
+                qHandler.saveFilters(buttons);
+                FilterFrame.this.dispose();
+            }
+        };
+    }
 
     private void setBoxModels(SolrInstance solr){
         dateComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[]{"last week", "last month", "last year"});
@@ -274,7 +297,6 @@ public class FilterFrame extends javax.swing.JFrame {
                 contentTypes[i] = ContentTypes.getSimpleName(contentTypes[i]);
             }
             String[] creators = solr.getFilterOptions("owner");
-
             formatComboBoxModel = new javax.swing.DefaultComboBoxModel<>(contentTypes);
             creatorComboBoxModel = new javax.swing.DefaultComboBoxModel<>(creators);
         }catch(Exception ex){
@@ -283,6 +305,20 @@ public class FilterFrame extends javax.swing.JFrame {
             dateComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[]{"last week", "last month", "last year"});
             creatorComboBoxModel = new javax.swing.DefaultComboBoxModel<>(new String[]{""});
         }
+    }
 
+    private void addFilter(Filter filterType, String value){
+        filters.put(filterType, value);
+    }
+
+    private enum Filter{
+        CREATORFILTER,
+        DATEFILTER,
+        FORMATFILTER,
+        CREATORPREFERENECE,
+        DATEPREFERENECE,
+        FORMATPREFERENECE,
+        SORTRELEVANCE,
+        SORTDATE
     }
 }

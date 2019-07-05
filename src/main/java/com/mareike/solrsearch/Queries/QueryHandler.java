@@ -6,7 +6,10 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.params.MapSolrParams;
 import org.apache.solr.common.params.SolrParams;
+
+import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class QueryHandler {
@@ -28,12 +31,6 @@ public class QueryHandler {
         QueryResponse response;
         try{
             response = client.query(params);
-            /*List<String> content = response.getHighlighting().get("778c5b0e-91cd-4140-b509-64d6e62d1d4f").get("_text_");
-            for(String st : content){
-                System.out.println("highlight is: " + st);
-            }*/
-            //System.out.println("response is: " + response);
-            //docs = response.getResults();
             return response;
         }catch(IOException io){
             System.out.println("IOException");
@@ -59,5 +56,10 @@ public class QueryHandler {
         parameters.put("hl.fl", "_text_");
 
         return new MapSolrParams(parameters);
+    }
+
+
+    public void saveFilters(ArrayList<Button> buttons){
+
     }
 }
