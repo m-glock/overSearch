@@ -153,7 +153,7 @@ public class UIHandler extends javax.swing.JFrame{
         startWelcomeLabel.setBackground(new java.awt.Color(255, 255, 255));
         startWelcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         startWelcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        startWelcomeLabel.setText("Welcome to overSearch! Please choose the directories you want to index for the search.");
+        startWelcomeLabel.setText("Welcome to overSearch! Please select all files you want to include in your search.");
         startWelcomeLabel.setAlignmentX(0.5F);
         startWelcomeLabel.setPreferredSize(new java.awt.Dimension(800, 100));
         startScreen.add(startWelcomeLabel);
@@ -209,7 +209,7 @@ public class UIHandler extends javax.swing.JFrame{
         searchBarPanel.setPreferredSize(new java.awt.Dimension(1080, 40));
 
         searchBar.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        searchBar.setText("Search");
+        searchBar.setText("");
         searchBar.setMaximumSize(new java.awt.Dimension(700, 40));
         searchBar.setMinimumSize(new java.awt.Dimension(700, 40));
         searchBar.setPreferredSize(new java.awt.Dimension(700, 40));
@@ -283,7 +283,11 @@ public class UIHandler extends javax.swing.JFrame{
     private void executeSearch() {
         //perform query on input string
         String queryWords = searchBar.getText();
-        //TODO: can only handle one query word?
+        //if not query word is specified, just return all files in the collection
+        //sorting and filter still apply
+        //TODO: preferences as well? I think there is no score?
+        if(queryWords.equals(""))
+            queryWords = "*:*";
         QueryResponse queryResponse = qHandler.sendQuery(solr.client, queryWords);
         String response = SearchResultBuilder.getHTMLForResults(queryResponse);
 
@@ -305,10 +309,9 @@ public class UIHandler extends javax.swing.JFrame{
                     Indexer.indexFiles(directoryPaths, solr.getCollectionName());
                     CardLayout card = (CardLayout)(mainPanel.getLayout());
                     card.show(mainPanel, "mainScreen");
-                }catch(NullPointerException ex){ //TODO: exception handling
+                }catch(NullPointerException ex){
                     JOptionPane.showMessageDialog(null, "Please select at least one Directory for indexing.");
-
-                }catch(IOException ex){
+                }catch(IOException ex){//TODO: exception handling
                     System.out.println("IOException: " + ex.getMessage());
                 }catch(SolrServerException ex){
                     System.out.println("SolrServerException: " + ex.getMessage());
@@ -333,7 +336,6 @@ public class UIHandler extends javax.swing.JFrame{
                     solr.deleteCollection();
                     CardLayout card = (CardLayout)(mainPanel.getLayout());
                     card.show(mainPanel, "startScreen");
-                    //TODO: remove directory watcher and empty list of directories
                     dir.removeDirectoryWatchers();
                     dir.startThreads();
                 }catch(Exception ex){

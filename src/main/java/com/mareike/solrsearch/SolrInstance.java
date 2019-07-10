@@ -47,7 +47,7 @@ public class SolrInstance {
     
     public void createCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
         String configName = "localDocs";
-        CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
+        CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 2, 2);
 
         NamedList resp = client.request(req);
         System.out.println("Collection created. Response: " + resp.toString());

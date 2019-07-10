@@ -20,7 +20,7 @@ public class Indexer {
         for(String path : paths){
             indexFileOrFolder(path);
         }
-        //indexSharePointFiles();
+        indexSharePointFiles();
     }
 
     public static void indexFileOrFolder(String path){
@@ -64,7 +64,7 @@ public class Indexer {
         }
     }
 
-    public static void indexSharePointFiles(){
+    private static void indexSharePointFiles(){
         try {
             final URL url = new URL(SharePointFunctionURL + collectionName);
             final HttpURLConnection con = (HttpURLConnection) url.openConnection();
