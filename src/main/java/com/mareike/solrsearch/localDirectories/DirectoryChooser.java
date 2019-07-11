@@ -42,7 +42,7 @@ public class DirectoryChooser extends JFrame {
     public ArrayList<String> listDirectories() throws NullPointerException{
         TreePath[] paths = tree.getSelectionPaths();
         ArrayList<String> fullPaths = new ArrayList<>();
-        int endIndex = basePath.lastIndexOf("/");
+        int endIndex = basePath.lastIndexOf(File.separator);
         String newBasePath = basePath.substring(0, endIndex+1);
         for(TreePath path : paths){
             String fullPath = newBasePath + buildPath(path);

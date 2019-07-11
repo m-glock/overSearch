@@ -68,7 +68,7 @@ public class UIHandler extends javax.swing.JFrame{
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }
         //TODO: let user choose start directory? Or just use C?
-        DirectoryChooser dir = new DirectoryChooser("C:/Users/mareike/Documents/Studium");
+        DirectoryChooser dir = new DirectoryChooser(System.getProperty("user.home"));
         qHandler = new QueryHandler();
         MultiSelectionTree tree = dir.getTree();
         initComponents(tree);
@@ -85,14 +85,16 @@ public class UIHandler extends javax.swing.JFrame{
     private void closeFrameActionListener(){
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                String fileName = "directories.txt";
-                try(PrintWriter pw = new PrintWriter(new FileOutputStream(fileName))) {
-                    for (String path : directoryPaths)
-                        pw.println(path);
-                }catch(FileNotFoundException ex){
-                    System.out.println("Error when trying to save directory paths in a file.");
+                if(directoryPaths != null && !directoryPaths.isEmpty()) {
+                    String fileName = "directories.txt";
+                    try (PrintWriter pw = new PrintWriter(new FileOutputStream(fileName))) {
+                        for (String path : directoryPaths)
+                            pw.println(path);
+                    } catch (FileNotFoundException ex) {
+                        System.out.println("Error when trying to save directory paths in a file.");
+                    }
+                    System.out.println("Frame closed");
                 }
-                System.out.println("Frame closed");
             }
         });
     }
@@ -286,12 +288,12 @@ public class UIHandler extends javax.swing.JFrame{
         //if not query word is specified, just return all files in the collection
         //sorting and filter still apply
         //TODO: preferences as well? I think there is no score?
-        if(queryWords.equals(""))
-            queryWords = "*:*";
-        QueryResponse queryResponse = qHandler.sendQuery(solr.client, queryWords);
-        String response = SearchResultBuilder.getHTMLForResults(queryResponse);
+        if(queryWords != null && !queryWords.equals("")) {
+            QueryResponse queryResponse = qHandler.sendQuery(solr.client, queryWords);
+            String response = SearchResultBuilder.getHTMLForResults(queryResponse);
 
-        editorPaneResults.setText(response);
+            editorPaneResults.setText(response);
+        }
     }
 
 
