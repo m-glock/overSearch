@@ -84,6 +84,7 @@ public class UIHandler extends javax.swing.JFrame{
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 if(directoryPaths != null && !directoryPaths.isEmpty()) {
+                    //TODO: check if content will be overwritten or just appended (seems like overwritten)
                     String fileName = "directories.txt";
                     try (PrintWriter pw = new PrintWriter(new FileOutputStream(fileName))) {
                         for (String path : directoryPaths)
