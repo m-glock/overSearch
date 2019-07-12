@@ -56,15 +56,11 @@ public class DirectorySelector extends JFrame {
         //load paths in ArrayList
         ArrayList<String> directories = new ArrayList<>();
         String directoryPath;
-        try {
-            FileReader reader = new FileReader("directories.txt");
-            BufferedReader bufferedReader = new BufferedReader(reader);
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("directories.txt"))) {
             while((directoryPath = bufferedReader.readLine()) != null) {
                 directories.add(directoryPath);
                 addDirectoryWatcher(directoryPath);
             }
-            reader.close();
-            bufferedReader.close();
         }catch(Exception e){
             System.out.println("Error when reading out directories. " + e.getMessage());
         }
@@ -83,10 +79,7 @@ public class DirectorySelector extends JFrame {
     private void addDirectoryWatcher(String path){
         System.out.println("start directory watcher on: " + path);
         try{
-
-            executorService.submit(new WatchDirectory(Paths.get(path), true));
-            //Thread t = new Thread(new WatchDirectory(Paths.get(path), true));
-            //t.start();
+            executorService.submit(new DirectoryWatchService(Paths.get(path), true));
         }catch(IOException io){
             System.out.println("IOException: " + io.getMessage());
         }

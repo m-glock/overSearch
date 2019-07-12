@@ -45,13 +45,13 @@ import java.util.*;
  * Example to watch a directory (or tree) for changes to files.
  */
 
-public class WatchDirectory implements Runnable{
+public class DirectoryWatchService implements Runnable{
 
     private final WatchService watcher;
     private final Map<WatchKey,Path> keys;
     private final boolean recursive;
     private boolean trace;
-    private String deletedFolder = "@";
+    private String deletedFolder = "clcvlbjdvnvdscksdabfg";
 
     @SuppressWarnings("unchecked")
     private static <T> WatchEvent<T> cast(WatchEvent<?> event) {
@@ -61,7 +61,7 @@ public class WatchDirectory implements Runnable{
     /**
      * Creates a WatchService and registers the given directory
      */
-    public WatchDirectory(Path dir, boolean recursive) throws IOException {
+    public DirectoryWatchService(Path dir, boolean recursive) throws IOException {
         this.watcher = FileSystems.getDefault().newWatchService();
         this.keys = new HashMap<>();
         this.recursive = recursive;
@@ -164,7 +164,7 @@ public class WatchDirectory implements Runnable{
                         if (Files.isDirectory(child, NOFOLLOW_LINKS)) {
                             registerAll(child);
                             if(child.toString().equals(deletedFolder)) {
-                                deletedFolder = "@";
+                                deletedFolder = "clcvlbjdvnvdscksdabfg";
                             }
                         }
                     } catch (IOException x) {
@@ -190,7 +190,7 @@ public class WatchDirectory implements Runnable{
 
     private void updateFiles(WatchEvent event, Path path){
         String extension = FilenameUtils.getExtension(path.toString());
-        if(extension.equals("") && event.kind().name() == "ENTRY_DELETE"){
+        if(extension.equals("") && event.kind().name().equals("ENTRY_DELETE")){
             System.out.println("folder has been deleted: " + path.toString());
             deleteAllFilesInFolder(path.toFile());
             deletedFolder = path.toString();
