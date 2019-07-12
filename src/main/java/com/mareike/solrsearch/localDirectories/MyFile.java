@@ -16,7 +16,6 @@ public class MyFile {
 
     public MyFile[] listFiles() {
         //only directories are listed and hidden directories are excluded
-        //TODO: check that every directory can be opened and closed
         final File[] files = mFile.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {

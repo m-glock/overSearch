@@ -3,10 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c7c82ed7-e179-461e-b4b0-f239f7558704" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/SolrInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/SolrInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Queries/SearchResultBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Queries/SearchResultBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/UI/UIHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/UI/UIHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectoryChooser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectoryChooser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectoryChooser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectorySelector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/MyFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/MyFile.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -24,12 +24,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="21" column="11" lean-forward="true" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+            <state relative-caret-position="136">
+              <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#339#560#0" expanded="true" />
-                <element signature="e#559#560#0" expanded="true" />
                 <element signature="method#setLookAndFeel#0;class#Main#0" />
               </folding>
             </state>
@@ -37,10 +35,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Indexer.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/UI/UIHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+            <state relative-caret-position="428">
+              <caret line="306" column="86" selection-start-line="306" selection-start-column="86" selection-end-line="306" selection-end-column="86" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -51,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Queries/SearchResultBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+            <state relative-caret-position="207">
+              <caret line="43" column="33" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -61,48 +59,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/UI/UIHandler.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectorySelector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="70" column="81" selection-start-line="70" selection-start-column="81" selection-end-line="70" selection-end-column="81" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3204#3835#0" expanded="true" />
-                <element signature="e#3834#3835#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectoryChooser.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="51" column="36" lean-forward="true" selection-start-line="51" selection-start-column="36" selection-end-line="51" selection-end-column="36" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/SolrInstance.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="49" column="123" selection-start-line="49" selection-start-column="123" selection-end-line="49" selection-end-column="123" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/WatchDirectory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2681">
-              <caret line="213" column="48" lean-forward="true" selection-start-line="213" selection-start-column="48" selection-end-line="213" selection-end-column="48" />
+            <state relative-caret-position="-434">
+              <caret line="26" column="57" selection-start-line="26" selection-start-column="57" selection-end-line="26" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -153,7 +113,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/FileTree.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/SimpleTree.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/FileSystemModel.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/WatchDirectory.java" />
@@ -199,11 +158,12 @@
         <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/MultiSelectionTree.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/MicrosoftConnector.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/SolrInstance.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Queries/SearchResultBuilder.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/UI/UIHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectoryChooser.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Indexer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectoryChooser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/MyFile.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Queries/SearchResultBuilder.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/UI/UIHandler.java" />
       </list>
     </option>
   </component>
@@ -242,8 +202,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -446,7 +406,7 @@
     <frame x="-8" y="-1088" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49945828" visible="true" weight="0.20628998" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49945828" visible="true" weight="0.21055438" />
       <window_info id="Structure" order="1" sideWeight="0.5005417" side_tool="true" weight="0.18763326" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -455,7 +415,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.34561214" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.34561214" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3109426" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -490,20 +450,14 @@
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/MLTreeSelectionModel.java</url>
-          <line>22</line>
-          <properties />
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Queries/QueryHandler.java</url>
           <line>67</line>
           <properties />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectoryChooser.java</url>
-          <line>49</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectorySelector.java</url>
+          <line>47</line>
           <properties />
           <option name="timeStamp" value="23" />
         </line-breakpoint>
@@ -629,46 +583,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/ParameterType.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/MyFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="23" column="33" lean-forward="true" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/MultiSelectionTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-141">
-          <caret line="20" selection-start-line="20" selection-end-line="20" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/MLTreeSelectionModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="69" selection-start-line="5" selection-start-column="69" selection-end-line="5" selection-end-column="69" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/FileSystemModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-855">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/MicrosoftConnector.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/ContentTypes.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -711,9 +625,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setLookAndFeel#0;class#Main#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Indexer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/SolrInstance.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
+        <state relative-caret-position="663">
           <caret line="49" column="123" selection-start-line="49" selection-start-column="123" selection-end-line="49" selection-end-column="123" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -723,8 +658,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/WatchDirectory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2681">
-          <caret line="213" column="48" lean-forward="true" selection-start-line="213" selection-start-column="48" selection-end-line="213" selection-end-column="48" />
+        <state relative-caret-position="3417">
+          <caret line="213" column="48" selection-start-line="213" selection-start-column="48" selection-end-line="213" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/MyFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="17" column="73" selection-start-line="17" selection-start-column="73" selection-end-line="17" selection-end-column="73" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/MultiSelectionTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/MLTreeSelectionModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="48" lean-forward="true" selection-start-column="48" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/FileSystemModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -733,53 +708,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Queries/SearchResultBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+        <state relative-caret-position="207">
+          <caret line="43" column="33" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectorySelector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="21" column="11" lean-forward="true" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+        <state relative-caret-position="-434">
+          <caret line="26" column="57" selection-start-line="26" selection-start-column="57" selection-end-line="26" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#339#560#0" expanded="true" />
-            <element signature="e#559#560#0" expanded="true" />
-            <element signature="method#setLookAndFeel#0;class#Main#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/UI/UIHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="70" column="81" selection-start-line="70" selection-start-column="81" selection-end-line="70" selection-end-column="81" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3204#3835#0" expanded="true" />
-            <element signature="e#3834#3835#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/localDirectories/DirectoryChooser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="51" column="36" lean-forward="true" selection-start-line="51" selection-start-column="36" selection-end-line="51" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/mareike/solrsearch/Indexer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+        <state relative-caret-position="428">
+          <caret line="306" column="86" selection-start-line="306" selection-start-column="86" selection-end-line="306" selection-end-column="86" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

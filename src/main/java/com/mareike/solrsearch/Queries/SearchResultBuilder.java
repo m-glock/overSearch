@@ -18,7 +18,6 @@ public class SearchResultBuilder {
         String html = "";
         for (SolrDocument doc : list){
             String document = "";
-            //TODO: add picture for content type
             String path = fieldValue(doc, "path");
             //TODO: exception handling
             URL url;
@@ -41,10 +40,8 @@ public class SearchResultBuilder {
             document += fieldValue(doc, "meta_creation_date")+ " | ";
             document += fieldValue(doc, "owner")+ " | ";
             document += path;
-            //TODO: show multiple snippets for one document?
             String id = fieldValue(doc, "id");
             document += "</div>";
-            //TODO: multiple snippets of relevant word?
             document += "<p>";
             String highlight = response.getHighlighting().get(id).get("_text_").get(0).replace("no_Spacing", "");
             document += highlight;

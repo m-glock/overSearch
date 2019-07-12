@@ -2,7 +2,7 @@ package com.mareike.solrsearch.UI;
 
 import com.mareike.solrsearch.Indexer;
 import com.mareike.solrsearch.Queries.SearchResultBuilder;
-import com.mareike.solrsearch.localDirectories.DirectoryChooser;
+import com.mareike.solrsearch.localDirectories.DirectorySelector;
 import com.mareike.solrsearch.localDirectories.MultiSelectionTree;
 import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
@@ -49,12 +49,11 @@ public class UIHandler extends javax.swing.JFrame{
         String solrURL = "http://localhost:8983/solr";
         String collectionName = "overSearchFiles";
         Boolean collectionExists = false;
-
         try {
             solr = new SolrInstance(solrURL, collectionName);
             java.util.List<String> collections = CollectionAdminRequest.listCollections(solr.client);
             if(collections.contains(collectionName)){
-                solr.changeSolrInstance(solrURL + "/" + collectionName);
+                solr.changeSolrInstance(solrURL + File.separator + collectionName);
                 collectionExists = true;
             }
             //TODO: exception handling
@@ -67,8 +66,7 @@ public class UIHandler extends javax.swing.JFrame{
         }catch(Exception e){
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
         }
-        //TODO: let user choose start directory? Or just use C?
-        DirectoryChooser dir = new DirectoryChooser(System.getProperty("user.home"));
+        DirectorySelector dir = new DirectorySelector(System.getProperty("user.home"));
         qHandler = new QueryHandler();
         MultiSelectionTree tree = dir.getTree();
         initComponents(tree);
@@ -287,7 +285,6 @@ public class UIHandler extends javax.swing.JFrame{
         String queryWords = searchBar.getText();
         //if not query word is specified, just return all files in the collection
         //sorting and filter still apply
-        //TODO: preferences as well? I think there is no score?
         if(queryWords != null && !queryWords.equals("")) {
             QueryResponse queryResponse = qHandler.sendQuery(solr.client, queryWords);
             String response = SearchResultBuilder.getHTMLForResults(queryResponse);
@@ -298,16 +295,16 @@ public class UIHandler extends javax.swing.JFrame{
 
 
     
-    private void addActionListeners(final DirectoryChooser dir){
+    private void addActionListeners(final DirectorySelector dir){
 
         indexButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
                 try {
+                    solr.createCollection();
                     directoryPaths = dir.listDirectories();
                     //Indexes all files from the paths as well as the SharePoint files
-                    solr.createCollection();
                     Indexer.indexFiles(directoryPaths, solr.getCollectionName());
                     CardLayout card = (CardLayout)(mainPanel.getLayout());
                     card.show(mainPanel, "mainScreen");
@@ -350,7 +347,6 @@ public class UIHandler extends javax.swing.JFrame{
         Filter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: call different constructor or something when filters are saved?
                 FilterFrame frame = new FilterFrame(solr, qHandler);
                 frame.getContentPane().setBackground(Color.white);
                 frame.setVisible(true);

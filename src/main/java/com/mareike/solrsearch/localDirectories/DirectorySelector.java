@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class DirectoryChooser extends JFrame {
+public class DirectorySelector extends JFrame {
 
     private MultiSelectionTree tree;
     private String basePath;
     private ExecutorService executorService;
 
     //TODO: if node is selected, select all children as well?
-    public DirectoryChooser(String basePath){
+    public DirectorySelector(String basePath){
         this.basePath = basePath;
         startThreads();
 
