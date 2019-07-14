@@ -2,24 +2,15 @@ package com.mareike.solrsearch;
 
 import com.mareike.solrsearch.UI.UIHandler;
 
-import java.awt.*;
-import java.util.Date;
-
 public class Main {
     
     public static void main(String[] args){
 
         setLookAndFeel();
 
-        //TODO: what does invoke later do?
-        //Create and display the form
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                UIHandler ex = new UIHandler();
-                ex.setVisible(true);
-                ex.getContentPane().setBackground(Color.white);
-            }
-        });
+        UIHandler ex = new UIHandler();
+        ex.setVisible(true);
+
 
         /*try{
             Parser parser = new AutoDetectParser();
