@@ -38,7 +38,8 @@ public class QueryHandler {
         }catch(Exception e){
             System.out.println("Unknown Exception. " + e.getMessage());
         }finally {
-            query = new SolrQuery();
+            query.clear();
+            System.out.println("cleared query after sending is empty: " + query.toQueryString().equals(""));
         }
         return null;
     }
@@ -53,9 +54,6 @@ public class QueryHandler {
     }
 
     private void addFilterAndPreferences(){
-        if(filters.isEmpty()){
-            System.out.println("no filters");
-        }
         String s;
         for (Filter f : filters.keySet()){
             switch(f.type){
