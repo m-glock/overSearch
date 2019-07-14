@@ -101,8 +101,7 @@ public class SolrInstance {
     }
 
     private String[] getListOfValues(QueryResponse response, String fieldName){
-        FacetField contentType = response.getFacetField(fieldName);
-        List<FacetField.Count> counts = contentType.getValues();
+        List<FacetField.Count> counts = response.getFacetField(fieldName).getValues();
         String[] formats = new String[counts.size()];
         int i = 0;
         for(FacetField.Count c : counts){

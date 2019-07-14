@@ -12,8 +12,8 @@ public enum Filter{
     final public String type;
     final public String value;
 
-    Filter(String parameter, String value){
-        type = parameter;
+    Filter(String parameterType, String value){
+        type = parameterType;
         this.value = value;
     }
 }
