@@ -5,34 +5,34 @@ public class ContentTypes {
     public static String getSimpleName(String contentType){
         switch(contentType){
             case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-                return "Word";
+                return "Word Document";
             case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-                return "Excel";
+                return "Excel Sheet";
             case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-                return "PowerPoint";
+                return "PowerPoint Presentation";
             case "application/pdf":
-                return "PDF";
+                return "PDF file";
             case "text/plain; charset=windows-1252":
                 return "Textfile";
             default:
-                return "Unknown";
+                return "";
         }
     }
 
     public static String getSolrValues(String format){
         switch(format){
-            case "Word":
+            case "Word Document":
                 return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-            case "Excel":
+            case "Excel Sheet":
                 return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            case "PowerPoint":
+            case "PowerPoint Presentation":
                 return "application/vnd.openxmlformats-officedocument.presentationml.presentation";
             case "PDF":
                 return "application/pdf";
             case "Textfile":
                 return "text/plain; charset=windows-1252";
             default:
-                return "Unknown";
+                return "";
         }
     }
 
