@@ -29,6 +29,7 @@ public class Indexer {
             final URL url = new URL(indexFunctionURL + path);
             final HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(HttpMethod.POST.name());
+            //TODO: change request property to body?
             con.setRequestProperty("collection", collectionName);
             con.setDoOutput(true);
             OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8);
@@ -59,8 +60,8 @@ public class Indexer {
                 System.out.println(".");
                 TimeUnit.SECONDS.sleep(5);
             }
-        }catch(Exception prot){
-            System.out.println("Protocol Exception: " + prot.getClass().toString() + " and message " + prot.getMessage());
+        }catch(Exception ex){
+            System.out.println("Error occurred while preparing the request to the indexing function: " + ex.getMessage());
         }
     }
 
@@ -92,7 +93,7 @@ public class Indexer {
                 TimeUnit.SECONDS.sleep(5);
             }
         }catch(Exception ex){
-            System.out.println("Error occurred while trying to send the request to the SharePointConnector function: " + ex.getMessage());
+            System.out.println("Error occurred while preparing the request to the SharePointConnector function: " + ex.getMessage());
         }
     }
 
@@ -111,8 +112,8 @@ public class Indexer {
             while ((inputLine = in.readLine()) != null)
                 System.out.println(inputLine);
             in.close();
-        }catch(Exception prot){
-            System.out.println("Protocol Exception: " + prot.getClass().toString() + " and message " + prot.getMessage());
+        }catch(Exception ex){
+            System.out.println("Error occurred while preparing the request for deleting a file from the index: " + ex.getMessage());
         }
     }
 
