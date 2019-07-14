@@ -53,7 +53,7 @@ public class UIHandler extends javax.swing.JFrame{
             solr = new SolrInstance(solrURL, collectionName);
             java.util.List<String> collections = CollectionAdminRequest.listCollections(solr.client);
             if(collections.contains(collectionName)){
-                solr.changeSolrInstance(solrURL + File.separator + collectionName);
+                solr.changeSolrInstance(solrURL + "/" + collectionName);
                 collectionExists = true;
             }
             //TODO: exception handling
@@ -141,6 +141,7 @@ public class UIHandler extends javax.swing.JFrame{
         scrollPaneResults = new javax.swing.JScrollPane();
         editorPaneResults = new javax.swing.JEditorPane();
 
+        getContentPane().setBackground(Color.white);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1200, 900));
@@ -154,7 +155,7 @@ public class UIHandler extends javax.swing.JFrame{
         startWelcomeLabel.setBackground(new java.awt.Color(255, 255, 255));
         startWelcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         startWelcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        startWelcomeLabel.setText("Welcome to overSearch! Please select all files you want to include in your search.");
+        startWelcomeLabel.setText("Welcome to overSearch! Please select all directories you want to include in your search.");
         startWelcomeLabel.setAlignmentX(0.5F);
         startWelcomeLabel.setPreferredSize(new java.awt.Dimension(800, 100));
         startScreen.add(startWelcomeLabel);
@@ -284,8 +285,6 @@ public class UIHandler extends javax.swing.JFrame{
     private void executeSearch() {
         //perform query on input string
         String queryWords = searchBar.getText();
-        //if not query word is specified, just return all files in the collection
-        //sorting and filter still apply
         if(queryWords != null && !queryWords.equals("")) {
             QueryResponse queryResponse = qHandler.sendQuery(solr.client, queryWords);
             String response = SearchResultBuilder.getHTMLForResults(queryResponse);
@@ -303,8 +302,8 @@ public class UIHandler extends javax.swing.JFrame{
             public void actionPerformed(ActionEvent e) {
                 //code to save paths in index handler and close frame
                 try {
-                    solr.createCollection();
                     directoryPaths = dir.listDirectories();
+                    solr.createCollection();
                     //Indexes all files from the paths as well as the SharePoint files
                     Indexer.indexFiles(directoryPaths, solr.getCollectionName());
                     CardLayout card = (CardLayout)(mainPanel.getLayout());
@@ -356,26 +355,25 @@ public class UIHandler extends javax.swing.JFrame{
 
         editorPaneResults.addHyperlinkListener(new HyperlinkListener() {
             public void hyperlinkUpdate(HyperlinkEvent e){
-                if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                    if (Desktop.isDesktopSupported()) {
-                        try {
-                            System.out.println("url: " + e.getURL().toString());
-                            URI uri = e.getURL().toURI();
-                            //TODO: exception handling
-                            if(uri.toString().contains("sharepoint")){
-                                System.out.println("URI " + uri + "is a sharepoint uri.");
-                                Desktop.getDesktop().browse(uri);
-                            }else{
-                                System.out.println("before create file");
-                                File myFile = new File(uri.toString().replace("file:","").replace("%20"," "));
-                                System.out.println("after create file. path is: " + myFile.getAbsolutePath());
-                                Desktop.getDesktop().open(myFile);
-                            }
-                        } catch (URISyntaxException ex) {
-                            System.out.println("Message uri: " + ex.getMessage());
-                        } catch(IOException io){
-                            System.out.println("Message io: " + io.getMessage());
+                if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED && Desktop.isDesktopSupported()) {
+                    try {
+                        System.out.println("url: " + e.getURL().toString());
+                        URI uri = e.getURL().toURI();
+                        //TODO: exception handling
+                        //TODO: maybe check uir/url stuff again because this "file:" thing is weird
+                        if(uri.toString().contains("https")){
+                            System.out.println("URI " + uri + "is a sharepoint uri.");
+                            Desktop.getDesktop().browse(uri);
+                        }else{
+                            System.out.println("before create file");
+                            File myFile = new File(uri.toString().replace("file:","").replace("%20"," "));
+                            System.out.println("after create file. path is: " + myFile.getAbsolutePath());
+                            Desktop.getDesktop().open(myFile);
                         }
+                    } catch (URISyntaxException ex) {
+                        System.out.println("Message uri: " + ex.getMessage());
+                    } catch(IOException io){
+                        System.out.println("Message io: " + io.getMessage());
                     }
                 }
             }
