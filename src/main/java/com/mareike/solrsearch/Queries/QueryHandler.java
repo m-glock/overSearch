@@ -85,16 +85,22 @@ public class QueryHandler {
             s = "\"" + ContentTypes.getSolrValues(filters.get(f)) + "\"";
         }else if(f.value.equals("meta_creation_date")){
             String timespan = filters.get(f);
-            if(timespan.equals("24 hours")){
-                s = "[NOW-1DAY TO NOW]";
-            }else if(timespan.equals("last week")){
-                s = "[NOW-7DAY TO NOW]";
-            }else if(timespan.equals("last month")){
-                s = "[NOW-1MONTH TO NOW]";
-            }else if(timespan.equals("last year")){
-                s = "[NOW-1YEAR TO NOW]";
-            }else{
-                s = "[]";
+            switch (timespan) {
+                case "24 hours":
+                    s = "[NOW-1DAY TO NOW]";
+                    break;
+                case "last week":
+                    s = "[NOW-7DAY TO NOW]";
+                    break;
+                case "last month":
+                    s = "[NOW-1MONTH TO NOW]";
+                    break;
+                case "last year":
+                    s = "[NOW-1YEAR TO NOW]";
+                    break;
+                default:
+                    s = "[]";
+                    break;
             }
         }
         return s;

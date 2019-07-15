@@ -34,7 +34,7 @@ public class SearchResultBuilder {
                 url = null;
             }
 
-            document += "<h2><a href=\"" + url + "\">" + fieldValue(doc, "stream_name") + "</a></h2>";
+            document += "<h2><a href=\"" + ((url == null) ? "" : url) + "\">" + fieldValue(doc, "stream_name") + "</a></h2>";
             document += "<div>";
             document += ContentTypes.getSimpleName(fieldValue(doc, "content_type")) + " | ";
             document += fieldValue(doc, "meta_creation_date")+ " | ";
