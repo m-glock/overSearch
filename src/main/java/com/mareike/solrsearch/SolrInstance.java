@@ -21,8 +21,6 @@ public class SolrInstance {
         urlString = solrURL;
         collectionName = collection;
         startClient();
-        //firstInit();
-        //checkSolrConnection();
     }
 
     public void changeSolrInstance(String solrURL){
@@ -33,20 +31,12 @@ public class SolrInstance {
         System.out.println("Base url is now: " + client.getBaseURL());
     }
 
-    /*private void firstInit(){
-        //TODO: check if Solr is running on provided URL. If this is not the case, show message that Solr is down and how to install it?
-        if(checkSolrConnection())
-            System.out.println("Solr is up and running");
-        else
-            System.out.println("Could not connect to Solr. Please check if Solr is running.");
-    }*/
-
     private void startClient(){
         client = new HttpSolrClient.Builder(urlString).build();
     }
     
     public void createCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
-        String configName = "localDocs";
+        String configName = "overSearchConfig";
         CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
 
         NamedList resp = client.request(req);
@@ -56,32 +46,30 @@ public class SolrInstance {
     }
 
     public void deleteCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
-        //client.setBaseURL(urlString);
         String solrBaseURL = client.getBaseURL().replaceAll("/" + collectionName, "");
         client.setBaseURL(solrBaseURL);
         CollectionAdminRequest.Delete request = CollectionAdminRequest.Delete.deleteCollection(collectionName);
         NamedList resp = client.request(request);
+        System.out.println("Response to request: " + resp);
         System.out.println("Collection removed. Solr instance now uses the URL: " + client.getBaseURL());
     }
 
-    //TODO: fix ping maybe?
     /*public Boolean checkSolrConnection(){
         System.out.println("check solr connection.");
         Boolean canConnect = false;
         try {
             System.out.println("in try");
             SolrPing ping = new SolrPing();
-            ping.getParams().add("distrib", "true"); //To make it a distributed request against a collection
+            //ping.getParams().add("distrib", "true"); //To make it a distributed request against a collection
             System.out.println("created ping, sending it now");
-            SolrPingResponse rsp = ping.process(client, collectionName);
+            SolrPingResponse rsp = ping.process(client);
             System.out.println("Response is: " + rsp.toString() + " with status: " + rsp.getStatus());
-        }catch(IOException io){
-
-        }catch(SolrServerException serv){
-
-        }finally{
-            return canConnect;
+            if(rsp.toString().contains("OK"))
+                canConnect = true;
+        }catch(Exception e){
+            System.out.println("Error when pinging the Solr instance: " + e.getMessage());
         }
+        return canConnect;
     }*/
 
     public String[] getFilterOptions(String fieldName) throws IOException, SolrServerException{
