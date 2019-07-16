@@ -29,11 +29,9 @@ public class Indexer {
             final URL url = new URL(indexFunctionURL + path);
             final HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(HttpMethod.POST.name());
-            //TODO: change request property to body?
-            con.setRequestProperty("collection", collectionName);
             con.setDoOutput(true);
             OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8);
-            osw.write("{}");
+            osw.write("{" + collectionName + "}");
             osw.flush();
             osw.close();
 
@@ -42,7 +40,6 @@ public class Indexer {
                 public void run(){
                     try{
                         System.out.println("\nSending 'POST' request to URL : " + url);
-                        //con.getResponseCode();
                         BufferedReader in = new BufferedReader(new InputStreamReader(
                                 con.getInputStream()));
                         String inputLine;
