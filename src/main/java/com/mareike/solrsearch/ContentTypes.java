@@ -27,7 +27,7 @@ public class ContentTypes {
                 return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             case "PowerPoint Presentation":
                 return "application/vnd.openxmlformats-officedocument.presentationml.presentation";
-            case "PDF":
+            case "PDF file":
                 return "application/pdf";
             case "Textfile":
                 return "text/plain; charset=windows-1252";

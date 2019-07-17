@@ -5,6 +5,7 @@ import com.mareike.solrsearch.Queries.Filter;
 import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -312,6 +313,15 @@ public class FilterFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addFilter(Filter.SORTRELEVANCE, "relevance");
+                creatorPreferencesCheckBox.setEnabled(true);
+                if(creatorPreferencesCheckBox.isSelected())
+                    creatorPreferencesComboBox.setEnabled(true);
+                datePreferencesCheckBox.setEnabled(true);
+                if(datePreferencesCheckBox.isSelected())
+                    datePreferencesComboBox.setEnabled(true);
+                formatPreferencesCheckBox.setEnabled(true);
+                if(formatPreferencesCheckBox.isSelected())
+                    formatPreferencesComboBox.setEnabled(true);
             }
         });
 
@@ -319,6 +329,12 @@ public class FilterFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addFilter(Filter.SORTRELEVANCE, "creation date");
+                creatorPreferencesCheckBox.setEnabled(false);
+                datePreferencesCheckBox.setEnabled(false);
+                formatPreferencesCheckBox.setEnabled(false);
+                creatorPreferencesComboBox.setEnabled(false);
+                datePreferencesComboBox.setEnabled(false);
+                formatPreferencesComboBox.setEnabled(false);
             }
         });
 
