@@ -31,7 +31,7 @@ public class Indexer {
             con.setRequestMethod(HttpMethod.POST.name());
             con.setDoOutput(true);
             OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8);
-            osw.write("{" + collectionName + "}");
+            osw.write("{ \"collectionName\": \"" + collectionName + "\"}");
             osw.flush();
             osw.close();
 

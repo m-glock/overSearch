@@ -108,7 +108,7 @@ public class UIHandler extends javax.swing.JFrame{
         ss.addRule("h2 a {font-size: 18pt; font-weight: bold; color: teal;}");
         ss.addRule("p { margin-bottom: 40px;}");
         ss.addRule("p, div{font-size: 16pt;}");
-        ss.addRule("p em {font-style: normal; background-color: #FFFF00;}");
+        ss.addRule("p em {font-style: normal; color: #0099CC; font-weight: bold;}");
 
         kit.setStyleSheet(ss);
 
