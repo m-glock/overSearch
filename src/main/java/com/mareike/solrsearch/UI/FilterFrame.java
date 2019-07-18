@@ -37,16 +37,60 @@ public class FilterFrame extends javax.swing.JFrame {
         initComponents();
         createActionListeners();
         setInitialStates();
+        if(!qHandler.getFilters().isEmpty()){
+            setPreviousStates(qHandler.getFilters());
+        }
     }
 
-    /*public FilterFrame(SolrInstance solr, QueryHandler qHandler, HashMap<Filter, String> filters){
-        this.qHandler = qHandler;
-        this.filters = filters;
-        setBoxModels(solr);
-        initComponents();
-        createActionListeners();
-        setStatesFromMap();
-    }*/
+    private void setPreviousStates(HashMap<Filter, String> previousFilters){
+        if(previousFilters.containsKey(Filter.CREATORFILTER)){
+            System.out.println("creator filter available");
+            creatorFilterCheckBox.setSelected(true);
+            creatorFilterComboBox.setEnabled(true);
+            creatorFilterComboBox.setSelectedItem(previousFilters.get(Filter.CREATORFILTER));
+        }
+        if(previousFilters.containsKey(Filter.CREATORPREFERENECE)){
+            System.out.println("creator preference available");
+            creatorPreferencesCheckBox.setSelected(true);
+            creatorPreferencesComboBox.setEnabled(true);
+            creatorFilterComboBox.setSelectedItem(previousFilters.get(Filter.CREATORPREFERENECE));
+        }
+        if(previousFilters.containsKey(Filter.DATEFILTER)) {
+            System.out.println("date filter available");
+            dateFilterCheckBox.setSelected(true);
+            dateFilterComboBox.setEnabled(true);
+            dateFilterComboBox.setSelectedItem(previousFilters.get(Filter.DATEFILTER));
+        }
+        if(previousFilters.containsKey(Filter.DATEPREFERENECE)){
+            System.out.println("date preference available");
+            datePreferencesCheckBox.setSelected(true);
+            datePreferencesComboBox.setEnabled(true);
+            datePreferencesComboBox.setSelectedItem(previousFilters.get(Filter.DATEPREFERENECE));
+        }
+        if(previousFilters.containsKey(Filter.FORMATFILTER)){
+            System.out.println("format filter available");
+            formatFilterCheckBox.setSelected(true);
+            formatFilterComboBox.setEnabled(true);
+            formatFilterComboBox.setSelectedItem(previousFilters.get(Filter.FORMATFILTER));
+        }
+        if(previousFilters.containsKey(Filter.FORMATPREFERENECE)){
+            System.out.println("format preference available");
+            formatPreferencesCheckBox.setSelected(true);
+            formatPreferencesComboBox.setEnabled(true);
+            formatPreferencesComboBox.setSelectedItem(previousFilters.get(Filter.FORMATPREFERENECE));
+        }
+        if(previousFilters.containsKey(Filter.SORTRELEVANCE) && previousFilters.get(Filter.SORTRELEVANCE).equals("creation date")){
+            System.out.println("sort by relevance");
+            creationDateRadioButton.setSelected(true);
+            //Disable all preference check boxes and dropdowns
+            creatorPreferencesCheckBox.setEnabled(false);
+            datePreferencesCheckBox.setEnabled(false);
+            formatPreferencesCheckBox.setEnabled(false);
+            creatorPreferencesComboBox.setEnabled(false);
+            datePreferencesComboBox.setEnabled(false);
+            formatPreferencesComboBox.setEnabled(false);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -288,7 +332,7 @@ public class FilterFrame extends javax.swing.JFrame {
         footer.setPreferredSize(new java.awt.Dimension(821, 50));
         footer.setLayout(new java.awt.GridBagLayout());
 
-        finishButton.setText("Done");
+        finishButton.setText("Apply");
         footer.add(finishButton, new java.awt.GridBagConstraints());
 
         getContentPane().add(footer);
@@ -335,6 +379,7 @@ public class FilterFrame extends javax.swing.JFrame {
                 creatorPreferencesComboBox.setEnabled(false);
                 datePreferencesComboBox.setEnabled(false);
                 formatPreferencesComboBox.setEnabled(false);
+
             }
         });
 

@@ -20,6 +20,8 @@ public class QueryHandler {
 
     public void setFilters(HashMap<Filter, String> filters){ this.filters = filters; }
 
+    public HashMap<Filter, String> getFilters(){ return filters; }
+
     public QueryResponse sendQuery(HttpSolrClient client, String queryWords){
         //send query to Solr server
         generateQueryParameters();
