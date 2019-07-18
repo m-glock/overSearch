@@ -56,13 +56,15 @@ public class DirectorySelector extends JFrame {
         //load paths in ArrayList
         ArrayList<String> directories = new ArrayList<>();
         String directoryPath;
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("directories.txt"))) {
-            while((directoryPath = bufferedReader.readLine()) != null) {
-                directories.add(directoryPath);
-                addDirectoryWatcher(directoryPath);
+        if(new File("directories.txt").exists()) {
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader("directories.txt"))) {
+                while ((directoryPath = bufferedReader.readLine()) != null) {
+                    directories.add(directoryPath);
+                    addDirectoryWatcher(directoryPath);
+                }
+            } catch (Exception e) {
+                System.out.println("Error when reading out directories. " + e.getMessage());
             }
-        }catch(Exception e){
-            System.out.println("Error when reading out directories. " + e.getMessage());
         }
         return directories;
     }

@@ -39,9 +39,6 @@ public class QueryHandler {
             System.out.println("SolrServerException");
         }catch(Exception e){
             System.out.println("Unknown Exception. " + e.getMessage());
-        }finally {
-            query.clear();
-            System.out.println("cleared query after sending is empty: " + query.toQueryString().equals(""));
         }
         return null;
     }

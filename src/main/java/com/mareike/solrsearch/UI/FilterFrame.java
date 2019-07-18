@@ -26,6 +26,8 @@ public class FilterFrame extends javax.swing.JFrame {
             formatFilterComboBoxModel, formatPreferenceComboBoxModel;
     private QueryHandler qHandler;
     private HashMap<Filter, String> filters;
+    private HashMap<Filter, Component[]> filterAndPreferenceComponents;
+    private HashMap<JCheckBox, JComboBox> preferenceComponents;
 
     /**
      * Creates new form NewJFrame
@@ -35,6 +37,7 @@ public class FilterFrame extends javax.swing.JFrame {
         filters = new HashMap<>();
         setBoxModels(solr);
         initComponents();
+        groupComponents();
         createActionListeners();
         setInitialStates();
         if(!qHandler.getFilters().isEmpty()){
@@ -42,54 +45,50 @@ public class FilterFrame extends javax.swing.JFrame {
         }
     }
 
+    private void groupComponents(){
+        filterAndPreferenceComponents = new HashMap<>();
+        filterAndPreferenceComponents.put(Filter.CREATORFILTER, new Component[] {creatorFilterCheckBox, creatorFilterComboBox});
+        filterAndPreferenceComponents.put(Filter.CREATORPREFERENECE, new Component[] {creatorPreferencesCheckBox, creatorPreferencesComboBox});
+        filterAndPreferenceComponents.put(Filter.DATEFILTER, new Component[] {dateFilterCheckBox, dateFilterComboBox});
+        filterAndPreferenceComponents.put(Filter.DATEPREFERENECE, new Component[] {datePreferencesCheckBox, datePreferencesComboBox});
+        filterAndPreferenceComponents.put(Filter.FORMATFILTER, new Component[] {formatFilterCheckBox, formatFilterComboBox});
+        filterAndPreferenceComponents.put(Filter.FORMATPREFERENECE, new Component[] {formatPreferencesCheckBox, formatPreferencesComboBox});
+        filterAndPreferenceComponents.put(Filter.SORTRELEVANCE, new Component[] {relevanceRadioButton, creationDateRadioButton});
+
+        preferenceComponents = new HashMap<>();
+        preferenceComponents.put(creatorPreferencesCheckBox, creatorPreferencesComboBox);
+        preferenceComponents.put(datePreferencesCheckBox, datePreferencesComboBox);
+        preferenceComponents.put(formatPreferencesCheckBox, formatPreferencesComboBox);
+    }
+
+    private void setInitialStates(){
+        for(Component[] c : filterAndPreferenceComponents.values()){
+            c[1].setEnabled(false);
+        }
+        creationDateRadioButton.setEnabled(true);
+        relevanceRadioButton.setSelected(true);
+        addFilter(Filter.SORTRELEVANCE, "true");
+    }
+
     private void setPreviousStates(HashMap<Filter, String> previousFilters){
-        if(previousFilters.containsKey(Filter.CREATORFILTER)){
-            System.out.println("creator filter available");
-            creatorFilterCheckBox.setSelected(true);
-            creatorFilterComboBox.setEnabled(true);
-            creatorFilterComboBox.setSelectedItem(previousFilters.get(Filter.CREATORFILTER));
+        for(Filter filter : previousFilters.keySet()){
+            if(previousFilters.get(filter).equals("creation date")){
+                creationDateRadioButton.setSelected(true);
+                //Disable all preference check boxes and dropdowns
+                for(JCheckBox c : preferenceComponents.keySet()){
+                    c.setEnabled(false);
+                    preferenceComponents.get(c).setEnabled(false);
+                }
+            }else if(!filter.type.equals("sort")){
+                setComponentState(filter);
+            }
         }
-        if(previousFilters.containsKey(Filter.CREATORPREFERENECE)){
-            System.out.println("creator preference available");
-            creatorPreferencesCheckBox.setSelected(true);
-            creatorPreferencesComboBox.setEnabled(true);
-            creatorFilterComboBox.setSelectedItem(previousFilters.get(Filter.CREATORPREFERENECE));
-        }
-        if(previousFilters.containsKey(Filter.DATEFILTER)) {
-            System.out.println("date filter available");
-            dateFilterCheckBox.setSelected(true);
-            dateFilterComboBox.setEnabled(true);
-            dateFilterComboBox.setSelectedItem(previousFilters.get(Filter.DATEFILTER));
-        }
-        if(previousFilters.containsKey(Filter.DATEPREFERENECE)){
-            System.out.println("date preference available");
-            datePreferencesCheckBox.setSelected(true);
-            datePreferencesComboBox.setEnabled(true);
-            datePreferencesComboBox.setSelectedItem(previousFilters.get(Filter.DATEPREFERENECE));
-        }
-        if(previousFilters.containsKey(Filter.FORMATFILTER)){
-            System.out.println("format filter available");
-            formatFilterCheckBox.setSelected(true);
-            formatFilterComboBox.setEnabled(true);
-            formatFilterComboBox.setSelectedItem(previousFilters.get(Filter.FORMATFILTER));
-        }
-        if(previousFilters.containsKey(Filter.FORMATPREFERENECE)){
-            System.out.println("format preference available");
-            formatPreferencesCheckBox.setSelected(true);
-            formatPreferencesComboBox.setEnabled(true);
-            formatPreferencesComboBox.setSelectedItem(previousFilters.get(Filter.FORMATPREFERENECE));
-        }
-        if(previousFilters.containsKey(Filter.SORTRELEVANCE) && previousFilters.get(Filter.SORTRELEVANCE).equals("creation date")){
-            System.out.println("sort by relevance");
-            creationDateRadioButton.setSelected(true);
-            //Disable all preference check boxes and dropdowns
-            creatorPreferencesCheckBox.setEnabled(false);
-            datePreferencesCheckBox.setEnabled(false);
-            formatPreferencesCheckBox.setEnabled(false);
-            creatorPreferencesComboBox.setEnabled(false);
-            datePreferencesComboBox.setEnabled(false);
-            formatPreferencesComboBox.setEnabled(false);
-        }
+    }
+
+    private void setComponentState(Filter filter){
+        ((JCheckBox) filterAndPreferenceComponents.get(filter)[0]).setSelected(true);
+        filterAndPreferenceComponents.get(filter)[1].setEnabled(true);
+        ((JComboBox) filterAndPreferenceComponents.get(filter)[1]).setSelectedItem(filter);
     }
 
     /**
@@ -357,15 +356,11 @@ public class FilterFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addFilter(Filter.SORTRELEVANCE, "relevance");
-                creatorPreferencesCheckBox.setEnabled(true);
-                if(creatorPreferencesCheckBox.isSelected())
-                    creatorPreferencesComboBox.setEnabled(true);
-                datePreferencesCheckBox.setEnabled(true);
-                if(datePreferencesCheckBox.isSelected())
-                    datePreferencesComboBox.setEnabled(true);
-                formatPreferencesCheckBox.setEnabled(true);
-                if(formatPreferencesCheckBox.isSelected())
-                    formatPreferencesComboBox.setEnabled(true);
+                for(JCheckBox c : preferenceComponents.keySet()){
+                    c.setEnabled(true);
+                    if(c.isSelected())
+                        preferenceComponents.get(c).setEnabled(true);
+                }
             }
         });
 
@@ -373,13 +368,10 @@ public class FilterFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addFilter(Filter.SORTRELEVANCE, "creation date");
-                creatorPreferencesCheckBox.setEnabled(false);
-                datePreferencesCheckBox.setEnabled(false);
-                formatPreferencesCheckBox.setEnabled(false);
-                creatorPreferencesComboBox.setEnabled(false);
-                datePreferencesComboBox.setEnabled(false);
-                formatPreferencesComboBox.setEnabled(false);
-
+                for(JCheckBox c : preferenceComponents.keySet()){
+                    c.setEnabled(false);
+                    preferenceComponents.get(c).setEnabled(false);
+                }
             }
         });
 
@@ -443,17 +435,6 @@ public class FilterFrame extends javax.swing.JFrame {
         }catch(Exception ex){
             System.out.println("Error when retrieving filter options: " + ex.getMessage());
         }
-    }
-
-    private void setInitialStates(){
-        creatorFilterComboBox.setEnabled(false);
-        creatorPreferencesComboBox.setEnabled(false);
-        dateFilterComboBox.setEnabled(false);
-        datePreferencesComboBox.setEnabled(false);
-        formatFilterComboBox.setEnabled(false);
-        formatPreferencesComboBox.setEnabled(false);
-        relevanceRadioButton.setSelected(true);
-        addFilter(Filter.SORTRELEVANCE, "true");
     }
 
     private void readAndSaveFilters(){
