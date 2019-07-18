@@ -3,15 +3,13 @@ package com.mareike.solrsearch;
 import com.microsoft.graph.http.HttpMethod;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class Indexer {
 
-    private static final String indexFunctionURL = "http://localhost:7071/api/IndexFilesToSolr?name=";
-    private static final String SharePointFunctionURL = "http://localhost:7074/api/SharePointConnector?name=";
     private static String collectionName;
 
 
@@ -24,10 +22,10 @@ public class Indexer {
     }
 
     public static void indexFileOrFolder(String path){
-        path = path.replace(" ", "%20");
         try{
-            final URL url = new URL(indexFunctionURL + path);
-            final HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            path = path.replace("\\", "/");
+            final URI uri = new URI("http", "localhost:7071", "/api/IndexFilesToSolr", "name=" + path, null);
+            final HttpURLConnection con = (HttpURLConnection) uri.toURL().openConnection();
             con.setRequestMethod(HttpMethod.POST.name());
             con.setDoOutput(true);
             OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8);
@@ -39,7 +37,7 @@ public class Indexer {
                 @Override
                 public void run(){
                     try{
-                        System.out.println("\nSending 'POST' request to URL : " + url);
+                        System.out.println("\nSending 'POST' request to URL : " + uri);
                         BufferedReader in = new BufferedReader(new InputStreamReader(
                                 con.getInputStream()));
                         String inputLine;
@@ -64,8 +62,8 @@ public class Indexer {
 
     private static void indexSharePointFiles(){
         try {
-            final URL url = new URL(SharePointFunctionURL + collectionName);
-            final HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            final URI url = new URI("http://localhost:7074/api/SharePointConnector?name=" + collectionName);
+            final HttpURLConnection con = (HttpURLConnection) url.toURL().openConnection();
             con.setRequestMethod(HttpMethod.GET.name());
 
             Thread t = new Thread(new Runnable() {
@@ -94,15 +92,14 @@ public class Indexer {
         }
     }
 
-    public static void deleteFile(String fileName){
-        fileName = fileName.replace(" ", "%20");
+    public static void deleteFile(String path){
         try{
-            URL url = new URL(indexFunctionURL + fileName);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            final URI uri = new URI("http", "localhost:7071", "/api/IndexFilesToSolr", "name=" + path, null);
+            HttpURLConnection con = (HttpURLConnection) uri.toURL().openConnection();
             con.setRequestMethod(HttpMethod.GET.name());
             con.setRequestProperty("collection",collectionName);
 
-            System.out.println("Sending request to delete " + fileName + " with http method " + con.getRequestMethod());
+            System.out.println("Sending request to delete " + path + " with http method " + con.getRequestMethod());
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
             String inputLine;
