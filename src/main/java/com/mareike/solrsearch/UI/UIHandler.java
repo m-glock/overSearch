@@ -72,6 +72,7 @@ public class UIHandler extends javax.swing.JFrame{
         initComponents(tree);
         if(collectionExists) {
             directoryPaths = dir.loadIndexedPaths();
+            Indexer.setCollectionName(collectionName);
             CardLayout card = (CardLayout) (mainPanel.getLayout());
             card.show(mainPanel, "mainScreen");
         }

@@ -7,6 +7,8 @@ import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.util.NamedList;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -17,7 +19,7 @@ public class SolrInstance {
     private String collectionName;
     
 
-    public SolrInstance(String solrURL, String collection) throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
+    public SolrInstance(String solrURL, String collection) throws HttpSolrClient.RemoteSolrException {
         urlString = solrURL;
         collectionName = collection;
         startClient();
@@ -25,7 +27,7 @@ public class SolrInstance {
 
     public void changeSolrInstance(String solrURL){
         urlString = solrURL;
-        int index = solrURL.lastIndexOf("/");
+        int index = solrURL.lastIndexOf(File.separator);
         collectionName = solrURL.substring(index+1);
         client.setBaseURL(urlString);
         System.out.println("Base url is now: " + client.getBaseURL());

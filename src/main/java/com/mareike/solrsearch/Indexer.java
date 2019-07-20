@@ -21,6 +21,10 @@ public class Indexer {
         indexSharePointFiles();
     }
 
+    public static void setCollectionName(String collection){
+        collectionName = collection;
+    }
+
     public static void indexFileOrFolder(String path){
         try{
             path = path.replace("\\", "/");
@@ -28,10 +32,10 @@ public class Indexer {
             final HttpURLConnection con = (HttpURLConnection) uri.toURL().openConnection();
             con.setRequestMethod(HttpMethod.POST.name());
             con.setDoOutput(true);
-            OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8);
-            osw.write("{ \"collectionName\": \"" + collectionName + "\"}");
-            osw.flush();
-            osw.close();
+            try (OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8)){
+                osw.write("{ \"collectionName\": \"" + collectionName + "\"}");
+                osw.flush();
+            }
 
             Thread t = new Thread(new Runnable() {
                 @Override
@@ -97,7 +101,7 @@ public class Indexer {
             final URI uri = new URI("http", "localhost:7071", "/api/IndexFilesToSolr", "name=" + path, null);
             HttpURLConnection con = (HttpURLConnection) uri.toURL().openConnection();
             con.setRequestMethod(HttpMethod.GET.name());
-            con.setRequestProperty("collection",collectionName);
+            con.setRequestProperty("collectionName", collectionName);
 
             System.out.println("Sending request to delete " + path + " with http method " + con.getRequestMethod());
             BufferedReader in = new BufferedReader(new InputStreamReader(
