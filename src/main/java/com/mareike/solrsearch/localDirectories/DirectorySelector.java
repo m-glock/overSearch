@@ -73,7 +73,7 @@ public class DirectorySelector extends JFrame {
         Object[] pathElements = path.getPath();
         String fullPath = "";
         for (Object pathElement : pathElements){
-            fullPath = fullPath + pathElement + "/" ;
+            fullPath = fullPath + pathElement + File.separator ;
         }
         return fullPath;
     }
@@ -83,7 +83,7 @@ public class DirectorySelector extends JFrame {
         try{
             executorService.submit(new DirectoryWatchService(Paths.get(path), true));
         }catch(IOException io){
-            System.out.println("IOException: " + io.getMessage());
+            System.out.println("Error when leading indexed paths: " + io.getMessage());
         }
     }
 
