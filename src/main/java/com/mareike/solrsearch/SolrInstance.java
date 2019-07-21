@@ -4,8 +4,10 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
+import org.apache.solr.client.solrj.request.SolrPing;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.SolrPingResponse;
 import org.apache.solr.common.util.NamedList;
 
 import java.io.File;
@@ -40,11 +42,15 @@ public class SolrInstance {
     public void createCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
         String configName = "overSearchConfig";
         CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
-
         NamedList resp = client.request(req);
-        System.out.println("Collection created. Response: " + resp.toString());
-        client.setBaseURL(client.getBaseURL() + "/" + collectionName);
-        System.out.println("Solr instance created with URL: " + client.getBaseURL());
+        System.out.println("Response: " + resp.toString());
+
+        if(checkSolrConnection()) {
+            client.setBaseURL(client.getBaseURL() + "/" + collectionName);
+            System.out.println("Solr instance created with URL: " + client.getBaseURL());
+        } else {
+            throw new SolrServerException("Collection cannot be accessed.");
+        }
     }
 
     public void deleteCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
@@ -56,23 +62,19 @@ public class SolrInstance {
         System.out.println("Collection removed. Solr instance now uses the URL: " + client.getBaseURL());
     }
 
-    /*public Boolean checkSolrConnection(){
-        System.out.println("check solr connection.");
-        Boolean canConnect = false;
+    private boolean checkSolrConnection(){
+        System.out.println("checking solr connection.");
+        boolean canConnect = false;
         try {
-            System.out.println("in try");
             SolrPing ping = new SolrPing();
-            //ping.getParams().add("distrib", "true"); //To make it a distributed request against a collection
-            System.out.println("created ping, sending it now");
             SolrPingResponse rsp = ping.process(client);
-            System.out.println("Response is: " + rsp.toString() + " with status: " + rsp.getStatus());
-            if(rsp.toString().contains("OK"))
+            if(rsp.toString().contains("status=OK"))
                 canConnect = true;
         }catch(Exception e){
             System.out.println("Error when pinging the Solr instance: " + e.getMessage());
         }
         return canConnect;
-    }*/
+    }
 
     public String[] getFilterOptions(String fieldName) throws IOException, SolrServerException{
         SolrQuery query = buildQuery(fieldName);
