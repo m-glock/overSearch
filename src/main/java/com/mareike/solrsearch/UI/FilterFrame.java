@@ -35,7 +35,9 @@ public class FilterFrame extends javax.swing.JFrame {
     public FilterFrame(SolrInstance solr, QueryHandler qHandler) {
         this.qHandler = qHandler;
         filters = new HashMap<>();
-        setBoxModels(solr);
+        if(solr.isConnected()) {
+            setBoxModels(solr);
+        }
         initComponents();
         groupComponents();
         createActionListeners();
@@ -344,9 +346,6 @@ public class FilterFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 readAndSaveFilters();
-                for(Filter f : filters.keySet()){
-                    System.out.println("Filter " + f + " with value " + filters.get(f));
-                }
                 qHandler.setFilters(filters);
                 FilterFrame.this.dispose();
             }

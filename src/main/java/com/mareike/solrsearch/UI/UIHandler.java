@@ -136,7 +136,7 @@ public class UIHandler extends javax.swing.JFrame{
         searchBar = new javax.swing.JTextField();
         buttonPanel = new javax.swing.JPanel();
         search = new javax.swing.JButton();
-        Filter = new javax.swing.JButton();
+        filter = new javax.swing.JButton();
         newCollection = new javax.swing.JButton();
         scrollPaneResults = new javax.swing.JScrollPane();
         editorPaneResults = new javax.swing.JEditorPane();
@@ -247,10 +247,10 @@ public class UIHandler extends javax.swing.JFrame{
         search.setText("Search");
         buttonPanel.add(search);
 
-        Filter.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        Filter.setText("Filter");
+        filter.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        filter.setText("filter");
 
-        buttonPanel.add(Filter);
+        buttonPanel.add(filter);
 
         newCollection.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         newCollection.setText("Index again");
@@ -285,7 +285,7 @@ public class UIHandler extends javax.swing.JFrame{
     private void executeSearch() {
         //perform query on input string
         String queryWords = searchBar.getText();
-        if(queryWords != null && !queryWords.equals("")) {
+        if(queryWords != null && !queryWords.equals("") && solr.isConnected()) {
             QueryResponse queryResponse = qHandler.sendQuery(solr.client, queryWords);
             String response = SearchResultBuilder.getHTMLForResults(queryResponse);
 
@@ -303,13 +303,18 @@ public class UIHandler extends javax.swing.JFrame{
                 //code to save paths in index handler and close frame
                 try {
                     directoryPaths = dir.listDirectories();
-                    solr.createCollection();
-                    //Indexes all files from the paths as well as the SharePoint files
-                    Indexer.indexFiles(directoryPaths, solr.getCollectionName());
-                    CardLayout card = (CardLayout)(mainPanel.getLayout());
-                    card.show(mainPanel, "mainScreen");
+                    if(solr.isConnected()) {
+                        solr.createCollection();
+                        //Indexes all files from the paths as well as the SharePoint files
+                        Indexer.indexFiles(directoryPaths, solr.getCollectionName());
+                        CardLayout card = (CardLayout) (mainPanel.getLayout());
+                        card.show(mainPanel, "mainScreen");
+                    }
                 }catch(NullPointerException ex){
-                    JOptionPane.showMessageDialog(null, "Please select at least one Directory for indexing.");
+                    JLabel errorMessage = new JLabel();
+                    errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                    errorMessage.setText("Please select at least one Directory for indexing.");
+                    JOptionPane.showMessageDialog(null, errorMessage);
                 }catch(IOException ex){//TODO: exception handling
                     System.out.println("IOException: " + ex.getMessage());
                 }catch(SolrServerException ex){
@@ -331,20 +336,21 @@ public class UIHandler extends javax.swing.JFrame{
         newCollection.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
-                    solr.deleteCollection();
-                    CardLayout card = (CardLayout)(mainPanel.getLayout());
-                    card.show(mainPanel, "startScreen");
-                    dir.removeDirectoryWatchers();
-                    dir.startThreads();
-                }catch(Exception ex){
-                    //TODO: exception handling
-                    System.out.println(ex.getMessage());
+                if(solr.isConnected()) {
+                    try {
+                        solr.deleteCollection();
+                        CardLayout card = (CardLayout) (mainPanel.getLayout());
+                        card.show(mainPanel, "startScreen");
+                        dir.removeDirectoryWatchers();
+                        dir.startThreads();
+                    } catch (Exception ex) {
+                        //TODO: exception handling
+                        System.out.println(ex.getMessage());
+                    }
                 }
             }
         });
-
-        Filter.addActionListener(new ActionListener() {
+        filter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 FilterFrame frame = new FilterFrame(solr, qHandler);
@@ -381,7 +387,7 @@ public class UIHandler extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Filter;
+    private javax.swing.JButton filter;
     private javax.swing.JPanel Header;
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JPanel directoryPanel;

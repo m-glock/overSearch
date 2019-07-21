@@ -10,16 +10,18 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.SolrPingResponse;
 import org.apache.solr.common.util.NamedList;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 public class SolrInstance {
 
     public HttpSolrClient client;
     private String urlString;
     private String collectionName;
-    
 
     public SolrInstance(String solrURL, String collection) throws HttpSolrClient.RemoteSolrException {
         urlString = solrURL;
@@ -33,24 +35,22 @@ public class SolrInstance {
         collectionName = solrURL.substring(index+1);
         client.setBaseURL(urlString);
         System.out.println("Base url is now: " + client.getBaseURL());
+        //isConnected();
     }
 
     private void startClient(){
         client = new HttpSolrClient.Builder(urlString).build();
     }
     
-    public void createCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
+    public void createCollection() throws IOException, SolrServerException {
         String configName = "overSearchConfig";
         CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
         NamedList resp = client.request(req);
         System.out.println("Response: " + resp.toString());
 
-        if(checkSolrConnection()) {
-            client.setBaseURL(client.getBaseURL() + "/" + collectionName);
-            System.out.println("Solr instance created with URL: " + client.getBaseURL());
-        } else {
-            throw new SolrServerException("Collection cannot be accessed.");
-        }
+        client.setBaseURL(client.getBaseURL() + "/" + collectionName);
+        System.out.println("Solr instance created with URL: " + client.getBaseURL());
+
     }
 
     public void deleteCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
@@ -62,18 +62,32 @@ public class SolrInstance {
         System.out.println("Collection removed. Solr instance now uses the URL: " + client.getBaseURL());
     }
 
-    private boolean checkSolrConnection(){
-        System.out.println("checking solr connection.");
-        boolean canConnect = false;
+    public boolean isConnected(){
+        boolean canConnect = true;
         try {
             SolrPing ping = new SolrPing();
             SolrPingResponse rsp = ping.process(client);
-            if(rsp.toString().contains("status=OK"))
-                canConnect = true;
-        }catch(Exception e){
-            System.out.println("Error when pinging the Solr instance: " + e.getMessage());
+            if (!rsp.toString().contains("status=OK")){
+                canConnect = false;
+                connectionLostMessage();
+            }
+        } catch (Exception e) {
+            System.out.println("Connection to Solr lost. ");
+            canConnect = false;
+            connectionLostMessage();
         }
         return canConnect;
+    }
+
+    private void connectionLostMessage(){
+        JLabel errorMessage = new JLabel();
+        errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        errorMessage.setText("<html>No connection to Solr possible. This can happen when Solr is down or the specified collectionName cannot be found.<br>"
+                + "- check if Solr is running on the URL " + urlString.replace("/" + collectionName, "") + ".<br>"
+                + "- check on http://localhost:8983/solr/#/~collections if the collection \'" + collectionName + "\' exists. "
+                + "If this is not the case, use the \'Index again\' button to create a new Index.<br><br>"
+                + "After restarting the instance or adding the collection name it might take a moment for the application to recognize the change.</html>");
+        JOptionPane.showMessageDialog(null, errorMessage, "Connection lost", JOptionPane.ERROR_MESSAGE);
     }
 
     public String[] getFilterOptions(String fieldName) throws IOException, SolrServerException{
