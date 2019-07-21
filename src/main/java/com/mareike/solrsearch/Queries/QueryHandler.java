@@ -27,7 +27,7 @@ public class QueryHandler {
         generateQueryParameters();
         addFilterAndPreferences();
         query.setQuery(queryWords);
-        System.out.println("parameter are: " + query.toString());
+        System.out.println("query is: " + query.toString());
 
         QueryResponse response;
         try{
@@ -58,12 +58,10 @@ public class QueryHandler {
             switch(f.type){
                 case "filter":
                     s = builtQueryParameter(f);
-                    System.out.println("query will be: " + f.value + ":" + s);
                     query.addFilterQuery(f.value + ":" + s);
                     break;
                 case "boost":
                     s = builtQueryParameter(f);
-                    System.out.println("query will be: " + f.value + ":" + s);
                     query.add("bq", f.value + ":" + s);
                     break;
                 case "sort":

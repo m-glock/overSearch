@@ -10,23 +10,7 @@ public class Main {
 
         UIHandler ex = new UIHandler();
         ex.setVisible(true);
-
-
-        /*try{
-            Parser parser = new AutoDetectParser();
-            BodyContentHandler handler = new BodyContentHandler();
-            Metadata metadata = new Metadata();
-            File file = new File("C:\\Users\\mareike\\Documents\\Studium\\8.Semester-SS19\\Bachelor\\english-words\\test files\\with query word\\cump.txt");
-            InputStream content = new FileInputStream(file);
-            parser.parse(content, handler, metadata, new ParseContext());
-            for (String name: metadata.names()) {
-                System.out.println(name + ": " + metadata.get(name));
-            }
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }*/
-
-
+        
     }
     
     private static void setLookAndFeel(){

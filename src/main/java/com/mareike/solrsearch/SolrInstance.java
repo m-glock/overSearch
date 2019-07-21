@@ -56,24 +56,6 @@ public class SolrInstance {
         System.out.println("Collection removed. Solr instance now uses the URL: " + client.getBaseURL());
     }
 
-    /*public Boolean checkSolrConnection(){
-        System.out.println("check solr connection.");
-        Boolean canConnect = false;
-        try {
-            System.out.println("in try");
-            SolrPing ping = new SolrPing();
-            //ping.getParams().add("distrib", "true"); //To make it a distributed request against a collection
-            System.out.println("created ping, sending it now");
-            SolrPingResponse rsp = ping.process(client);
-            System.out.println("Response is: " + rsp.toString() + " with status: " + rsp.getStatus());
-            if(rsp.toString().contains("OK"))
-                canConnect = true;
-        }catch(Exception e){
-            System.out.println("Error when pinging the Solr instance: " + e.getMessage());
-        }
-        return canConnect;
-    }*/
-
     public String[] getFilterOptions(String fieldName) throws IOException, SolrServerException{
         SolrQuery query = buildQuery(fieldName);
         QueryResponse response = client.query(query);

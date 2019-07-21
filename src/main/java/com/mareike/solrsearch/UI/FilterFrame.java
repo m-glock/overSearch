@@ -344,9 +344,6 @@ public class FilterFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 readAndSaveFilters();
-                for(Filter f : filters.keySet()){
-                    System.out.println("Filter " + f + " with value " + filters.get(f));
-                }
                 qHandler.setFilters(filters);
                 FilterFrame.this.dispose();
             }

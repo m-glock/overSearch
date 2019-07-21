@@ -30,7 +30,6 @@ public class SearchResultBuilder {
                 }
             }catch(MalformedURLException ex){
                 System.out.println("URL exception");
-                //TODO: exception handling
                 url = null;
             }
 

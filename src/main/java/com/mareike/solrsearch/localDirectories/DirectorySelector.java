@@ -16,7 +16,6 @@ public class DirectorySelector extends JFrame {
     private String basePath;
     private ExecutorService executorService;
 
-    //TODO: if node is selected, select all children as well?
     public DirectorySelector(String basePath){
         this.basePath = basePath;
         startThreads();
@@ -83,7 +82,7 @@ public class DirectorySelector extends JFrame {
         try{
             executorService.submit(new DirectoryWatchService(Paths.get(path), true));
         }catch(IOException io){
-            System.out.println("Error when leading indexed paths: " + io.getMessage());
+            System.out.println("Error when reading indexed paths: " + io.getMessage());
         }
     }
 

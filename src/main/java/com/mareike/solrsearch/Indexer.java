@@ -41,7 +41,7 @@ public class Indexer {
                 @Override
                 public void run(){
                     try{
-                        System.out.println("\nSending 'POST' request to URL : " + uri);
+                        System.out.println("\nSending " + con.getRequestMethod() + " request to URL : " + uri);
                         BufferedReader in = new BufferedReader(new InputStreamReader(
                                 con.getInputStream()));
                         String inputLine;
@@ -74,7 +74,7 @@ public class Indexer {
                 @Override
                 public void run(){
                     try{
-                        System.out.println("\nSending 'GET' request to URL : " + url);
+                        System.out.println("\nSending " + con.getRequestMethod() + " request to URL : " + url);
                         BufferedReader in = new BufferedReader(new InputStreamReader(
                                 con.getInputStream()));
                         String inputLine;
