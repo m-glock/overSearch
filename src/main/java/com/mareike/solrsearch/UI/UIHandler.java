@@ -53,7 +53,7 @@ public class UIHandler extends javax.swing.JFrame{
             solr = new SolrInstance(solrURL, collectionName);
             java.util.List<String> collections = CollectionAdminRequest.listCollections(solr.client);
             if(collections.contains(collectionName)){
-                solr.changeSolrInstance(solrURL + "/" + collectionName);
+                solr.changeSolrInstance();
                 collectionExists = true;
             }
             //TODO: exception handling
@@ -353,6 +353,8 @@ public class UIHandler extends javax.swing.JFrame{
             public void actionPerformed(ActionEvent e) {
                 FilterFrame frame = new FilterFrame(solr, qHandler);
                 frame.getContentPane().setBackground(Color.white);
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
                 frame.setVisible(true);
             }
         });

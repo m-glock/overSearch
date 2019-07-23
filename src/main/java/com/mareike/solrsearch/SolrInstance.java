@@ -29,11 +29,9 @@ public class SolrInstance {
         startClient();
     }
 
-    public void changeSolrInstance(String solrURL){
-        urlString = solrURL;
-        int index = solrURL.lastIndexOf(File.separator);
-        collectionName = solrURL.substring(index+1);
-        client.setBaseURL(urlString);
+    public void changeSolrInstance(){
+
+        client.setBaseURL(urlString + "/" + collectionName);
         System.out.println("Base url is now: " + client.getBaseURL());
         //isConnected();
     }
@@ -67,6 +65,7 @@ public class SolrInstance {
         try {
             SolrPing ping = new SolrPing();
             SolrPingResponse rsp = ping.process(client);
+            System.out.println(rsp);
             if (!rsp.toString().contains("status=OK")){
                 canConnect = false;
                 connectionLostMessage();
@@ -76,6 +75,7 @@ public class SolrInstance {
             canConnect = false;
             connectionLostMessage();
         }
+        System.out.println(canConnect);
         return canConnect;
     }
 
