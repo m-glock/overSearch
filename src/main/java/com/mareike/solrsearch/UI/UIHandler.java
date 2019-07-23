@@ -303,13 +303,11 @@ public class UIHandler extends javax.swing.JFrame{
                 //code to save paths in index handler and close frame
                 try {
                     directoryPaths = dir.listDirectories();
-                    if(solr.isConnected()) {
-                        solr.createCollection();
-                        //Indexes all files from the paths as well as the SharePoint files
-                        Indexer.indexFiles(directoryPaths, solr.getCollectionName());
-                        CardLayout card = (CardLayout) (mainPanel.getLayout());
-                        card.show(mainPanel, "mainScreen");
-                    }
+                    solr.createCollection();
+                    //Indexes all files from the paths as well as the SharePoint files
+                    Indexer.indexFiles(directoryPaths, solr.getCollectionName());
+                    CardLayout card = (CardLayout) (mainPanel.getLayout());
+                    card.show(mainPanel, "mainScreen");
                 }catch(NullPointerException ex){
                     JLabel errorMessage = new JLabel();
                     errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 24));
