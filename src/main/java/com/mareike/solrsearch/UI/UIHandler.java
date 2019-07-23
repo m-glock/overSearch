@@ -45,37 +45,20 @@ public class UIHandler extends javax.swing.JFrame{
     /**
      * Creates new form UIHandler
      */
-    public UIHandler() {
-        String solrURL = "http://localhost:8983/solr";
-        String collectionName = "overSearchFiles";
-        Boolean collectionExists = false;
-        try {
-            solr = new SolrInstance(solrURL, collectionName);
-            java.util.List<String> collections = CollectionAdminRequest.listCollections(solr.client);
-            if(collections.contains(collectionName)){
-                solr.changeSolrInstance();
-                collectionExists = true;
-            }
-            //TODO: exception handling
-        }catch(IOException io){
-            System.out.println("IOException: " + io.getMessage());
-        }catch(SolrServerException serv){
-            System.out.println("SolrServerException: " + serv.getMessage());
-        }catch(HttpSolrClient.RemoteSolrException ex){
-            System.out.println("RemoteSolrException with message: " + ex.getMessage());
-        }catch(Exception e){
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-        DirectorySelector dir = new DirectorySelector(System.getProperty("user.home"));
+    public UIHandler(SolrInstance inst, String collectionName, boolean collectionExists, String baseDirectory) {
+        solr = inst;
+        DirectorySelector dir = new DirectorySelector(baseDirectory);
         qHandler = new QueryHandler();
         MultiSelectionTree tree = dir.getTree();
         initComponents(tree);
+
         if(collectionExists) {
             directoryPaths = dir.loadIndexedPaths();
             Indexer.setCollectionName(collectionName);
             CardLayout card = (CardLayout) (mainPanel.getLayout());
             card.show(mainPanel, "mainScreen");
         }
+
         setEditorPane();
         addActionListeners(dir);
         closeFrameActionListener();
@@ -366,7 +349,6 @@ public class UIHandler extends javax.swing.JFrame{
                         System.out.println("url: " + e.getURL().toString());
                         URI uri = e.getURL().toURI();
                         //TODO: exception handling
-                        //TODO: maybe check uir/url stuff again because this "file:" thing is weird
                         if(uri.toString().contains("https")){
                             System.out.println("URI " + uri + "is a sharepoint uri.");
                             Desktop.getDesktop().browse(uri);

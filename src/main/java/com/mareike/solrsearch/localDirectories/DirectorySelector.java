@@ -16,7 +16,6 @@ public class DirectorySelector extends JFrame {
     private String basePath;
     private ExecutorService executorService;
 
-    //TODO: if node is selected, select all children as well?
     public DirectorySelector(String basePath){
         this.basePath = basePath;
         startThreads();
