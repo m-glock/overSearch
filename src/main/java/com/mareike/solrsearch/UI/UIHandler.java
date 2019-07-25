@@ -1,14 +1,12 @@
 package com.mareike.solrsearch.UI;
 
 import com.mareike.solrsearch.Indexer;
+import com.mareike.solrsearch.Main;
 import com.mareike.solrsearch.Queries.SearchResultBuilder;
 import com.mareike.solrsearch.localDirectories.DirectorySelector;
 import com.mareike.solrsearch.localDirectories.MultiSelectionTree;
 import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
@@ -25,36 +23,24 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author mareike
- */
 public class UIHandler extends javax.swing.JFrame{
-
 
     private SolrInstance solr;
     private QueryHandler qHandler;
     private ArrayList<String> directoryPaths;
 
-    /**
-     * Creates new form UIHandler
-     */
     public UIHandler(SolrInstance inst, String collectionName, boolean collectionExists, String baseDirectory) {
         solr = inst;
         DirectorySelector dir = new DirectorySelector(baseDirectory);
         qHandler = new QueryHandler();
         MultiSelectionTree tree = dir.getTree();
+        Main.logger.info("create UI.");
         initComponents(tree);
 
         if(collectionExists) {
             directoryPaths = dir.loadIndexedPaths();
             Indexer.setCollectionName(collectionName);
+            Main.logger.info("Switch to main search screen.\n");
             CardLayout card = (CardLayout) (mainPanel.getLayout());
             card.show(mainPanel, "mainScreen");
         }
@@ -73,9 +59,9 @@ public class UIHandler extends javax.swing.JFrame{
                         for (String path : directoryPaths)
                             pw.println(path);
                     } catch (FileNotFoundException ex) {
-                        System.out.println("Error when trying to save directory paths in a file.");
+                        Main.logger.info("Error when trying to save directory paths in a file.");
                     }
-                    System.out.println("Frame closed");
+                    Main.logger.info("Frame closed");
                 }
             }
         });
@@ -267,8 +253,10 @@ public class UIHandler extends javax.swing.JFrame{
     //executed when user hits enter in the search bar or when the search button is clicked
     private void executeSearch() {
         //perform query on input string
+        Main.logger.info("Retrieve text from search bar.");
         String queryWords = searchBar.getText();
         if(queryWords != null && !queryWords.equals("") && solr.isConnected()) {
+            Main.logger.info("Query string is: " + queryWords);
             QueryResponse queryResponse = qHandler.sendQuery(solr.client, queryWords);
             String response = SearchResultBuilder.getHTMLForResults(queryResponse);
 
@@ -289,6 +277,7 @@ public class UIHandler extends javax.swing.JFrame{
                     solr.createCollection();
                     //Indexes all files from the paths as well as the SharePoint files
                     Indexer.indexFiles(directoryPaths, solr.getCollectionName());
+                    Main.logger.info("switching to search screen.");
                     CardLayout card = (CardLayout) (mainPanel.getLayout());
                     card.show(mainPanel, "mainScreen");
                 }catch(NullPointerException ex){
@@ -296,10 +285,8 @@ public class UIHandler extends javax.swing.JFrame{
                     errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 24));
                     errorMessage.setText("Please select at least one Directory for indexing.");
                     JOptionPane.showMessageDialog(null, errorMessage);
-                }catch(IOException ex){//TODO: exception handling
-                    System.out.println("IOException: " + ex.getMessage());
-                }catch(SolrServerException ex){
-                    System.out.println("SolrServerException: " + ex.getMessage());
+                }catch(Exception ex){
+                    Main.logger.info("Error when indexing files: " + ex.getMessage());
                 }
             }
         });
@@ -320,20 +307,22 @@ public class UIHandler extends javax.swing.JFrame{
                 if(solr.isConnected()) {
                     try {
                         solr.deleteCollection();
+                        Main.logger.info("Switch back to start screen.");
                         CardLayout card = (CardLayout) (mainPanel.getLayout());
                         card.show(mainPanel, "startScreen");
                         dir.removeDirectoryWatchers();
                         dir.startThreads();
                     } catch (Exception ex) {
-                        //TODO: exception handling
-                        System.out.println(ex.getMessage());
+                        Main.logger.info("Error when trying to delete a collection. " + ex.getMessage());
                     }
                 }
             }
         });
+
         filter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Main.logger.info("Open filter and preferences.");
                 FilterFrame frame = new FilterFrame(solr, qHandler);
                 frame.getContentPane().setBackground(Color.white);
                 Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -346,22 +335,19 @@ public class UIHandler extends javax.swing.JFrame{
             public void hyperlinkUpdate(HyperlinkEvent e){
                 if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED && Desktop.isDesktopSupported()) {
                     try {
-                        System.out.println("url: " + e.getURL().toString());
                         URI uri = e.getURL().toURI();
-                        //TODO: exception handling
                         if(uri.toString().contains("https")){
-                            System.out.println("URI " + uri + "is a sharepoint uri.");
+                            Main.logger.info("Selected File " + uri + " is from SharePoint.");
                             Desktop.getDesktop().browse(uri);
                         }else{
-                            System.out.println("before create file");
                             File myFile = new File(uri.toString().replace("file:","").replace("%20"," "));
-                            System.out.println("after create file. path is: " + myFile.getAbsolutePath());
+                            Main.logger.info("Selected File " + myFile.getAbsolutePath() + " is from the local file system.");
                             Desktop.getDesktop().open(myFile);
                         }
                     } catch (URISyntaxException ex) {
-                        System.out.println("Message uri: " + ex.getMessage());
-                    } catch(IOException io){
-                        System.out.println("Message io: " + io.getMessage());
+                        Main.logger.info("Error with the URI building. " + ex.getMessage());
+                    } catch(Exception ex){
+                        Main.logger.info("Error when trying to open the file. " + ex.getMessage());
                     }
                 }
             }

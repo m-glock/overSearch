@@ -1,5 +1,8 @@
 package com.mareike.solrsearch.localDirectories;
 
+import com.mareike.solrsearch.Main;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
@@ -17,6 +20,7 @@ public class DirectorySelector extends JFrame {
     private ExecutorService executorService;
 
     public DirectorySelector(String basePath){
+        Main.logger.info("prepare directory selection...");
         this.basePath = basePath;
         startThreads();
 
@@ -30,6 +34,7 @@ public class DirectorySelector extends JFrame {
         final Font currentFont = tree.getFont();
         final Font bigFont = new Font(currentFont.getName(), currentFont.getStyle(), currentFont.getSize() + 5);
         tree.setFont(bigFont);
+        Main.logger.info("Directory selection ready.");
     }
     
     public MultiSelectionTree getTree(){
@@ -39,12 +44,14 @@ public class DirectorySelector extends JFrame {
     public void startThreads(){executorService = Executors.newFixedThreadPool(4);}
 
     public ArrayList<String> listDirectories() throws NullPointerException{
+        Main.logger.info("create list of all directories that have been indexed.");
         TreePath[] paths = tree.getSelectionPaths();
         ArrayList<String> fullPaths = new ArrayList<>();
         int endIndex = basePath.lastIndexOf(File.separator);
         String newBasePath = basePath.substring(0, endIndex+1);
         for(TreePath path : paths){
             String fullPath = newBasePath + buildPath(path);
+            Main.logger.info("Path "+ fullPath + "is added to list.");
             addDirectoryWatcher(fullPath);
             fullPaths.add(fullPath);
         }
@@ -52,9 +59,9 @@ public class DirectorySelector extends JFrame {
     }
 
     public ArrayList<String> loadIndexedPaths(){
-        //load paths in ArrayList
         ArrayList<String> directories = new ArrayList<>();
         String directoryPath;
+        Main.logger.info("load previously indexed paths from file directories.txt");
         if(new File("directories.txt").exists()) {
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader("directories.txt"))) {
                 while ((directoryPath = bufferedReader.readLine()) != null) {
@@ -62,7 +69,7 @@ public class DirectorySelector extends JFrame {
                     addDirectoryWatcher(directoryPath);
                 }
             } catch (Exception e) {
-                System.out.println("Error when reading out directories. " + e.getMessage());
+                Main.logger.info("Error when reading out directories. " + e.getMessage());
             }
         }
         return directories;
@@ -78,16 +85,16 @@ public class DirectorySelector extends JFrame {
     }
 
     private void addDirectoryWatcher(String path){
-        System.out.println("start directory watcher on: " + path);
+        Main.logger.info("start directory watcher on: " + path);
         try{
             executorService.submit(new DirectoryWatchService(Paths.get(path), true));
         }catch(IOException io){
-            System.out.println("Error when leading indexed paths: " + io.getMessage());
+            Main.logger.info("Error when adding directory watcher. " + io.getMessage());
         }
     }
 
     public void removeDirectoryWatchers(){
+        Main.logger.info("remove directory watchers.");
         executorService.shutdownNow();
-        System.out.println("directory watchers removed.");
     }
 }

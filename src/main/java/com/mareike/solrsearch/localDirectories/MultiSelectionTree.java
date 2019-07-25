@@ -1,5 +1,7 @@
 package com.mareike.solrsearch.localDirectories;
 
+import com.mareike.solrsearch.Main;
+
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 
@@ -13,40 +15,30 @@ public class MultiSelectionTree extends JTree {
     @Override
     public void setSelectionPath(TreePath path) {
 
-        System.out.println("MLDebugJTree: setSelectionPath(" + path + ")");
+        Main.logger.info("Path " + buildPath(path) + " has been selected.");
         TreePath[] alreadySelectedPaths = getSelectionModel().getSelectionPaths();
         String pathToAdd = buildPath(path);
         for(TreePath tPath : alreadySelectedPaths){
             String alreadySelected = buildPath(tPath);
             if(pathToAdd.contains(alreadySelected) && !pathToAdd.equals(alreadySelected)){
-                System.out.println("in if query");
+                Main.logger.info("Selected path is an ancestor of another already selected path");
                 JOptionPane.showMessageDialog(null, "This directory is already being indexed together with its parent directory " + buildPath(tPath));
                 return;
             }else if(alreadySelected.contains(pathToAdd)&& !alreadySelected.equals(pathToAdd)){
                 removeSelectionPath(tPath);
-                System.out.println("removed " + buildPath(tPath) + " from list of selected paths");
+                Main.logger.info("removed " + buildPath(tPath) + " from list of selected paths because it is an ancestor of " + buildPath(path));
             }
         }
         addSelectionPath(path);
-        System.out.println(path + " added");
+        Main.logger.info(buildPath(path) + " has been added to the selection");
 
         return;
-        //super.setSelectionPath(path);
-    }
-
-    private String buildPath(TreePath path){
-        Object[] pathElements = path.getPath();
-        String fullPath = "";
-        for (Object pathElement : pathElements){
-            fullPath = fullPath + pathElement + "/" ;
-        }
-        return fullPath;
     }
 
     @Override
     public void setSelectionPaths(TreePath[] paths) {
 
-        System.out.println("MLDebugJTree: setSelectionPaths(" + paths + ")");
+        Main.logger.info("MLDebugJTree: setSelectionPaths(" + paths + ")");
 
         addSelectionPaths(paths);
 
@@ -56,7 +48,7 @@ public class MultiSelectionTree extends JTree {
     @Override
     public void setSelectionRow(int row) {
 
-        System.out.println("MLDebugJTree: setSelectionRow(" + row + ")");
+        Main.logger.info("MLDebugJTree: setSelectionRow(" + row + ")");
 
         addSelectionRow(row);
 
@@ -67,11 +59,20 @@ public class MultiSelectionTree extends JTree {
     @Override
     public void setSelectionRows(int[] rows) {
 
-        System.out.println("MLDebugJTree: setSelectionRows(" + rows + ")");
+        Main.logger.info("MLDebugJTree: setSelectionRows(" + rows + ")");
 
         addSelectionRows(rows);
 
         return;
         //super.setSelectionRows(rows);
+    }
+
+    private String buildPath(TreePath path){
+        Object[] pathElements = path.getPath();
+        String fullPath = "";
+        for (Object pathElement : pathElements){
+            fullPath = fullPath + pathElement + "/" ;
+        }
+        return fullPath;
     }
 }

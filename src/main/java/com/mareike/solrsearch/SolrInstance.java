@@ -27,13 +27,12 @@ public class SolrInstance {
         urlString = solrURL;
         collectionName = collection;
         startClient();
+        Main.logger.info("Solr instance created with URL: " + urlString);
     }
 
     public void changeSolrInstance(){
-
         client.setBaseURL(urlString + "/" + collectionName);
-        System.out.println("Base url is now: " + client.getBaseURL());
-        //isConnected();
+        Main.logger.info("Solr base URL changed to: " + client.getBaseURL() + "\n");
     }
 
     private void startClient(){
@@ -41,26 +40,29 @@ public class SolrInstance {
     }
     
     public void createCollection() throws IOException, SolrServerException {
+        Main.logger.info("Create a colection...");
         String configName = "overSearchConfig";
         CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
         NamedList resp = client.request(req);
-        System.out.println("Response: " + resp.toString());
+        Main.logger.info("Response to request: " + resp.toString());
 
         client.setBaseURL(client.getBaseURL() + "/" + collectionName);
-        System.out.println("Solr instance created with URL: " + client.getBaseURL());
+        Main.logger.info("Collection named " + collectionName + " created.\nSolr instance URL has been changed to: " + client.getBaseURL());
 
     }
 
     public void deleteCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
+        Main.logger.info("Delete collection ...");
         String solrBaseURL = client.getBaseURL().replaceAll("/" + collectionName, "");
         client.setBaseURL(solrBaseURL);
         CollectionAdminRequest.Delete request = CollectionAdminRequest.Delete.deleteCollection(collectionName);
         NamedList resp = client.request(request);
         System.out.println("Response to request: " + resp);
-        System.out.println("Collection removed. Solr instance now uses the URL: " + client.getBaseURL());
+        System.out.println("Collection has been removed. Solr instance now uses the URL: " + client.getBaseURL());
     }
 
     public boolean isConnected(){
+        Main.logger.info("Ping Solr collection...");
         boolean canConnect = true;
         try {
             SolrPing ping = new SolrPing();
@@ -71,11 +73,11 @@ public class SolrInstance {
                 connectionLostMessage();
             }
         } catch (Exception e) {
-            System.out.println("Connection to Solr lost. ");
+            Main.logger.info("Connection to Solr lost. ");
             canConnect = false;
             connectionLostMessage();
         }
-        System.out.println(canConnect);
+        Main.logger.info("Able to connect to Solr: " + canConnect);
         return canConnect;
     }
 
@@ -97,12 +99,14 @@ public class SolrInstance {
     }
 
     private SolrQuery buildQuery(String fieldName){
+        Main.logger.info("Built facet query.");
         SolrQuery query = new SolrQuery();
         query.setFacet(true);
         query.addFacetField(fieldName);
         query.setFacetLimit(-1);
         query.setRows(0);
         query.setQuery("*");
+        Main.logger.info("Query is: " + query.toString());
         return query;
     }
 

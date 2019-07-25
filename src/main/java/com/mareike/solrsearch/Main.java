@@ -1,17 +1,19 @@
 package com.mareike.solrsearch;
 
 import com.mareike.solrsearch.UI.UIHandler;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
-
 import java.awt.*;
-import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.SimpleFormatter;
 
 public class Main {
-    
+
+    public static java.util.logging.Logger logger;
+
     public static void main(String[] args){
 
+        createLogger();
+        logger.info("application started.\n");
         setLookAndFeel();
 
         String solrURL = "http://localhost:8983/solr";
@@ -22,28 +24,38 @@ public class Main {
             SolrInstance solr = new SolrInstance(solrURL, collectionName);
             java.util.List<String> collections = CollectionAdminRequest.listCollections(solr.client);
             if(collections.contains(collectionName)){
+                logger.info("Collection already exists.");
                 solr.changeSolrInstance();
                 collectionExists = true;
             }
-
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
             UIHandler ex = new UIHandler(solr, collectionName, collectionExists, baseDirectory);
             ex.setTitle("OverSearch");
             ex.setLocation(dim.width / 2 - ex.getSize().width / 2, dim.height / 2 - ex.getSize().height / 2);
             ex.setVisible(true);
 
-            //TODO: exception handling
-        }catch(IOException io){
-            System.out.println("IOException: " + io.getMessage());
-        }catch(SolrServerException serv){
-            System.out.println("SolrServerException: " + serv.getMessage());
-        }catch(HttpSolrClient.RemoteSolrException ex){
-            System.out.println("RemoteSolrException with message: " + ex.getMessage());
         }catch(Exception e){
-            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            logger.info(" Error in Main method. " + e.getMessage());
         }
     }
-    
+
+    private static void createLogger(){
+        logger = java.util.logging.Logger.getLogger("log");
+        FileHandler fh;
+
+        try {
+            fh = new FileHandler(System.getProperty("user.dir") + "/MyLogFile.log");
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+
+            logger.info("Staring log.");
+
+        } catch (Exception e) {
+            logger.info("Error when creating logger: " + e.getMessage());
+        }
+    }
+
     private static void setLookAndFeel(){
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

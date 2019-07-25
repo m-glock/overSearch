@@ -1,6 +1,7 @@
 package com.mareike.solrsearch.UI;
 
 import com.mareike.solrsearch.ContentTypes;
+import com.mareike.solrsearch.Main;
 import com.mareike.solrsearch.Queries.Filter;
 import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
@@ -8,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashMap;
 
 public class FilterFrame extends javax.swing.JFrame {
@@ -38,6 +41,7 @@ public class FilterFrame extends javax.swing.JFrame {
         if(solr.isConnected()) {
             setBoxModels(solr);
         }
+        Main.logger.info("Create filter frame.");
         initComponents();
         groupComponents();
         createActionListeners();
@@ -48,6 +52,7 @@ public class FilterFrame extends javax.swing.JFrame {
     }
 
     private void groupComponents(){
+        Main.logger.info("Create groups for components.");
         filterAndPreferenceComponents = new HashMap<>();
         filterAndPreferenceComponents.put(Filter.CREATORFILTER, new Component[] {creatorFilterCheckBox, creatorFilterComboBox});
         filterAndPreferenceComponents.put(Filter.CREATORPREFERENECE, new Component[] {creatorPreferencesCheckBox, creatorPreferencesComboBox});
@@ -64,6 +69,7 @@ public class FilterFrame extends javax.swing.JFrame {
     }
 
     private void setInitialStates(){
+        Main.logger.info("Disable all dropdowns and select relevance radio button.");
         for(Component[] c : filterAndPreferenceComponents.values()){
             c[1].setEnabled(false);
         }
@@ -73,7 +79,9 @@ public class FilterFrame extends javax.swing.JFrame {
     }
 
     private void setPreviousStates(HashMap<Filter, String> previousFilters){
+        Main.logger.info("Read out previous filter and set appropriate state.");
         for(Filter filter : previousFilters.keySet()){
+            Main.logger.info("Filter " + filter.type + "is set.");
             if(previousFilters.get(filter).equals("creation date")){
                 creationDateRadioButton.setSelected(true);
                 //Disable all preference check boxes and dropdowns
@@ -347,7 +355,17 @@ public class FilterFrame extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 readAndSaveFilters();
                 qHandler.setFilters(filters);
+                Main.logger.info("Filters saved. Close Filter frame.");
                 FilterFrame.this.dispose();
+            }
+        });
+
+        //TODO: test this
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                readAndSaveFilters();
+                qHandler.setFilters(filters);
+                Main.logger.info("Filters saved. Close Filter frame.");
             }
         });
 
@@ -432,7 +450,7 @@ public class FilterFrame extends javax.swing.JFrame {
             creatorFilterComboBoxModel = new javax.swing.DefaultComboBoxModel<>(creators);
             creatorPreferenceComboBoxModel = new javax.swing.DefaultComboBoxModel<>(creators);
         }catch(Exception ex){
-            System.out.println("Error when retrieving filter options: " + ex.getMessage());
+            Main.logger.info("Error when retrieving filter options: " + ex.getMessage());
         }
     }
 
@@ -464,6 +482,7 @@ public class FilterFrame extends javax.swing.JFrame {
     }
 
     private void addFilter(Filter filterType, String value){
+        Main.logger.info("Filter " + filterType.type + " was selected and has been added to the list.");
         filters.put(filterType, value);
     }
 }

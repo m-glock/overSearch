@@ -32,6 +32,7 @@ package com.mareike.solrsearch.localDirectories;
  */
 
 import com.mareike.solrsearch.Indexer;
+import com.mareike.solrsearch.Main;
 import org.apache.commons.io.FilenameUtils;
 
 import java.nio.file.*;
@@ -67,9 +68,9 @@ public class DirectoryWatchService implements Runnable{
         this.recursive = recursive;
 
         if (recursive) {
-            System.out.format("Scanning %s ...\n", dir);
+            Main.logger.info("Adding directory watcher to " + dir + " ...\n");
             registerAll(dir);
-            System.out.println("Done.");
+            Main.logger.info("Done.");
         } else {
             register(dir);
         }
@@ -92,10 +93,10 @@ public class DirectoryWatchService implements Runnable{
         if (trace) {
             Path prev = keys.get(key);
             if (prev == null) {
-                System.out.format("register: %s\n", dir);
+                Main.logger.info("register "+ dir + "\n");
             } else {
                 if (!dir.equals(prev)) {
-                    System.out.format("update: %s -> %s\n", prev, dir);
+                    Main.logger.info("update: " + prev + " -> " + dir + "\n");
                 }
             }
         }
@@ -138,7 +139,7 @@ public class DirectoryWatchService implements Runnable{
 
             Path dir = keys.get(key);
             if (dir == null) {
-                System.err.println("WatchKey not recognized!!");
+                Main.logger.info("WatchKey not recognized!!");
                 continue;
             }
 
@@ -191,18 +192,18 @@ public class DirectoryWatchService implements Runnable{
     private void updateFiles(WatchEvent event, Path path){
         String extension = FilenameUtils.getExtension(path.toString());
         if(extension.equals("") && event.kind().name().equals("ENTRY_DELETE")){
-            System.out.println("folder has been deleted: " + path.toString());
+            Main.logger.info("folder has been deleted: " + path.toString());
             deleteAllFilesInFolder(path.toFile());
             deletedFolder = path.toString();
         }
         if(!extension.equals("") && !path.toString().contains("~$") && !path.toString().endsWith("tmp") && !path.toString().contains(deletedFolder)){
             switch(event.kind().name()){
                 case "ENTRY_MODIFY":
-                    System.out.println("create file " + path.toString());
+                    Main.logger.info("create file " + path.toString());
                     Indexer.indexFileOrFolder(path.toString());
                     break;
                 case "ENTRY_DELETE":
-                    System.out.println("delete file " + path.toString());
+                    Main.logger.info("delete file " + path.toString());
                     Indexer.deleteFile(path.toString());
                     break;
                 default:
