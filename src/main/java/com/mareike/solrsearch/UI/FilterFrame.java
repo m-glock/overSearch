@@ -38,9 +38,9 @@ public class FilterFrame extends javax.swing.JFrame {
     public FilterFrame(SolrInstance solr, QueryHandler qHandler) {
         this.qHandler = qHandler;
         filters = new HashMap<>();
-        if(solr.isConnected()) {
+        //if(solr.isConnected()) {
             setBoxModels(solr);
-        }
+        //}
         Main.logger.info("Create filter frame.");
         initComponents();
         groupComponents();

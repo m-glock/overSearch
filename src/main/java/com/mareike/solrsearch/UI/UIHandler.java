@@ -255,7 +255,7 @@ public class UIHandler extends javax.swing.JFrame{
         //perform query on input string
         Main.logger.info("Retrieve text from search bar.");
         String queryWords = searchBar.getText();
-        if(queryWords != null && !queryWords.equals("") && solr.isConnected()) {
+        if(queryWords != null && !queryWords.equals("") /*&& solr.isConnected()*/) {
             Main.logger.info("Query string is: " + queryWords);
             QueryResponse queryResponse = qHandler.sendQuery(solr.client, queryWords);
             String response = SearchResultBuilder.getHTMLForResults(queryResponse);
@@ -304,7 +304,7 @@ public class UIHandler extends javax.swing.JFrame{
         newCollection.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(solr.isConnected()) {
+                //if(solr.isConnected()) {
                     try {
                         solr.deleteCollection();
                         Main.logger.info("Switch back to start screen.");
@@ -315,7 +315,7 @@ public class UIHandler extends javax.swing.JFrame{
                     } catch (Exception ex) {
                         Main.logger.info("Error when trying to delete a collection. " + ex.getMessage());
                     }
-                }
+                //}
             }
         });
 
