@@ -43,19 +43,27 @@ public class DirectorySelector extends JFrame {
 
     public void startThreads(){executorService = Executors.newFixedThreadPool(4);}
 
-    public ArrayList<String> listDirectories() throws NullPointerException{
+    public ArrayList<String> listDirectories(){
         Main.logger.info("create list of all directories that have been indexed.");
-        TreePath[] paths = tree.getSelectionPaths();
-        ArrayList<String> fullPaths = new ArrayList<>();
-        int endIndex = basePath.lastIndexOf(File.separator);
-        String newBasePath = basePath.substring(0, endIndex+1);
-        for(TreePath path : paths){
-            String fullPath = newBasePath + buildPath(path);
-            Main.logger.info("Path "+ fullPath + "is added to list.");
-            addDirectoryWatcher(fullPath);
-            fullPaths.add(fullPath);
+        try {
+           TreePath[] paths = tree.getSelectionPaths();
+            ArrayList<String> fullPaths = new ArrayList<>();
+            int endIndex = basePath.lastIndexOf(File.separator);
+            String newBasePath = basePath.substring(0, endIndex + 1);
+            for (TreePath path : paths) {
+                String fullPath = newBasePath + buildPath(path);
+                Main.logger.info("Path " + fullPath + "is added to list.");
+                addDirectoryWatcher(fullPath);
+                fullPaths.add(fullPath);
+            }
+            return fullPaths;
+        } catch(NullPointerException ex){
+           JLabel errorMessage = new JLabel();
+           errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 24));
+           errorMessage.setText("Please select at least one Directory for indexing.");
+           JOptionPane.showMessageDialog(null, errorMessage);
+           return null;
         }
-        return fullPaths;
     }
 
     public ArrayList<String> loadIndexedPaths(){
