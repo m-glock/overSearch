@@ -1,45 +1,60 @@
 package com.mareike.solrsearch;
 
+import com.mareike.solrsearch.UI.Environment;
 import com.mareike.solrsearch.UI.ErrorMessage;
 import com.mareike.solrsearch.UI.UIHandler;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import java.awt.*;
+import java.io.File;
 import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
 
 public class Main {
 
     public static java.util.logging.Logger logger;
+    private static String startDirectory;
+    private static Dimension dim;
+    private static String collectionName;
+    private static SolrInstance solr;
+    private static boolean collectionExists;
 
     public static void main(String[] args){
-
         createLogger();
-        logger.info("application started.\n");
         setLookAndFeel();
 
         String solrURL = "http://localhost:8983/solr";
-        String collectionName = "overSearchFiles";
-        String baseDirectory = System.getProperty("user.home");
-        Boolean collectionExists = false;
+        collectionName = "overSearchFiles";
+        startDirectory = System.getProperty("user.dir") + File.separator + "test_files";
+        dim = Toolkit.getDefaultToolkit().getScreenSize();
+        collectionExists = false;
+
         try {
-            SolrInstance solr = new SolrInstance(solrURL, collectionName);
+            solr = new SolrInstance(solrURL, collectionName);
             java.util.List<String> collections = CollectionAdminRequest.listCollections(solr.client);
             if(collections.contains(collectionName)){
                 logger.info("Collection already exists.");
                 solr.changeSolrInstance();
                 collectionExists = true;
+                startApplcation();
+            }else{
+                Environment env = new Environment();
+                env.setLocation(dim.width / 2 - env.getSize().width / 2, dim.height / 2 - env.getSize().height / 2);
+                env.setVisible(true);
             }
-            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-            UIHandler ex = new UIHandler(solr, collectionName, collectionExists, baseDirectory);
-            ex.setTitle("OverSearch");
-            ex.setLocation(dim.width / 2 - ex.getSize().width / 2, dim.height / 2 - ex.getSize().height / 2);
-            ex.setVisible(true);
-
         }catch(Exception e){
             String message = " Error in Main method. " + e.getMessage();
             new ErrorMessage(message);
             logger.info(message);
         }
+
+    }
+
+    public static void startApplcation(){
+        logger.info("Start application\n");
+        UIHandler ex = new UIHandler(solr, collectionName, collectionExists, startDirectory);
+        ex.setTitle("OverSearch");
+        ex.setLocation(dim.width / 2 - ex.getSize().width / 2, dim.height / 2 - ex.getSize().height / 2);
+        ex.setVisible(true);
     }
 
     private static void createLogger(){
@@ -57,6 +72,10 @@ public class Main {
         } catch (Exception e) {
             logger.info("Error when creating logger: " + e.getMessage());
         }
+    }
+
+    public static void setStartDirectory(String start){
+        startDirectory = start;
     }
 
     private static void setLookAndFeel(){
