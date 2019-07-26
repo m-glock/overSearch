@@ -8,6 +8,8 @@ import com.mareike.solrsearch.localDirectories.MultiSelectionTree;
 import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -274,17 +276,19 @@ public class UIHandler extends javax.swing.JFrame{
                 //code to save paths in index handler and close frame
                 try {
                     directoryPaths = dir.listDirectories();
-                    solr.createCollection();
-                    //Indexes all files from the paths as well as the SharePoint files
-                    Indexer.indexFiles(directoryPaths, solr.getCollectionName());
-                    Main.logger.info("switching to search screen.");
-                    CardLayout card = (CardLayout) (mainPanel.getLayout());
-                    card.show(mainPanel, "mainScreen");
-                }catch(NullPointerException ex){
-                    JLabel errorMessage = new JLabel();
-                    errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 24));
-                    errorMessage.setText("Please select at least one Directory for indexing.");
-                    JOptionPane.showMessageDialog(null, errorMessage);
+                    boolean collectionSuccess = solr.createCollection();
+                    if(collectionSuccess && directoryPaths != null){
+                        //Indexes all files from the paths as well as the SharePoint files
+                        boolean indexingSuccess = Indexer.indexFiles(directoryPaths, solr.getCollectionName());
+                        if(indexingSuccess) {
+                            Main.logger.info("switching to search screen.");
+                            CardLayout card = (CardLayout) (mainPanel.getLayout());
+                            card.show(mainPanel, "mainScreen");
+                        } else{
+                            System.out.println("error when indexing.");
+                            solr.deleteCollection();
+                        }
+                    }
                 }catch(Exception ex){
                     Main.logger.info("Error when indexing files: " + ex.getMessage());
                 }

@@ -1,0 +1,322 @@
+Jul 26, 2019 11:10:54 AM com.mareike.solrsearch.Main createLogger
+INFORMATION: Staring log.
+Jul 26, 2019 11:10:55 AM com.mareike.solrsearch.Main main
+INFORMATION: application started.
+
+Jul 26, 2019 11:10:57 AM com.mareike.solrsearch.SolrInstance <init>
+INFORMATION: Solr instance created with URL: http://localhost:8983/solr
+Jul 26, 2019 11:10:57 AM com.mareike.solrsearch.Main main
+INFORMATION: Collection already exists.
+Jul 26, 2019 11:10:57 AM com.mareike.solrsearch.SolrInstance changeSolrInstance
+INFORMATION: Solr base URL changed to: http://localhost:8983/solr/overSearchFiles
+
+Jul 26, 2019 11:10:57 AM com.mareike.solrsearch.localDirectories.DirectorySelector <init>
+INFORMATION: prepare directory selection...
+Jul 26, 2019 11:10:58 AM com.mareike.solrsearch.localDirectories.DirectorySelector <init>
+INFORMATION: Directory selection ready.
+Jul 26, 2019 11:10:58 AM com.mareike.solrsearch.UI.UIHandler <init>
+INFORMATION: create UI.
+Jul 26, 2019 11:10:58 AM com.mareike.solrsearch.localDirectories.DirectorySelector loadIndexedPaths
+INFORMATION: load previously indexed paths from file directories.txt
+Jul 26, 2019 11:10:58 AM com.mareike.solrsearch.localDirectories.DirectorySelector addDirectoryWatcher
+INFORMATION: start directory watcher on: C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:10:58 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Adding directory watcher to C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2 ...
+
+Jul 26, 2019 11:10:58 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Done.
+Jul 26, 2019 11:10:58 AM com.mareike.solrsearch.UI.UIHandler <init>
+INFORMATION: Switch to main search screen.
+
+Jul 26, 2019 11:10:59 AM com.mareike.solrsearch.SolrInstance deleteCollection
+INFORMATION: Delete collection ...
+Jul 26, 2019 11:10:59 AM com.mareike.solrsearch.UI.UIHandler$4 actionPerformed
+INFORMATION: Switch back to start screen.
+Jul 26, 2019 11:10:59 AM com.mareike.solrsearch.localDirectories.DirectorySelector removeDirectoryWatchers
+INFORMATION: remove directory watchers.
+Jul 26, 2019 11:11:15 AM com.mareike.solrsearch.localDirectories.MultiSelectionTree setSelectionPath
+INFORMATION: Path mareike/Documents/Studium/2. Semester - SS16/Info 2/ has been selected.
+Jul 26, 2019 11:11:15 AM com.mareike.solrsearch.localDirectories.MLTreeSelectionModel addSelectionPaths
+INFORMATION: Path has been added to the selection
+Jul 26, 2019 11:11:17 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: create list of all directories that have been indexed.
+Jul 26, 2019 11:11:17 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: Path C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\is added to list.
+Jul 26, 2019 11:11:17 AM com.mareike.solrsearch.localDirectories.DirectorySelector addDirectoryWatcher
+INFORMATION: start directory watcher on: C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:11:17 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Adding directory watcher to C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2 ...
+
+Jul 26, 2019 11:11:17 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Done.
+Jul 26, 2019 11:11:17 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Create a collection at http://localhost:8983/solr ...
+Jul 26, 2019 11:11:24 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Response to request: {responseHeader={status=0,QTime=6305},success={192.168.77.1:8983_solr={responseHeader={status=0,QTime=5842},core=overSearchFiles_shard1_replica_n1}}}
+Jul 26, 2019 11:11:24 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Creating the collection was successful.
+Jul 26, 2019 11:11:24 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Collection named overSearchFiles created.
+Solr instance URL has been changed to: http://localhost:8983/solr/overSearchFiles
+Jul 26, 2019 11:11:24 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Start indexing...
+Jul 26, 2019 11:11:24 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Indexing request for C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:11:28 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing local files.
+Staring to index SharePoint files.
+Jul 26, 2019 11:11:30 AM com.mareike.solrsearch.Indexer$FunctionCall call
+INFORMATION: Connection refused: connect
+Jul 26, 2019 11:11:39 AM com.mareike.solrsearch.Indexer indexSharePointFiles
+INFORMATION: Error occurred while preparing the request to the SharePointConnector function:  Connection refused: connect. Please try to index again. If the problem persists, check the SharePoint function.
+Jul 26, 2019 11:11:39 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing SharePoint files.
+Jul 26, 2019 11:11:39 AM com.mareike.solrsearch.SolrInstance deleteCollection
+INFORMATION: Delete collection ...
+Jul 26, 2019 11:12:45 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: create list of all directories that have been indexed.
+Jul 26, 2019 11:12:45 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: Path C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\is added to list.
+Jul 26, 2019 11:12:45 AM com.mareike.solrsearch.localDirectories.DirectorySelector addDirectoryWatcher
+INFORMATION: start directory watcher on: C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:12:45 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Adding directory watcher to C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2 ...
+
+Jul 26, 2019 11:12:45 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Done.
+Jul 26, 2019 11:12:45 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Create a collection at http://localhost:8983/solr ...
+Jul 26, 2019 11:12:51 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Response to request: {responseHeader={status=0,QTime=6443},success={192.168.77.1:8983_solr={responseHeader={status=0,QTime=5926},core=overSearchFiles_shard1_replica_n1}}}
+Jul 26, 2019 11:12:51 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Creating the collection was successful.
+Jul 26, 2019 11:12:51 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Collection named overSearchFiles created.
+Solr instance URL has been changed to: http://localhost:8983/solr/overSearchFiles
+Jul 26, 2019 11:12:51 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Start indexing...
+Jul 26, 2019 11:12:51 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Indexing request for C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:12:55 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing local files.
+Staring to index SharePoint files.
+Jul 26, 2019 11:13:04 AM com.mareike.solrsearch.Indexer$FunctionCall call
+INFORMATION: Server returned HTTP response code: 500 for URL: http://localhost:7074/api/SharePointConnector?name=overSearchFiles
+Jul 26, 2019 11:13:18 AM com.mareike.solrsearch.Indexer indexSharePointFiles
+INFORMATION: Error occurred while preparing the request to the SharePointConnector function:  Server returned HTTP response code: 500 for URL: http://localhost:7074/api/SharePointConnector?name=overSearchFiles. Please try to index again. If the problem persists, check the SharePoint function.
+Jul 26, 2019 11:13:18 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing SharePoint files.
+Jul 26, 2019 11:13:18 AM com.mareike.solrsearch.SolrInstance deleteCollection
+INFORMATION: Delete collection ...
+Jul 26, 2019 11:14:23 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: create list of all directories that have been indexed.
+Jul 26, 2019 11:14:23 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: Path C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\is added to list.
+Jul 26, 2019 11:14:23 AM com.mareike.solrsearch.localDirectories.DirectorySelector addDirectoryWatcher
+INFORMATION: start directory watcher on: C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:14:23 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Adding directory watcher to C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2 ...
+
+Jul 26, 2019 11:14:23 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Done.
+Jul 26, 2019 11:14:23 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Create a collection at http://localhost:8983/solr ...
+Jul 26, 2019 11:14:29 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Response to request: {responseHeader={status=0,QTime=6346},success={192.168.77.1:8983_solr={responseHeader={status=0,QTime=5896},core=overSearchFiles_shard1_replica_n1}}}
+Jul 26, 2019 11:14:29 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Creating the collection was successful.
+Jul 26, 2019 11:14:29 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Collection named overSearchFiles created.
+Solr instance URL has been changed to: http://localhost:8983/solr/overSearchFiles
+Jul 26, 2019 11:14:29 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Start indexing...
+Jul 26, 2019 11:14:29 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Indexing request for C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:14:34 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing local files.
+Staring to index SharePoint files.
+Jul 26, 2019 11:14:36 AM com.mareike.solrsearch.Indexer$FunctionCall call
+INFORMATION: Server returned HTTP response code: 500 for URL: http://localhost:7074/api/SharePointConnector?name=overSearchFiles
+Jul 26, 2019 11:14:41 AM com.mareike.solrsearch.Indexer indexSharePointFiles
+INFORMATION: Error occurred while preparing the request to the SharePointConnector function:  Server returned HTTP response code: 500 for URL: http://localhost:7074/api/SharePointConnector?name=overSearchFiles. Please try to index again. If the problem persists, check the SharePoint function.
+Jul 26, 2019 11:14:41 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing SharePoint files.
+Jul 26, 2019 11:14:41 AM com.mareike.solrsearch.SolrInstance deleteCollection
+INFORMATION: Delete collection ...
+Jul 26, 2019 11:16:54 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: create list of all directories that have been indexed.
+Jul 26, 2019 11:16:54 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: Path C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\is added to list.
+Jul 26, 2019 11:16:54 AM com.mareike.solrsearch.localDirectories.DirectorySelector addDirectoryWatcher
+INFORMATION: start directory watcher on: C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:16:54 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Adding directory watcher to C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2 ...
+
+Jul 26, 2019 11:16:54 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Done.
+Jul 26, 2019 11:16:54 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Create a collection at http://localhost:8983/solr ...
+Jul 26, 2019 11:17:01 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Response to request: {responseHeader={status=0,QTime=6447},success={192.168.77.1:8983_solr={responseHeader={status=0,QTime=5958},core=overSearchFiles_shard1_replica_n1}}}
+Jul 26, 2019 11:17:01 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Creating the collection was successful.
+Jul 26, 2019 11:17:01 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Collection named overSearchFiles created.
+Solr instance URL has been changed to: http://localhost:8983/solr/overSearchFiles
+Jul 26, 2019 11:17:01 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Start indexing...
+Jul 26, 2019 11:17:01 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Indexing request for C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:17:07 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing local files.
+Staring to index SharePoint files.
+Jul 26, 2019 11:18:55 AM com.mareike.solrsearch.Indexer$FunctionCall call
+INFORMATION: Server returned HTTP response code: 500 for URL: http://localhost:7074/api/SharePointConnector?name=overSearchFiles
+Jul 26, 2019 11:19:38 AM com.mareike.solrsearch.Indexer indexSharePointFiles
+INFORMATION: Error occurred while preparing the request to the SharePointConnector function:  Server returned HTTP response code: 500 for URL: http://localhost:7074/api/SharePointConnector?name=overSearchFiles. Please try to index again. If the problem persists, check the SharePoint function.
+Jul 26, 2019 11:19:38 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing SharePoint files.
+Jul 26, 2019 11:19:38 AM com.mareike.solrsearch.SolrInstance deleteCollection
+INFORMATION: Delete collection ...
+Jul 26, 2019 11:20:21 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: create list of all directories that have been indexed.
+Jul 26, 2019 11:20:21 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: Path C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\is added to list.
+Jul 26, 2019 11:20:21 AM com.mareike.solrsearch.localDirectories.DirectorySelector addDirectoryWatcher
+INFORMATION: start directory watcher on: C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:20:21 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Adding directory watcher to C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2 ...
+
+Jul 26, 2019 11:20:21 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Done.
+Jul 26, 2019 11:20:21 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Create a collection at http://localhost:8983/solr ...
+Jul 26, 2019 11:20:27 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Response to request: {responseHeader={status=0,QTime=6452},success={192.168.77.1:8983_solr={responseHeader={status=0,QTime=5987},core=overSearchFiles_shard1_replica_n1}}}
+Jul 26, 2019 11:20:27 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Creating the collection was successful.
+Jul 26, 2019 11:20:27 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Collection named overSearchFiles created.
+Solr instance URL has been changed to: http://localhost:8983/solr/overSearchFiles
+Jul 26, 2019 11:20:27 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Start indexing...
+Jul 26, 2019 11:20:27 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Indexing request for C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:20:33 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing local files.
+Staring to index SharePoint files.
+Jul 26, 2019 11:22:02 AM com.mareike.solrsearch.Indexer$FunctionCall call
+INFORMATION: Server returned HTTP response code: 500 for URL: http://localhost:7074/api/SharePointConnector?name=overSearchFiles
+Jul 26, 2019 11:22:05 AM com.mareike.solrsearch.Indexer indexSharePointFiles
+INFORMATION: Error occurred while preparing the request to the SharePointConnector function:  Server returned HTTP response code: 500 for URL: http://localhost:7074/api/SharePointConnector?name=overSearchFiles. Please try to index again. If the problem persists, check the SharePoint function.
+Jul 26, 2019 11:22:05 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing SharePoint files.
+Jul 26, 2019 11:22:05 AM com.mareike.solrsearch.SolrInstance deleteCollection
+INFORMATION: Delete collection ...
+Jul 26, 2019 11:23:12 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: create list of all directories that have been indexed.
+Jul 26, 2019 11:23:12 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: Path C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\is added to list.
+Jul 26, 2019 11:23:12 AM com.mareike.solrsearch.localDirectories.DirectorySelector addDirectoryWatcher
+INFORMATION: start directory watcher on: C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:23:12 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Adding directory watcher to C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2 ...
+
+Jul 26, 2019 11:23:12 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Done.
+Jul 26, 2019 11:23:12 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Create a collection at http://localhost:8983/solr ...
+Jul 26, 2019 11:23:19 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Response to request: {responseHeader={status=0,QTime=6979},success={192.168.77.1:8983_solr={responseHeader={status=0,QTime=6316},core=overSearchFiles_shard1_replica_n1}}}
+Jul 26, 2019 11:23:19 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Creating the collection was successful.
+Jul 26, 2019 11:23:19 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Collection named overSearchFiles created.
+Solr instance URL has been changed to: http://localhost:8983/solr/overSearchFiles
+Jul 26, 2019 11:23:19 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Start indexing...
+Jul 26, 2019 11:23:19 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Indexing request for C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:23:25 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing local files.
+Staring to index SharePoint files.
+Jul 26, 2019 11:24:39 AM com.mareike.solrsearch.Indexer$FunctionCall call
+INFORMATION: Connection refused: connect
+Jul 26, 2019 11:24:42 AM com.mareike.solrsearch.Indexer indexSharePointFiles
+INFORMATION: Error occurred while preparing the request to the SharePointConnector function:  Connection refused: connect. Please try to index again. If the problem persists, check the SharePoint function.
+Jul 26, 2019 11:24:42 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing SharePoint files.
+Jul 26, 2019 11:24:42 AM com.mareike.solrsearch.SolrInstance deleteCollection
+INFORMATION: Delete collection ...
+Jul 26, 2019 11:26:35 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: create list of all directories that have been indexed.
+Jul 26, 2019 11:26:35 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: Path C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\is added to list.
+Jul 26, 2019 11:26:35 AM com.mareike.solrsearch.localDirectories.DirectorySelector addDirectoryWatcher
+INFORMATION: start directory watcher on: C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:26:35 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Adding directory watcher to C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2 ...
+
+Jul 26, 2019 11:26:35 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Done.
+Jul 26, 2019 11:26:35 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Create a collection at http://localhost:8983/solr ...
+Jul 26, 2019 11:26:43 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Response to request: {responseHeader={status=0,QTime=8002},success={192.168.77.1:8983_solr={responseHeader={status=0,QTime=6201},core=overSearchFiles_shard1_replica_n1}}}
+Jul 26, 2019 11:26:43 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Creating the collection was successful.
+Jul 26, 2019 11:26:43 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Collection named overSearchFiles created.
+Solr instance URL has been changed to: http://localhost:8983/solr/overSearchFiles
+Jul 26, 2019 11:26:43 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Start indexing...
+Jul 26, 2019 11:26:43 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Indexing request for C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:26:50 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing local files.
+Staring to index SharePoint files.
+Jul 26, 2019 11:27:00 AM com.mareike.solrsearch.Indexer$FunctionCall call
+INFORMATION: Server returned HTTP response code: 500 for URL: http://localhost:7074/api/SharePointConnector?name=overSearchFiles
+Jul 26, 2019 11:27:06 AM com.mareike.solrsearch.Indexer indexSharePointFiles
+INFORMATION: Error occurred while preparing the request to the SharePointConnector function:  Server returned HTTP response code: 500 for URL: http://localhost:7074/api/SharePointConnector?name=overSearchFiles. Please try to index again. If the problem persists, check the SharePoint function.
+Jul 26, 2019 11:27:06 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing SharePoint files.
+Jul 26, 2019 11:27:06 AM com.mareike.solrsearch.SolrInstance deleteCollection
+INFORMATION: Delete collection ...
+Jul 26, 2019 11:27:22 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: create list of all directories that have been indexed.
+Jul 26, 2019 11:27:22 AM com.mareike.solrsearch.localDirectories.DirectorySelector listDirectories
+INFORMATION: Path C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\is added to list.
+Jul 26, 2019 11:27:22 AM com.mareike.solrsearch.localDirectories.DirectorySelector addDirectoryWatcher
+INFORMATION: start directory watcher on: C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:27:22 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Adding directory watcher to C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2 ...
+
+Jul 26, 2019 11:27:22 AM com.mareike.solrsearch.localDirectories.DirectoryWatchService <init>
+INFORMATION: Done.
+Jul 26, 2019 11:27:22 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Create a collection at http://localhost:8983/solr ...
+Jul 26, 2019 11:27:28 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Response to request: {responseHeader={status=0,QTime=6551},success={192.168.77.1:8983_solr={responseHeader={status=0,QTime=6083},core=overSearchFiles_shard1_replica_n1}}}
+Jul 26, 2019 11:27:28 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Creating the collection was successful.
+Jul 26, 2019 11:27:28 AM com.mareike.solrsearch.SolrInstance createCollection
+INFORMATION: Collection named overSearchFiles created.
+Solr instance URL has been changed to: http://localhost:8983/solr/overSearchFiles
+Jul 26, 2019 11:27:28 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Start indexing...
+Jul 26, 2019 11:27:28 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Indexing request for C:\Users\mareike\Documents\Studium\2. Semester - SS16\Info 2\
+Jul 26, 2019 11:27:34 AM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing local files.
+Staring to index SharePoint files.
+Jul 26, 2019 11:29:56 AM com.mareike.solrsearch.Indexer$FunctionCall call
+INFORMATION: Connection refused: connect
+Jul 26, 2019 12:10:53 PM com.mareike.solrsearch.Indexer indexSharePointFiles
+INFORMATION: Error occurred while preparing the request to the SharePointConnector function:  Connection refused: connect. Please try to index again. If the problem persists, check the SharePoint function.
+Jul 26, 2019 12:10:53 PM com.mareike.solrsearch.Indexer indexFiles
+INFORMATION: Finished indexing SharePoint files.
+Jul 26, 2019 12:10:53 PM com.mareike.solrsearch.SolrInstance deleteCollection
+INFORMATION: Delete collection ...
+Jul 26, 2019 12:10:54 PM com.mareike.solrsearch.UI.UIHandler$1 windowClosing
+INFORMATION: Frame closed

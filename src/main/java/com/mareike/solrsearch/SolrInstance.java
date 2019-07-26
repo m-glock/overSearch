@@ -9,12 +9,9 @@ import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.SolrPingResponse;
 import org.apache.solr.common.util.NamedList;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.util.*;
 import java.util.List;
 
 public class SolrInstance {
@@ -39,16 +36,24 @@ public class SolrInstance {
         client = new HttpSolrClient.Builder(urlString).build();
     }
     
-    public void createCollection() throws IOException, SolrServerException {
-        Main.logger.info("Create a colection...");
+    public boolean createCollection() throws IOException, SolrServerException {
+        Main.logger.info("Create a collection at " + client.getBaseURL() + " ...");
         String configName = "overSearchConfig";
-        CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
-        NamedList resp = client.request(req);
-        Main.logger.info("Response to request: " + resp.toString());
-
-        client.setBaseURL(client.getBaseURL() + "/" + collectionName);
-        Main.logger.info("Collection named " + collectionName + " created.\nSolr instance URL has been changed to: " + client.getBaseURL());
-
+        boolean success;
+        if(client.getBaseURL().contains(collectionName)){
+            success = true;
+        }else{
+            CollectionAdminRequest.Create req = CollectionAdminRequest.Create.createCollection(collectionName, configName, 1, 1);
+            NamedList resp = client.request(req);
+            Main.logger.info("Response to request: " + resp.toString());
+            success = resp.toString().contains("success");
+            if(success){
+                Main.logger.info("Creating the collection was successful.");
+                client.setBaseURL(client.getBaseURL() + "/" + collectionName);
+                Main.logger.info("Collection named " + collectionName + " created.\nSolr instance URL has been changed to: " + client.getBaseURL());
+            }
+        }
+        return success;
     }
 
     public void deleteCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
@@ -61,14 +66,16 @@ public class SolrInstance {
         System.out.println("Collection has been removed. Solr instance now uses the URL: " + client.getBaseURL());
     }
 
-    public boolean isConnected(){
+    /*public boolean isConnected(){
         Main.logger.info("Ping Solr collection...");
         boolean canConnect = true;
         try {
+            System.out.println("in try");
             SolrPing ping = new SolrPing();
+            System.out.println("after ping is created");
             SolrPingResponse rsp = ping.process(client);
             System.out.println(rsp);
-            if (!rsp.toString().contains("status=OK")){
+            if (!(rsp.getStatus() == 0)){
                 canConnect = false;
                 connectionLostMessage();
             }
@@ -90,7 +97,7 @@ public class SolrInstance {
                 + "If this is not the case, use the \'Index again\' button to create a new Index.<br><br>"
                 + "After restarting the instance or adding the collection name it might take a moment for the application to recognize the change.</html>");
         JOptionPane.showMessageDialog(null, errorMessage, "Connection lost", JOptionPane.ERROR_MESSAGE);
-    }
+    }*/
 
     public String[] getFilterOptions(String fieldName) throws IOException, SolrServerException{
         SolrQuery query = buildQuery(fieldName);
