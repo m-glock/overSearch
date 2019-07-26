@@ -42,6 +42,7 @@ public class UIHandler extends javax.swing.JFrame{
         if(collectionExists) {
             directoryPaths = dir.loadIndexedPaths();
             Indexer.setCollectionName(collectionName);
+            Indexer.addNewThreadPool();
             Main.logger.info("Switch to main search screen.\n");
             CardLayout card = (CardLayout) (mainPanel.getLayout());
             card.show(mainPanel, "mainScreen");

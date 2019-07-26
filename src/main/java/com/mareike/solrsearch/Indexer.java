@@ -2,9 +2,6 @@ package com.mareike.solrsearch;
 
 import com.mareike.solrsearch.UI.ErrorMessage;
 import com.microsoft.graph.http.HttpMethod;
-
-import javax.swing.*;
-import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -31,15 +28,20 @@ public class Indexer {
         }
 
         Main.logger.info("Finished indexing local files.\nStaring to index SharePoint files.");
-        String sharePointResponse = indexSharePointFiles();
+        /*String sharePointResponse = indexSharePointFiles();
         successfulSharePoint = sharePointResponse.contains("Successfully indexed");
-        Main.logger.info("Finished indexing SharePoint files.");
+        Main.logger.info("Finished indexing SharePoint files.");*/
+        successfulSharePoint = true;
 
         return successfulLocal && successfulSharePoint;
     }
 
     public static void setCollectionName(String collection){
         collectionName = collection;
+    }
+
+    public static void addNewThreadPool(){
+        service = Executors.newFixedThreadPool(1);
     }
 
     public static String indexFileOrFolder(String path){
@@ -92,7 +94,7 @@ public class Indexer {
         }
     }
 
-    public static void deleteFile(String path){
+    public static String deleteFile(String path){
         Main.logger.info("Send request to delete a file.");
         try{
             final URI uri = new URI("http", "localhost:7071", "/api/IndexFilesToSolr", "name=" + path, null);
@@ -100,21 +102,21 @@ public class Indexer {
             con.setRequestMethod(HttpMethod.GET.name());
             con.setRequestProperty("collectionName", collectionName);
 
-            Main.logger.info("Sending " + con.getRequestMethod() + " request to delete " + path);
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            while ((inputLine = in.readLine()) != null){
-                Main.logger.info(inputLine);
-                System.out.println(".");
+            FunctionCall fc = new FunctionCall(con, uri);
+            Future task = service.submit(fc);
+            String response = (String) task.get();
+            if(response.contains("Error")){
+                Main.logger.info("Could not delete file " + new File(path).getName());
+                return "";
+            }else{
+                return response;
             }
-                Main.logger.info(inputLine);
-            in.close();
         }catch(Exception ex){
             String message = "Error occurred while preparing the request for deleting a file from the index: " + ex.getMessage() + ".\n"
-                    + "Please try to index again. If the problem persists, check the indexing function.";
+                    + "If the problem persists, check the indexing function.";
             new ErrorMessage(message);
             Main.logger.info(message);
+            return "";
         }
     }
 
