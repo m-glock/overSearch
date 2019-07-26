@@ -34,7 +34,6 @@ public class QueryHandler {
         QueryResponse response;
         try{
             response = client.query(query);
-            Main.logger.info("response to query is: " + response);
             return response;
         }catch(IOException io){
             Main.logger.info("IOException");

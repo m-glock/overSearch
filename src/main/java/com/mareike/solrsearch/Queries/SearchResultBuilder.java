@@ -44,7 +44,13 @@ public class SearchResultBuilder {
             String id = fieldValue(doc, "id");
             document += "</div>";
             document += "<p>";
-            String highlight = response.getHighlighting().get(id).get("_text_").get(0).replace("no_Spacing", "");
+            //TODO: more thatn one snippet?
+            String highlight;
+            if(response.getHighlighting().get(id).isEmpty()) {
+                highlight = "No excerpt available.";
+            }else{
+                highlight = response.getHighlighting().get(id).get("_text_").get(0).replace("no_Spacing", "");
+            }
             document += highlight;
 
             document += "</p>";
