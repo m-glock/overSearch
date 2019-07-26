@@ -41,6 +41,8 @@ public class QueryHandler {
             Main.logger.info("SolrServerException");
         }catch(Exception e){
             Main.logger.info("Unknown Exception. " + e.getMessage());
+        }finally{
+            query.clear();
         }
         return null;
     }

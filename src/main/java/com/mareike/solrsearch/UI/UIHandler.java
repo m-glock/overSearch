@@ -283,6 +283,7 @@ public class UIHandler extends javax.swing.JFrame{
                         boolean indexingSuccess = Indexer.indexFiles(directoryPaths, solr.getCollectionName());
                         if(indexingSuccess) {
                             Main.logger.info("switching to search screen.");
+                            editorPaneResults.setText("");
                             CardLayout card = (CardLayout) (mainPanel.getLayout());
                             card.show(mainPanel, "mainScreen");
                         } else{
