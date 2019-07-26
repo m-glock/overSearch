@@ -30,7 +30,6 @@ public class MultiSelectionTree extends JTree {
             }
         }
         addSelectionPath(path);
-        Main.logger.info(buildPath(path) + " has been added to the selection");
 
         return;
     }

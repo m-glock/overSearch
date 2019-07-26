@@ -126,7 +126,6 @@ public class DirectoryWatchService implements Runnable{
      * Process all events for keys queued to the watcher
      */
     private void processEvents() {
-       System.out.println("in process");
         for (;;) {
 
             // wait for key to be signalled
