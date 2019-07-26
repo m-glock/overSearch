@@ -285,12 +285,12 @@ public class UIHandler extends javax.swing.JFrame{
                             CardLayout card = (CardLayout) (mainPanel.getLayout());
                             card.show(mainPanel, "mainScreen");
                         } else{
-                            System.out.println("error when indexing.");
+                            Main.logger.info("error while indexing. Collection will be removed to try indexing again.");
                             solr.deleteCollection();
                         }
                     }
                 }catch(Exception ex){
-                    Main.logger.info("Error when indexing files: " + ex.getMessage());
+                    new ErrorMessage("Error when trying to index files: " + ex.getMessage());
                 }
             }
         });
@@ -308,18 +308,18 @@ public class UIHandler extends javax.swing.JFrame{
         newCollection.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(solr.isConnected()) {
-                    try {
-                        solr.deleteCollection();
+                try {
+                    boolean deleted = solr.deleteCollection();
+                    if (deleted) {
                         Main.logger.info("Switch back to start screen.");
                         CardLayout card = (CardLayout) (mainPanel.getLayout());
                         card.show(mainPanel, "startScreen");
                         dir.removeDirectoryWatchers();
                         dir.startThreads();
-                    } catch (Exception ex) {
-                        Main.logger.info("Error when trying to delete a collection. " + ex.getMessage());
                     }
-                //}
+                } catch (Exception ex) {
+                    new ErrorMessage("Error when trying to delete a collection. " + ex.getMessage());
+                }
             }
         });
 

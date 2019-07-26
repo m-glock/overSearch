@@ -1,5 +1,6 @@
 package com.mareike.solrsearch;
 
+import com.mareike.solrsearch.UI.ErrorMessage;
 import com.microsoft.graph.http.HttpMethod;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class Indexer {
         Main.logger.info("Start indexing...");
         collectionName = collection;
         service = Executors.newFixedThreadPool(1);
+
         boolean successfulLocal = false;
         boolean successfulSharePoint;
         for(String path : paths){
@@ -27,6 +29,7 @@ public class Indexer {
             String response = indexFileOrFolder(path);
             successfulLocal = response.contains("Successfully indexed");
         }
+
         Main.logger.info("Finished indexing local files.\nStaring to index SharePoint files.");
         String sharePointResponse = indexSharePointFiles();
         successfulSharePoint = sharePointResponse.contains("Successfully indexed");
@@ -54,12 +57,10 @@ public class Indexer {
             Future task = service.submit(new FunctionCall(con, uri));
             String response = (String) task.get();
             if(response.contains("Error")){
-                JLabel errorMessage = new JLabel();
-                errorMessage.setText("Error occurred while preparing the request to the indexing function: " + response.replace("Error:","") + ". "
-                        + "Please try to index again. If the problem persists, check the SharePoint function.");
-                errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 20));
-                JOptionPane.showMessageDialog(null, errorMessage, "Indexing error", JOptionPane.ERROR_MESSAGE);
-                Main.logger.info(errorMessage.getText());
+                String message = "<html>Error occurred while preparing the request to the indexing function:<br>" + response.replace("Error:","") + "<br>"
+                        + "Please try to index again. If the problem persists, check the indexing function.</html>";
+                new ErrorMessage(message);
+                Main.logger.info(message);
                 return "";
             }else {
                 return response;
@@ -78,12 +79,10 @@ public class Indexer {
             Future task = service.submit(new FunctionCall(con, uri));
             String response = (String) task.get();
             if(response.contains("Error")){
-                JLabel errorMessage = new JLabel();
-                errorMessage.setText("Error occurred while preparing the request to the SharePointConnector function: " + response.replace("Error:","") + ". "
-                        + "Please try to index again. If the problem persists, check the SharePoint function.");
-                errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 20));
-                JOptionPane.showMessageDialog(null, errorMessage, "Indexing error", JOptionPane.ERROR_MESSAGE);
-                Main.logger.info(errorMessage.getText());
+                String message = "<html>Error occurred while preparing the request to the SharePoint function:<br>" + response.replace("Error:","") + "<br>"
+                        + "Please try to index again. If the problem persists, check the SharePoint function.</html>";
+                new ErrorMessage(message);
+                Main.logger.info(message);
                 return "";
             }else{
                 return response;
@@ -105,16 +104,17 @@ public class Indexer {
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
             String inputLine;
-            while ((inputLine = in.readLine()) != null)
+            while ((inputLine = in.readLine()) != null){
+                Main.logger.info(inputLine);
+                System.out.println(".");
+            }
                 Main.logger.info(inputLine);
             in.close();
         }catch(Exception ex){
-            JLabel errorMessage = new JLabel();
-            errorMessage.setText("Error occurred while preparing the request for deleting a file from the index: " + ex.getMessage() + ".\n"
-                    + "Please try to index again. If the problem persists, check the indexing function.");
-            errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 20));
-            JOptionPane.showMessageDialog(null, errorMessage, "Indexing error", JOptionPane.ERROR_MESSAGE);
-            Main.logger.info(errorMessage.getText());
+            String message = "Error occurred while preparing the request for deleting a file from the index: " + ex.getMessage() + ".\n"
+                    + "Please try to index again. If the problem persists, check the indexing function.";
+            new ErrorMessage(message);
+            Main.logger.info(message);
         }
     }
 

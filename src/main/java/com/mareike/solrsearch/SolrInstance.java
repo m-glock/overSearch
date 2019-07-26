@@ -1,5 +1,6 @@
 package com.mareike.solrsearch;
 
+import com.mareike.solrsearch.UI.ErrorMessage;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -37,7 +38,7 @@ public class SolrInstance {
     }
     
     public boolean createCollection() throws IOException, SolrServerException {
-        Main.logger.info("Create a collection at " + client.getBaseURL() + " ...");
+        Main.logger.info("Create collection ...");
         String configName = "overSearchConfig";
         boolean success;
         if(client.getBaseURL().contains(collectionName)){
@@ -51,19 +52,33 @@ public class SolrInstance {
                 Main.logger.info("Creating the collection was successful.");
                 client.setBaseURL(client.getBaseURL() + "/" + collectionName);
                 Main.logger.info("Collection named " + collectionName + " created.\nSolr instance URL has been changed to: " + client.getBaseURL());
+            } else {
+                String message = "Collection could not be created.";
+                new ErrorMessage(message);
+                Main.logger.info(message);
             }
         }
         return success;
     }
 
-    public void deleteCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
+    public boolean deleteCollection() throws IOException, SolrServerException, HttpSolrClient.RemoteSolrException {
         Main.logger.info("Delete collection ...");
         String solrBaseURL = client.getBaseURL().replaceAll("/" + collectionName, "");
         client.setBaseURL(solrBaseURL);
         CollectionAdminRequest.Delete request = CollectionAdminRequest.Delete.deleteCollection(collectionName);
         NamedList resp = client.request(request);
         System.out.println("Response to request: " + resp);
-        System.out.println("Collection has been removed. Solr instance now uses the URL: " + client.getBaseURL());
+        if(resp.toString().contains("success")){
+            System.out.println("Collection has been removed. Solr instance now uses the URL: " + client.getBaseURL());
+            return true;
+        }else{
+            String message = "Collection could not be deleted.";
+            solrBaseURL = solrBaseURL + "/" + collectionName;
+            client.setBaseURL(solrBaseURL);
+            new ErrorMessage(message);
+            Main.logger.info(message);
+            return false;
+        }
     }
 
     /*public boolean isConnected(){

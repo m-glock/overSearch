@@ -1,5 +1,6 @@
 package com.mareike.solrsearch;
 
+import com.mareike.solrsearch.UI.ErrorMessage;
 import com.mareike.solrsearch.UI.UIHandler;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
 import java.awt.*;
@@ -35,7 +36,9 @@ public class Main {
             ex.setVisible(true);
 
         }catch(Exception e){
-            logger.info(" Error in Main method. " + e.getMessage());
+            String message = " Error in Main method. " + e.getMessage();
+            new ErrorMessage(message);
+            logger.info(message);
         }
     }
 
