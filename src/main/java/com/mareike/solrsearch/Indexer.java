@@ -28,10 +28,9 @@ public class Indexer {
         }
 
         Main.logger.info("Finished indexing local files.\nStaring to index SharePoint files.");
-        /*String sharePointResponse = indexSharePointFiles();
+        String sharePointResponse = indexSharePointFiles();
         successfulSharePoint = sharePointResponse.contains("Successfully indexed");
-        Main.logger.info("Finished indexing SharePoint files.");*/
-        successfulSharePoint = true;
+        Main.logger.info("Finished indexing SharePoint files.");
 
         return successfulLocal && successfulSharePoint;
     }
@@ -57,6 +56,10 @@ public class Indexer {
             }
 
             Future task = service.submit(new FunctionCall(con, uri));
+            while(!task.isDone()){
+                System.out.println(".");
+                Thread.sleep(5000);
+            }
             String response = (String) task.get();
             if(response.contains("Error")){
                 String message = "<html>Error occurred while preparing the request to the indexing function:<br>" + response.replace("Error:","") + "<br>"
@@ -79,6 +82,10 @@ public class Indexer {
             con.setRequestMethod(HttpMethod.GET.name());
 
             Future task = service.submit(new FunctionCall(con, uri));
+            while(!task.isDone()){
+                System.out.println(".");
+                Thread.sleep(5000);
+            }
             String response = (String) task.get();
             if(response.contains("Error")){
                 String message = "<html>Error occurred while preparing the request to the SharePoint function:<br>" + response.replace("Error:","") + "<br>"
@@ -102,8 +109,11 @@ public class Indexer {
             con.setRequestMethod(HttpMethod.GET.name());
             con.setRequestProperty("collectionName", collectionName);
 
-            FunctionCall fc = new FunctionCall(con, uri);
-            Future task = service.submit(fc);
+            Future task = service.submit(new FunctionCall(con, uri));
+            while(!task.isDone()){
+                System.out.println(".");
+                Thread.sleep(5000);
+            }
             String response = (String) task.get();
             if(response.contains("Error")){
                 Main.logger.info("Could not delete file " + new File(path).getName());
