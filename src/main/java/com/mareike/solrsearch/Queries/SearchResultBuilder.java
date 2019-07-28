@@ -44,7 +44,6 @@ public class SearchResultBuilder {
             String id = fieldValue(doc, "id");
             document += "</div>";
             document += "<p>";
-            //TODO: more thatn one snippet?
             String highlight;
             if(response.getHighlighting().get(id).isEmpty()) {
                 highlight = "No excerpt available.";

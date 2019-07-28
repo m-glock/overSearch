@@ -42,10 +42,6 @@ import java.nio.file.attribute.*;
 import java.io.*;
 import java.util.*;
 
-/**
- * Example to watch a directory (or tree) for changes to files.
- */
-
 public class DirectoryWatchService implements Runnable{
 
     private final WatchService watcher;
@@ -59,9 +55,6 @@ public class DirectoryWatchService implements Runnable{
         return (WatchEvent<T>)event;
     }
 
-    /**
-     * Creates a WatchService and registers the given directory
-     */
     public DirectoryWatchService(Path dir, boolean recursive) throws IOException {
         this.watcher = FileSystems.getDefault().newWatchService();
         this.keys = new HashMap<>();
@@ -85,9 +78,6 @@ public class DirectoryWatchService implements Runnable{
         processEvents();
     }
 
-    /**
-     * Register the given directory with the WatchService
-     */
     private void register(Path dir) throws IOException {
         WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
         if (trace) {
@@ -103,10 +93,6 @@ public class DirectoryWatchService implements Runnable{
         keys.put(key, dir);
     }
 
-    /**
-     * Register the given directory, and all its sub-directories, with the
-     * WatchService.
-     */
     private void registerAll(final Path start) throws IOException {
         // register directory and sub-directories
         Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
@@ -120,11 +106,6 @@ public class DirectoryWatchService implements Runnable{
         });
     }
 
-
-
-    /**
-     * Process all events for keys queued to the watcher
-     */
     private void processEvents() {
         for (;;) {
 
@@ -144,11 +125,6 @@ public class DirectoryWatchService implements Runnable{
 
             for (WatchEvent<?> event: key.pollEvents()) {
                 WatchEvent.Kind kind = event.kind();
-
-                // TBD - provide example of how OVERFLOW event is handled
-                if (kind == OVERFLOW) {
-                    continue;
-                }
 
                 // Context for directory entry event is the file name of entry
                 WatchEvent<Path> ev = cast(event);

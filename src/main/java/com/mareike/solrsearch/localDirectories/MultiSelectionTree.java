@@ -1,7 +1,6 @@
 package com.mareike.solrsearch.localDirectories;
 
 import com.mareike.solrsearch.Main;
-
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 
@@ -52,7 +51,6 @@ public class MultiSelectionTree extends JTree {
         addSelectionRow(row);
 
         return;
-        //super.setSelectionRow(row);
     }
 
     @Override
@@ -63,7 +61,6 @@ public class MultiSelectionTree extends JTree {
         addSelectionRows(rows);
 
         return;
-        //super.setSelectionRows(rows);
     }
 
     private String buildPath(TreePath path){

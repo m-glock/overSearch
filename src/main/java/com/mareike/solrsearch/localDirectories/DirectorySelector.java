@@ -1,7 +1,6 @@
 package com.mareike.solrsearch.localDirectories;
 
 import com.mareike.solrsearch.Main;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;

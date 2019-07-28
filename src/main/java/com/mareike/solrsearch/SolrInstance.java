@@ -5,13 +5,9 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.CollectionAdminRequest;
-import org.apache.solr.client.solrj.request.SolrPing;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.client.solrj.response.SolrPingResponse;
 import org.apache.solr.common.util.NamedList;
-import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -80,39 +76,6 @@ public class SolrInstance {
             return false;
         }
     }
-
-    /*public boolean isConnected(){
-        Main.logger.info("Ping Solr collection...");
-        boolean canConnect = true;
-        try {
-            System.out.println("in try");
-            SolrPing ping = new SolrPing();
-            System.out.println("after ping is created");
-            SolrPingResponse rsp = ping.process(client);
-            System.out.println(rsp);
-            if (!(rsp.getStatus() == 0)){
-                canConnect = false;
-                connectionLostMessage();
-            }
-        } catch (Exception e) {
-            Main.logger.info("Connection to Solr lost. ");
-            canConnect = false;
-            connectionLostMessage();
-        }
-        Main.logger.info("Able to connect to Solr: " + canConnect);
-        return canConnect;
-    }
-
-    private void connectionLostMessage(){
-        JLabel errorMessage = new JLabel();
-        errorMessage.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        errorMessage.setText("<html>No connection to Solr possible. This can happen when Solr is down or the specified collectionName cannot be found.<br>"
-                + "- check if Solr is running on the URL " + urlString.replace("/" + collectionName, "") + ".<br>"
-                + "- check on http://localhost:8983/solr/#/~collections if the collection \'" + collectionName + "\' exists. "
-                + "If this is not the case, use the \'Index again\' button to create a new Index.<br><br>"
-                + "After restarting the instance or adding the collection name it might take a moment for the application to recognize the change.</html>");
-        JOptionPane.showMessageDialog(null, errorMessage, "Connection lost", JOptionPane.ERROR_MESSAGE);
-    }*/
 
     public String[] getFilterOptions(String fieldName) throws IOException, SolrServerException{
         SolrQuery query = buildQuery(fieldName);

@@ -8,9 +8,6 @@ import com.mareike.solrsearch.localDirectories.MultiSelectionTree;
 import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
-import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLEditorKit;
@@ -258,7 +255,7 @@ public class UIHandler extends javax.swing.JFrame{
         //perform query on input string
         Main.logger.info("Retrieve text from search bar.");
         String queryWords = searchBar.getText();
-        if(queryWords != null && !queryWords.equals("") /*&& solr.isConnected()*/) {
+        if(queryWords != null && !queryWords.equals("")) {
             Main.logger.info("Query string is: " + queryWords);
             QueryResponse queryResponse = qHandler.sendQuery(solr.client, queryWords);
             String response = SearchResultBuilder.getHTMLForResults(queryResponse);
