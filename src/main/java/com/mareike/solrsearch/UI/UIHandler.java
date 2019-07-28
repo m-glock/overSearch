@@ -220,7 +220,7 @@ public class UIHandler extends javax.swing.JFrame{
         buttonPanel.add(search);
 
         filter.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        filter.setText("filter");
+        filter.setText("Filter");
 
         buttonPanel.add(filter);
 

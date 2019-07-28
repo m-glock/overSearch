@@ -89,6 +89,7 @@ public class Environment extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.startApplcation();
+                dispose();
             }
         });
 
@@ -97,6 +98,7 @@ public class Environment extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Main.setStartDirectory(System.getProperty("user.home"));
                 Main.startApplcation();
+                dispose();
             }
         });
     }
