@@ -1,2 +1,4 @@
 target/
 directories.txt
+*.log
+*.log.lck

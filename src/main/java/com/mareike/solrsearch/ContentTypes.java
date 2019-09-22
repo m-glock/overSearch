@@ -15,7 +15,7 @@ public class ContentTypes {
             case "text/plain; charset=windows-1252":
                 return "Textfile";
             default:
-                return "";
+                return contentType;
         }
     }
 
@@ -32,7 +32,7 @@ public class ContentTypes {
             case "Textfile":
                 return "text/plain; charset=windows-1252";
             default:
-                return "";
+                return format;
         }
     }
 

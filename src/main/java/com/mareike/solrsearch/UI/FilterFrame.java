@@ -1,6 +1,7 @@
 package com.mareike.solrsearch.UI;
 
 import com.mareike.solrsearch.ContentTypes;
+import com.mareike.solrsearch.Main;
 import com.mareike.solrsearch.Queries.Filter;
 import com.mareike.solrsearch.Queries.QueryHandler;
 import com.mareike.solrsearch.SolrInstance;
@@ -8,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FilterFrame extends javax.swing.JFrame {
@@ -26,8 +30,8 @@ public class FilterFrame extends javax.swing.JFrame {
             formatFilterComboBoxModel, formatPreferenceComboBoxModel;
     private QueryHandler qHandler;
     private HashMap<Filter, String> filters;
-    private HashMap<Filter, Component[]> filterAndPreferenceComponents;
-    private HashMap<JCheckBox, JComboBox> preferenceComponents;
+    private HashMap<Filter, FPComponent> filterAndPreferenceComponents;
+    private ArrayList<FPComponent> preferenceComponents;
 
     /**
      * Creates new form NewJFrame
@@ -36,6 +40,7 @@ public class FilterFrame extends javax.swing.JFrame {
         this.qHandler = qHandler;
         filters = new HashMap<>();
         setBoxModels(solr);
+        Main.logger.info("Create filter frame.");
         initComponents();
         groupComponents();
         createActionListeners();
@@ -46,49 +51,52 @@ public class FilterFrame extends javax.swing.JFrame {
     }
 
     private void groupComponents(){
+        Main.logger.info("Create groups for components.");
         filterAndPreferenceComponents = new HashMap<>();
-        filterAndPreferenceComponents.put(Filter.CREATORFILTER, new Component[] {creatorFilterCheckBox, creatorFilterComboBox});
-        filterAndPreferenceComponents.put(Filter.CREATORPREFERENECE, new Component[] {creatorPreferencesCheckBox, creatorPreferencesComboBox});
-        filterAndPreferenceComponents.put(Filter.DATEFILTER, new Component[] {dateFilterCheckBox, dateFilterComboBox});
-        filterAndPreferenceComponents.put(Filter.DATEPREFERENECE, new Component[] {datePreferencesCheckBox, datePreferencesComboBox});
-        filterAndPreferenceComponents.put(Filter.FORMATFILTER, new Component[] {formatFilterCheckBox, formatFilterComboBox});
-        filterAndPreferenceComponents.put(Filter.FORMATPREFERENECE, new Component[] {formatPreferencesCheckBox, formatPreferencesComboBox});
-        filterAndPreferenceComponents.put(Filter.SORTRELEVANCE, new Component[] {relevanceRadioButton, creationDateRadioButton});
+        filterAndPreferenceComponents.put(Filter.CREATORFILTER, new FPComponent(creatorFilterCheckBox, creatorFilterComboBox));
+        filterAndPreferenceComponents.put(Filter.CREATORPREFERENECE, new FPComponent(creatorPreferencesCheckBox, creatorPreferencesComboBox));
+        filterAndPreferenceComponents.put(Filter.DATEFILTER,new FPComponent(dateFilterCheckBox, dateFilterComboBox));
+        filterAndPreferenceComponents.put(Filter.DATEPREFERENECE, new FPComponent(datePreferencesCheckBox, datePreferencesComboBox));
+        filterAndPreferenceComponents.put(Filter.FORMATFILTER, new FPComponent(formatFilterCheckBox, formatFilterComboBox));
+        filterAndPreferenceComponents.put(Filter.FORMATPREFERENECE, new FPComponent(formatPreferencesCheckBox, formatPreferencesComboBox));
 
-        preferenceComponents = new HashMap<>();
-        preferenceComponents.put(creatorPreferencesCheckBox, creatorPreferencesComboBox);
-        preferenceComponents.put(datePreferencesCheckBox, datePreferencesComboBox);
-        preferenceComponents.put(formatPreferencesCheckBox, formatPreferencesComboBox);
+        preferenceComponents = new ArrayList<>();
+        preferenceComponents.add(new FPComponent(creatorPreferencesCheckBox, creatorPreferencesComboBox));
+        preferenceComponents.add(new FPComponent(datePreferencesCheckBox, datePreferencesComboBox));
+        preferenceComponents.add(new FPComponent(formatPreferencesCheckBox, formatPreferencesComboBox));
     }
 
     private void setInitialStates(){
-        for(Component[] c : filterAndPreferenceComponents.values()){
-            c[1].setEnabled(false);
+        Main.logger.info("Disable all dropdowns and select relevance radio button.");
+        for(FPComponent component : filterAndPreferenceComponents.values()){
+            component.getDropdown().setEnabled(false);
         }
-        creationDateRadioButton.setEnabled(true);
         relevanceRadioButton.setSelected(true);
         addFilter(Filter.SORTRELEVANCE, "true");
     }
 
     private void setPreviousStates(HashMap<Filter, String> previousFilters){
+        Main.logger.info("Read out previous filter and set appropriate state.");
         for(Filter filter : previousFilters.keySet()){
+            Main.logger.info("Filter " + filter.type + "is set.");
             if(previousFilters.get(filter).equals("creation date")){
                 creationDateRadioButton.setSelected(true);
                 //Disable all preference check boxes and dropdowns
-                for(JCheckBox c : preferenceComponents.keySet()){
-                    c.setEnabled(false);
-                    preferenceComponents.get(c).setEnabled(false);
+                for(FPComponent component : preferenceComponents){
+                    component.getCheckBox().setEnabled(false);
+                    component.getDropdown().setEnabled(false);
                 }
             }else if(!filter.type.equals("sort")){
-                setComponentState(filter);
+                setComponentState(filter,previousFilters.get(filter));
             }
         }
     }
 
-    private void setComponentState(Filter filter){
-        ((JCheckBox) filterAndPreferenceComponents.get(filter)[0]).setSelected(true);
-        filterAndPreferenceComponents.get(filter)[1].setEnabled(true);
-        ((JComboBox) filterAndPreferenceComponents.get(filter)[1]).setSelectedItem(filter);
+    private void setComponentState(Filter filter, String filterItem){
+        FPComponent componentGroup = filterAndPreferenceComponents.get(filter);
+        componentGroup.getCheckBox().setSelected(true);
+        componentGroup.getDropdown().setEnabled(true);
+        componentGroup.getDropdown().setSelectedItem(filterItem);
     }
 
     /**
@@ -345,7 +353,17 @@ public class FilterFrame extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 readAndSaveFilters();
                 qHandler.setFilters(filters);
+                Main.logger.info("Filters saved. Close Filter frame.");
                 FilterFrame.this.dispose();
+            }
+        });
+
+        //TODO: test this
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                readAndSaveFilters();
+                qHandler.setFilters(filters);
+                Main.logger.info("Filters saved. Close Filter frame.");
             }
         });
 
@@ -353,10 +371,11 @@ public class FilterFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addFilter(Filter.SORTRELEVANCE, "relevance");
-                for(JCheckBox c : preferenceComponents.keySet()){
-                    c.setEnabled(true);
-                    if(c.isSelected())
-                        preferenceComponents.get(c).setEnabled(true);
+                for(FPComponent c : preferenceComponents){
+                    c.getCheckBox().setEnabled(true);
+                    if(c.getCheckBox().isSelected()){
+                        c.getDropdown().setEnabled(true);
+                    }
                 }
             }
         });
@@ -365,9 +384,11 @@ public class FilterFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addFilter(Filter.SORTRELEVANCE, "creation date");
-                for(JCheckBox c : preferenceComponents.keySet()){
-                    c.setEnabled(false);
-                    preferenceComponents.get(c).setEnabled(false);
+                for(FPComponent c : preferenceComponents){
+                    c.getCheckBox().setEnabled(false);
+                    if(c.getCheckBox().isSelected()){
+                        c.getDropdown().setEnabled(false);
+                    }
                 }
             }
         });
@@ -430,7 +451,7 @@ public class FilterFrame extends javax.swing.JFrame {
             creatorFilterComboBoxModel = new javax.swing.DefaultComboBoxModel<>(creators);
             creatorPreferenceComboBoxModel = new javax.swing.DefaultComboBoxModel<>(creators);
         }catch(Exception ex){
-            System.out.println("Error when retrieving filter options: " + ex.getMessage());
+            Main.logger.info("Error when retrieving filter options: " + ex.getMessage());
         }
     }
 
@@ -462,6 +483,7 @@ public class FilterFrame extends javax.swing.JFrame {
     }
 
     private void addFilter(Filter filterType, String value){
+        Main.logger.info("Filter " + filterType.type + " was selected and has been added to the list.");
         filters.put(filterType, value);
     }
 }

@@ -1,5 +1,7 @@
 package com.mareike.solrsearch.localDirectories;
 
+import com.mareike.solrsearch.Main;
+
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.event.TreeModelEvent;
@@ -35,7 +37,7 @@ public class FileSystemModel implements TreeModel {
         final String newName = (String) pNewValue;
         final File newFile = new File(oldFile.getParentFile(), newName);
         oldFile.renameTo(newFile);
-        System.out.println("Renamed '" + oldFile + "' to '" + newFile + "'.");
+        Main.logger.info("Renamed '" + oldFile + "' to '" + newFile + "'.");
         reload();
     }
 

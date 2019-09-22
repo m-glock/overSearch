@@ -1,6 +1,7 @@
 package com.mareike.solrsearch.Queries;
 
 import com.mareike.solrsearch.ContentTypes;
+import com.mareike.solrsearch.Main;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -24,21 +25,24 @@ public class QueryHandler {
 
     public QueryResponse sendQuery(HttpSolrClient client, String queryWords){
         //send query to Solr server
+        Main.logger.info("Sending query to Solr...");
         generateQueryParameters();
         addFilterAndPreferences();
         query.setQuery(queryWords);
-        System.out.println("query is: " + query.toString());
+        Main.logger.info("Parameters of the query are: " + query.toString());
 
         QueryResponse response;
         try{
             response = client.query(query);
             return response;
         }catch(IOException io){
-            System.out.println("IOException");
+            Main.logger.info("IOException");
         }catch(SolrServerException ser){
-            System.out.println("SolrServerException");
+            Main.logger.info("SolrServerException");
         }catch(Exception e){
-            System.out.println("Unknown Exception. " + e.getMessage());
+            Main.logger.info("Unknown Exception. " + e.getMessage());
+        }finally{
+            query.clear();
         }
         return null;
     }

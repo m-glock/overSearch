@@ -32,6 +32,7 @@ package com.mareike.solrsearch.localDirectories;
  */
 
 import com.mareike.solrsearch.Indexer;
+import com.mareike.solrsearch.Main;
 import org.apache.commons.io.FilenameUtils;
 
 import java.nio.file.*;
@@ -40,10 +41,6 @@ import static java.nio.file.LinkOption.*;
 import java.nio.file.attribute.*;
 import java.io.*;
 import java.util.*;
-
-/**
- * Example to watch a directory (or tree) for changes to files.
- */
 
 public class DirectoryWatchService implements Runnable{
 
@@ -58,18 +55,15 @@ public class DirectoryWatchService implements Runnable{
         return (WatchEvent<T>)event;
     }
 
-    /**
-     * Creates a WatchService and registers the given directory
-     */
     public DirectoryWatchService(Path dir, boolean recursive) throws IOException {
         this.watcher = FileSystems.getDefault().newWatchService();
         this.keys = new HashMap<>();
         this.recursive = recursive;
 
         if (recursive) {
-            System.out.format("Scanning %s ...\n", dir);
+            Main.logger.info("Adding directory watcher to " + dir + " ...\n");
             registerAll(dir);
-            System.out.println("Done.");
+            Main.logger.info("Done.");
         } else {
             register(dir);
         }
@@ -84,28 +78,21 @@ public class DirectoryWatchService implements Runnable{
         processEvents();
     }
 
-    /**
-     * Register the given directory with the WatchService
-     */
     private void register(Path dir) throws IOException {
         WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
         if (trace) {
             Path prev = keys.get(key);
             if (prev == null) {
-                System.out.format("register: %s\n", dir);
+                Main.logger.info("register "+ dir + "\n");
             } else {
                 if (!dir.equals(prev)) {
-                    System.out.format("update: %s -> %s\n", prev, dir);
+                    Main.logger.info("update: " + prev + " -> " + dir + "\n");
                 }
             }
         }
         keys.put(key, dir);
     }
 
-    /**
-     * Register the given directory, and all its sub-directories, with the
-     * WatchService.
-     */
     private void registerAll(final Path start) throws IOException {
         // register directory and sub-directories
         Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
@@ -119,13 +106,7 @@ public class DirectoryWatchService implements Runnable{
         });
     }
 
-
-
-    /**
-     * Process all events for keys queued to the watcher
-     */
     private void processEvents() {
-       System.out.println("in process");
         for (;;) {
 
             // wait for key to be signalled
@@ -138,17 +119,12 @@ public class DirectoryWatchService implements Runnable{
 
             Path dir = keys.get(key);
             if (dir == null) {
-                System.err.println("WatchKey not recognized!!");
+                Main.logger.info("WatchKey not recognized!!");
                 continue;
             }
 
             for (WatchEvent<?> event: key.pollEvents()) {
                 WatchEvent.Kind kind = event.kind();
-
-                // TBD - provide example of how OVERFLOW event is handled
-                if (kind == OVERFLOW) {
-                    continue;
-                }
 
                 // Context for directory entry event is the file name of entry
                 WatchEvent<Path> ev = cast(event);
@@ -191,18 +167,18 @@ public class DirectoryWatchService implements Runnable{
     private void updateFiles(WatchEvent event, Path path){
         String extension = FilenameUtils.getExtension(path.toString());
         if(extension.equals("") && event.kind().name().equals("ENTRY_DELETE")){
-            System.out.println("folder has been deleted: " + path.toString());
+            Main.logger.info("folder has been deleted: " + path.toString());
             deleteAllFilesInFolder(path.toFile());
             deletedFolder = path.toString();
         }
         if(!extension.equals("") && !path.toString().contains("~$") && !path.toString().endsWith("tmp") && !path.toString().contains(deletedFolder)){
             switch(event.kind().name()){
                 case "ENTRY_MODIFY":
-                    System.out.println("create file " + path.toString());
+                    Main.logger.info("create file " + path.toString());
                     Indexer.indexFileOrFolder(path.toString());
                     break;
                 case "ENTRY_DELETE":
-                    System.out.println("delete file " + path.toString());
+                    Main.logger.info("delete file " + path.toString());
                     Indexer.deleteFile(path.toString());
                     break;
                 default:

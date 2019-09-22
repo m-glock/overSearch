@@ -1,6 +1,7 @@
 package com.mareike.solrsearch.Queries;
 
 import com.mareike.solrsearch.ContentTypes;
+import com.mareike.solrsearch.Main;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -13,13 +14,14 @@ public class SearchResultBuilder {
     public static String getHTMLForResults(QueryResponse response){
         SolrDocumentList list = response.getResults();
         if(list.isEmpty()){
+            Main.logger.info("No documents found for the query.");
             return "<div> No documents fit your query. </div>";
         }
         String html = "";
+        Main.logger.info("build HTML for list of returned documents...");
         for (SolrDocument doc : list){
             String document = "";
             String path = fieldValue(doc, "path");
-            //TODO: exception handling
             URL url;
             try {
                 if(path.contains("sharepoint")){
@@ -29,7 +31,7 @@ public class SearchResultBuilder {
                     url = file.toURI().toURL();
                 }
             }catch(MalformedURLException ex){
-                System.out.println("URL exception");
+                Main.logger.info("Exception when building the URL to open the file.");
                 url = null;
             }
 
@@ -42,12 +44,18 @@ public class SearchResultBuilder {
             String id = fieldValue(doc, "id");
             document += "</div>";
             document += "<p>";
-            String highlight = response.getHighlighting().get(id).get("_text_").get(0).replace("no_Spacing", "");
+            String highlight;
+            if(response.getHighlighting().get(id).isEmpty()) {
+                highlight = "No excerpt available.";
+            }else{
+                highlight = response.getHighlighting().get(id).get("_text_").get(0).replace("no_Spacing", "");
+            }
             document += highlight;
 
             document += "</p>";
             html += document;
         }
+        Main.logger.info("Finished building the HTML.");
         return html;
     }
 
