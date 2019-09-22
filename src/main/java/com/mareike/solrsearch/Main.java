@@ -24,7 +24,7 @@ public class Main {
 
         String solrURL = "http://localhost:8983/solr";
         collectionName = "overSearchFiles";
-        startDirectory = System.getProperty("user.dir") + File.separator + "test_files";
+        startDirectory = "C:\\Users\\mareike\\Documents\\Studium\\8. Semester - SS19\\overSearch\\res\\test files";
         dim = Toolkit.getDefaultToolkit().getScreenSize();
         collectionExists = false;
 
